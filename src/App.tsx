@@ -442,18 +442,7 @@ export default function App() {
           </Suspense>
         </main>
 
-        <footer className="max-w-7xl mx-auto w-full px-4 md:px-8 pb-10 pt-10 mt-12 text-slate-500 text-[10px] font-mono uppercase tracking-widest flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-[#0A84FF]" />
-            <span className="text-slate-400 font-bold">Security Master OS</span>
-          </div>
-          <p>© 2026 Structured Cybersecurity Learning Workstation</p>
-          <div className="flex gap-6">
-            <span className="text-slate-550 hover:text-slate-300 cursor-pointer">Local Sync</span>
-            <span>•</span>
-            <span className="text-slate-550 hover:text-slate-300 cursor-pointer">CISSP Aligned</span>
-          </div>
-        </footer>
+
       </div>
     </div>
   );
