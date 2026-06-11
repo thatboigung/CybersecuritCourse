@@ -1,4 +1,52 @@
 import { RoadmapArea, Module, Lesson, Quiz, Exam, QuizQuestion } from './types';
+import {
+  hardwareQuestions,
+  osPlatformsQuestions,
+  osCliCrudQuestions,
+  permissionsQuestions,
+  virtualizationQuestions,
+  group1MasterExamQuestions
+} from './data/group1Questions';
+import {
+  netBasicsQuestions,
+  osiModelQuestions,
+  subnettingQuestions,
+  protocolsQuestions,
+  group2MasterExamQuestions
+} from './data/group2Questions';
+import {
+  ciaTriadQuestions,
+  authMethodologiesQuestions,
+  operationsMetricsQuestions,
+  analyticalFrameworksQuestions,
+  group3MasterExamQuestions
+} from './data/group3Questions';
+import {
+  cryptographyBasicsQuestions,
+  vulnerabilitiesExploitsQuestions,
+  owaspWebSecurityQuestions,
+  socialEngineeringQuestions,
+  group4MasterExamQuestions
+} from './data/group4Questions';
+import {
+  programmingFundamentalsQuestions,
+  cloudSecurityModelQuestions,
+  group5MasterExamQuestions
+} from './data/group5Questions';
+import {
+  endpointHardeningQuestions,
+  socOperationsQuestions,
+  incidentResponseQuestions,
+  complianceFrameworksQuestions,
+  group6MasterExamQuestions
+} from './data/group6Questions';
+import {
+  networkDiagnosticsQuestions,
+  forensicsThreatPlatformsQuestions,
+  ctfsRoeQuestions,
+  industryCredentialsQuestions,
+  group7MasterExamQuestions
+} from './data/group7Questions';
 
 // Define our 7 Group-based Roadmap Areas
 export const ROADMAP_AREAS: RoadmapArea[] = [
@@ -118,29 +166,7 @@ Improve your understanding with these professional tutorials:
          quiz: {
            id: 'q-it-hardware',
            title: 'Hardware Components & Diagnostics Quiz',
-           questions: [
-             createQuestion(
-               'qh-1',
-               'Which bios feature must you explicitly enable at the motherboard firmware layer to host Type-1 bare-metal hypervisors?',
-               ['Data Execution Prevention (DEP)', 'Intel VT-x / AMD-V Virtualization extension', 'Secure Boot Integrity check', 'SATA AHCI interface controller mode'],
-               1,
-               'Hosting standard hypervisor nodes requires hardware-assisted CPU virtualization parameters (Intel VT-x or AMD-V) to be toggled on in BIOS/UEFI.'
-             ),
-             createQuestion(
-               'qh-2',
-               'Which represents the first logical step during a structured system-level troubleshooting flow?',
-               ['Replace the central processing unit', 'Formulate an actionable hypothesis and test theories', 'Identify the problem by gathering active symptoms and system state logs', 'Write system log events onto standard recovery drives'],
-               2,
-               'A robust troubleshooting lifecycle always begins by identifying the active symptoms and establishing a clear problem boundaries checklist.'
-             ),
-             createQuestion(
-               'qh-3',
-               'Which storage interface is specifically designed to bypass legacy driver overhead and communicate directly over PCIe lanes to provide massive throughput?',
-               ['SATA III SSD', 'iSCSI Storage Unit', 'NVMe M.2 SSD', 'SAS Enterprise Grid'],
-               2,
-               'NVMe (Non-Volatile Memory Express) maps storage commands directly over high-speed PCIe system lanes, significantly outperforming legacy SATA configurations.'
-             )
-           ]
+           questions: hardwareQuestions
          }
       },
       {
@@ -186,29 +212,7 @@ Improve your system administration skills with these tutorials:
          quiz: {
            id: 'q-os-platforms',
            title: 'Windows & Linux Architecture Quiz',
-           questions: [
-             createQuestion(
-               'qo-p1',
-               'Which Linux structure evaluates system dependency prerequisites and configures build parameters before compiling binaries from source code?',
-               ['The make command', 'The ./configure script', 'The apt package manager', 'The make install directive'],
-               1,
-               'The "./configure" step is run first when compiling from source, evaluating the system setup and generating appropriate Makefiles for execution.'
-             ),
-             createQuestion(
-               'qo-p2',
-               'Where are system-wide configuration files primarily stored on most standard Linux distributions?',
-               ['/var/sys', '/usr/bin', '/etc', '/opt'],
-               2,
-               'The "/etc" directory is the central location for static, flat-text system configuration files on Linux environments.'
-             ),
-             createQuestion(
-               'qo-p3',
-               'Which level of the processor hardware protection ring architecture is executed strictly by the core runtime Operating System Kernel?',
-               ['Ring 3', 'Ring 1', 'Ring 0', 'Ring 2'],
-               2,
-               'Ring 0 possesses absolute execution privileges and runs core Kernel instructions. Ring 3 is hyper-restricted, executing standard user software.'
-             )
-          ]
+           questions: osPlatformsQuestions
          }
       },
       {
@@ -255,29 +259,7 @@ Quickly familiarize yourself with terminal interfaces using these videos:
          quiz: {
            id: 'q-cli-crud',
            title: 'Command Line Interfaces & CRUD File Operations Quiz',
-           questions: [
-             createQuestion(
-               'qo-c1',
-               'Which command flag forces the recursive erasure of non-empty directory scopes on Linux Bash environments?',
-               ['-la', '-rf', '-dir', '-append'],
-               1,
-               '"rm -rf" issues a force statement to recursively erase the directory and all of its nested contents.'
-             ),
-             createQuestion(
-               'qo-c2',
-               'What is the fundamental difference between the redirection operators ">" and ">>"?',
-               ['> appends data, whereas >> is used for pipeline operations', '>> appends the text stream onto the end of a file, while > completely overwrites existing contents', '> writes logs to the main terminal console exclusively', '>> runs commands across isolated container runtimes'],
-               1,
-               'The double-arrow (">>") appends streams to the end of a file without destroying current file rows, while is standard single-arrow (">") replaces the file contents completely.'
-             ),
-             createQuestion(
-               'qo-c3',
-               'Which PowerShell cmdlet serves as the direct equivalent to the Linux "cat" file reading command?',
-               ['type-file', 'Get-Content', 'Read-Item', 'Set-Content'],
-               1,
-               'The PowerShell cmdlet "Get-Content" is the standard mechanism to query and output unencrypted text strings from local files.'
-             )
-           ]
+           questions: osCliCrudQuestions
          }
       },
       {
@@ -327,29 +309,7 @@ Learn how to audit permissions and troubleshoot issues using these tutorials:
          quiz: {
            id: 'q-permissions-logs',
            title: 'Permissions & System Logs Quiz',
-           questions: [
-             createQuestion(
-               'qo-l1',
-               'If a security analyst executes "chmod 640 target_report.csv" on a Linux node, what access rights has the Group received?',
-               ['Read access only', 'Read and execute access', 'Read and write access exclusively', 'No permissions whatsoever'],
-               0,
-               'Octal 6 means Owner gets Read+Write (4+2), 4 means Group gets Read (4), and 0 means Others get No Access. Therefore, the Group only has Read access.'
-             ),
-             createQuestion(
-               'qo-l2',
-               'Which Linux directory is the standard location for files containing authentication logs, boot diagnostic details, and network services logs?',
-               ['/usr/log', '/var/log', '/sys/log', '/etc/log'],
-               1,
-               'The "/var/log" directory contains system-wide logs, process status values, and service events logs.'
-             ),
-             createQuestion(
-               'qo-l3',
-               'A security operations team wants to inspect SSH authentication attempts on a Linux system. Which log file contains these records?',
-               ['/var/log/auth.log (or /var/log/secure)', '/var/log/dmesg', '/var/log/syslog', '/var/log/admin.log'],
-               0,
-               '"/var/log/auth.log" (on Debian-based systems) and "/var/log/secure" (on RedHat-based systems) track authentication attempts, SSH logins, and sudo executions.'
-             )
-           ]
+           questions: permissionsQuestions
          }
       },
       {
@@ -392,29 +352,7 @@ Learn about virtualization technology and how to configure labs using these guid
          quiz: {
            id: 'q-virtualization',
            title: 'Virtualization Systems Quiz',
-           questions: [
-             createQuestion(
-               'qo-v1',
-               'Which virtualization software is categorized as a high-performance bare-metal Type-1 Hypervisor directly managing hardware?',
-               ['VirtualBox', 'VMware Workstation', 'Proxmox VE', 'QEMU emulator client'],
-               2,
-               'Proxmox VE (and VMware ESXi) are bare-metal Type-1 hypervisors that control infrastructure directly, bypassing the hosting desktop OS environment.'
-             ),
-             createQuestion(
-               'qo-v2',
-               'Which VirtualBox network configuration attaches guests securely to an internal isolated switch that only allows communication between guest VMs and the host machine, while blocking external internet WAN access?',
-               ['NAT Service Adapter', 'Bridged Network Adapter', 'Host-Only Network Adapter', 'Generic Driver Interface'],
-               2,
-               'The Host-Only Network framework isolates guests from outer gateway addresses while keeping inter-VM and Host-to-Guest local communications active.'
-             ),
-             createQuestion(
-               'qo-v3',
-               'In virtualized topologies, what role is played by the HostOS?',
-               ['It represents the isolated sandbox guest', 'It represents the base physical operating system hosting Type-2 virtualization software', 'It serves as the cloud-native database pipeline', 'It functions as a virtual router link'],
-               1,
-               'The HostOS acts as the underlying hardware manager for Type-2 hosted hypervisors (like VirtualBox).'
-             )
-           ]
+           questions: virtualizationQuestions
          }
       }
     ],
@@ -422,44 +360,8 @@ Learn about virtualization technology and how to configure labs using these guid
       id: 'ex-group1',
       title: 'Fundamental IT & OS Master Exam',
       moduleId: 'mod-group1',
-      timeLimit: 15,
-      questions: [
-        createQuestion(
-          'em1-1',
-          'In virtualized labs, what term identifies the virtual operating instances nested and running on hardware-managed hypervisors?',
-          ['The HostOS', 'The GuestOS', 'The Physical Core', 'The Bare-Metal controller'],
-          1,
-          'A GuestOS runs virtualized inside system chassis emulations, separated from direct physical host resource levels.'
-        ),
-        createQuestion(
-          'em1-2',
-          'Which utility command allows an admin to dynamically search, query, and filter specific strings of text inside massive Linux logs?',
-          ['cat', 'grep', 'ls -la', 'chmod'],
-          1,
-          'The Linux command utility "grep" searches file systems and logs using regular expression patterns to isolate target criteria.'
-        ),
-        createQuestion(
-          'em1-3',
-          'A corporate auditor wants to inspect system boot failures, device driver issues, and credential validation events on Windows. Which native GUI is the primary diagnostic suite?',
-          ['Device Manager', 'Event Viewer (eventvwr.msc)', 'Disk Management', 'System Configuration (msconfig)'],
-          1,
-          'The Windows Event Viewer (eventvwr.msc) tracks diagnostic logs under Security, System, and Application categories.'
-        ),
-        createQuestion(
-          'em1-4',
-          'Which bios settings extension must you explicitly toggle on in system systems configurations before you can deploy or run any Nested Type-1 Virtual Machine instances?',
-          ['Secure Boot configurations integrity', 'Intel VT-x / AMD-V virtualization features flags', 'PATA controller operations mode', 'Trusted Cryptographic Platform modules keys (TPM)'],
-          1,
-          'Hardware-assisted cpu virtualization flags (Intel VT-x or AMD-V) are a mandatory requirement that must be explicitly enabled at the BIOS firmware configuration layer before hosting nested virtual segments.'
-        ),
-        createQuestion(
-          'em1-5',
-          'Which combined file command arguments correctly forces a recursive deletion on a Linux machine folder that contains nested data files?',
-          ['chown -R', 'rm -rf', 'Remove-Item -Relative', 'cat >>'],
-          1,
-          'The command "rm -rf" forcefully removes lists (using "-f" flag) and recursively tracks folders structures (using the "-r" loop parameter) to delete non-empty locations.'
-        )
-      ]
+      timeLimit: 90,
+      questions: group1MasterExamQuestions
     }
   },
 
@@ -526,36 +428,7 @@ Understanding remote data architectures guides disk forensic collection:
         quiz: {
           id: 'q-net-basics',
           title: 'Topologies, Scales, & Wireless Quiz',
-          questions: [
-            createQuestion(
-              'qn-top-1',
-              'Which network topology features absolute fault tolerance by providing redundant, direct point-to-point links between every single node?',
-              ['Bus Topology', 'Star Topology', 'Ring Topology', 'Mesh Topology'],
-              3,
-              'A Mesh topology features redundant, direct pathways between nodes, ensuring maximum uptime and data survivability.'
-            ),
-            createQuestion(
-              'qn-top-2',
-              'An administrator needs to bridge network connectivity across five office buildings situated inside a single Parisian municipal metro sector. Which network category best defines this scale?',
-              ['LAN (Local Area Network)', 'WAN (Wide Area Network)', 'MAN (Metropolitan Area Network)', 'PAN (Personal Area Network)'],
-              2,
-              'A Metropolitan Area Network (MAN) bridges connected systems across municipal distances larger than a local site but smaller than an inter-city WAN link.'
-            ),
-            createQuestion(
-              'qn-top-3',
-              'What is the primary operational distance limit of Near Field Communication (NFC) spectrum configurations to secure card-present payments?',
-              ['Under 4 Centimeters', 'Under 10 Meters', 'Up to 100 Meters', 'Line of Sight Optical Path'],
-              0,
-              'NFC operates on highly localized electromagnetic fields with a scale under 4 centimeters, making structural tapping extremely difficult.'
-            ),
-            createQuestion(
-              'qn-top-4',
-              'Which storage technology provides dedicated, high-speed block-level access to consolidated arrays of disks over a fiber channel routing fabric, appearing as local raw hard disks?',
-              ['SMB Network Share Appliance (NAS)', 'Storage Area Network (SAN)', 'Network Attached Storage (NAS)', 'Redundant Array of Independent Disks (RAID)'],
-              1,
-              'SAN (Storage Area Network) provides high-speed block-level access to consolidated storage arrays, whereas NAS provides file-level access over standard SMB/NFS.'
-            )
-          ]
+          questions: netBasicsQuestions
         }
       },
       {
@@ -611,36 +484,7 @@ To enforce physical network defenses, you must master these core perimeter node 
         quiz: {
           id: 'q-osi-match',
           title: 'OSI Layers & Hardware Quiz',
-          questions: [
-            createQuestion(
-              'qn-osi-1',
-              'At which layer of the standard 7-Layer OSI model does Address Resolution Protocol (ARP) operate to map logical network IPs to hardware MAC addresses?',
-              ['Layer 1 (Physical Layer)', 'Layer 2 (Data Link Layer)', 'Layer 3 (Network Layer)', 'Layer 4 (Transport Layer)'],
-              1,
-              'ARP maps logical Network layer (L3) IPs to hardware Data Link layer (L2) MAC addresses, operating precisely at OSI Layer 2.'
-            ),
-            createQuestion(
-              'qn-osi-2',
-              'To analyze and block connection parameters inside the actual user payload data (e.g., stopping specific custom SQL injections), a firewall must inspect traffic at which OSI Layer?',
-              ['Layer 2 (Data Link Layer)', 'Layer 3 (Network Layer)', 'Layer 4 (Transport Layer)', 'Layer 7 (Application Layer)'],
-              3,
-              'Deep packet inspection of user data and web service parameters operates at OSI Layer 7, the Application Layer.'
-            ),
-            createQuestion(
-              'qn-osi-3',
-              'What security and routing benefits do Virtual Local Area Networks (VLANs) offer inside an enterprise network switch infrastructure?',
-              ['Automatically lease dynamic logical address ranges to hosts', 'Route frames across remote geographic WAN clusters statefully', 'Partition a physical switch logically into separate broadcast domains', 'Encrypt internal network payloads asynchronously over SSL/TLS channels'],
-              2,
-              'VLANs segment a physical switch logically, partitioning it into separate broadcast domains for local traffic isolation.'
-            ),
-            createQuestion(
-              'qn-osi-4',
-              'An engineer is deploying public-facing web servers. Where should they position these systems to isolate them from the high-security corporate intranet?',
-              ['Directly inside the physical Default Gateway core bus', 'Within a dedicated Demilitarized Zone (DMZ)', 'On the localhost loopback virtual subnet interface', 'Across a physical SAN array network trunk line'],
-              1,
-              'The DMZ (Demilitarized Zone) acts as a logical subnetwork buffering trusted internal infrastructures from untrusted external segments.'
-            )
-          ]
+          questions: osiModelQuestions
         }
       },
       {
@@ -702,36 +546,7 @@ When configuring any IP subnet network block, you must reserve **2** IP addresse
         quiz: {
           id: 'q-subnetting',
           title: 'Addressing & Subnetting Quiz',
-          questions: [
-            createQuestion(
-              'qn-sub-1',
-              'Which of the following IP addresses is public and routable on the WAN, and NOT reserved as a private range under RFC 1918 guidelines?',
-              ['10.250.12.8', '172.24.113.41', '192.168.1.1', '203.0.113.50'],
-              3,
-              '203.0.113.50 is outside the RFC 1918 private scopes (10.x.x.x, 172.16-31.x.x, 192.168.x.x) and is a public routable WAN address.'
-            ),
-            createQuestion(
-              'qn-sub-2',
-              'A router interface is assigned an IP of 10.0.0.1 with a /28 subnet configuration. How many usable host IP addresses are allocatable in this private network?',
-              ['30 Usable Hosts', '14 Usable Hosts', '16 Usable Hosts', '254 Usable Hosts'],
-              1,
-              'For a /28 block, there are 4 host bits (32 - 28 = 4). 2^4 = 16 total IPs. Subtracting the network and broadcast address leaves 14 usable hosts.'
-            ),
-            createQuestion(
-              'qn-sub-3',
-              'A local server wants to send an IP packet to a target backup cluster hosted at another branch globally. Which local component is responsible for receiving and routing this outbound trunk traffic?',
-              ['Default Gateway Router interface', 'Localhost Loopback adapter (127.0.0.1)', 'Layer-2 Broadcast Address IP endpoint', 'Centrally mapped IPAM lease table'],
-              0,
-              'The Default Gateway is the border routing path interface designed to receive local packets bound for external global subnet locations.'
-            ),
-            createQuestion(
-              'qn-sub-4',
-              'Which standard logical IP address serves as the loopback interface on a local computer workstation to verify network services without physical wire transmission?',
-              ['192.168.1.254', '10.0.0.0', '127.0.0.1', '0.0.0.0'],
-              2,
-              '127.0.0.1 is the universal logical loopback address mapping IP packets immediately back to the local device RAM.'
-            )
-          ]
+          questions: subnettingQuestions
         }
       },
       {
@@ -794,36 +609,7 @@ Clients establish secure HTTPS connections with web servers through a multi-step
         quiz: {
           id: 'q-protocols-services',
           title: 'Infrastructure & Protocols Quiz',
-          questions: [
-            createQuestion(
-              'qn-pro-1',
-              'What represents the correct logical sequence of administrative steps taken during a client DHCP IP lease configuration?',
-              ['Offer, Discover, Acknowledge, Request', 'Discover, Offer, Request, Acknowledge', 'Request, Offer, Discover, Acknowledge', 'Discover, Request, Offer, Acknowledge'],
-              1,
-              'DHCP leases addresses using the DORA handshake: Discover, Offer, Request, and Acknowledge.'
-            ),
-            createQuestion(
-              'qn-pro-2',
-              'Which system protocol transfers administrative commands and files in clear-text, and should be replaced with SSH/SFTP respectively?',
-              ['Telnet & FTP', 'HTTPS & RDP', 'NTP & DHCP', 'IPAM & FTPS'],
-              0,
-              'Telnet and FTP transfer passwords and system data in absolute plaintext (clear-text) which can be easily sniffed and captured.'
-            ),
-            createQuestion(
-              'qn-pro-3',
-              'What is the primary operational purpose of Network Address Translation (NAT) running on an edge router?',
-              ['Securely authenticate admin administrators over RDP sessions', 'Map private RFC 1918 addresses to a single public internet IP', 'Log all timestamped events onto an enterprise IPAM server', 'Verify the digital signatures of incoming certificate authorities'],
-              1,
-              'NAT translates multiple internal private IPv4 addresses to a single public IP to route traffic on the WAN and hide internal networks.'
-            ),
-            createQuestion(
-              'qn-pro-4',
-              'During the TLS handshake process, how is the symmetric session key established between client and server once the certificate is verified?',
-              ['The client sends its own raw private key in the initial Client Hello', 'The server publishes its private session key over UDP port 53', 'The client encrypts a pre-master secret key with the server\'s public key', 'The CA third-party directory services push matches to both systems dynamically'],
-              2,
-              'During standard asymmetric key exchange, the pre-master key is generated by the client, encrypted under the server\'s public key, and transmitted safely.'
-            )
-          ]
+          questions: protocolsQuestions
         }
       }
     ],
@@ -831,65 +617,8 @@ Clients establish secure HTTPS connections with web servers through a multi-step
       id: 'ex-network-security',
       title: 'Networking & Infrastructure Master Exam',
       moduleId: 'mod-group2',
-      timeLimit: 15,
-      questions: [
-        createQuestion(
-          'em2-1',
-          'Which OSI layer abstracts symmetric session keys, formatting characters (like ASCII/UTF-8), and cryptographically sets up SSL/TLS handshakes?',
-          ['Layer 4 (Transport Layer)', 'Layer 5 (Session Layer)', 'Layer 6 (Presentation Layer)', 'Layer 7 (Application Layer)'],
-          2,
-          'Symmetric encryption, character code translations, and formatting operate precisely at Layer 6, the Presentation Layer.'
-        ),
-        createQuestion(
-          'em2-2',
-          'Under RFC 1918 private allocations, what is the valid range of IP addresses reserved under the Class B private address space?',
-          ['10.0.0.0 - 10.255.255.255', '172.16.0.0 - 172.31.255.255', '192.168.0.0 - 192.168.255.255', '169.254.0.0 - 169.254.255.255'],
-          1,
-          'Class B private RFC 1918 scope is defined as 172.16.0.0 through 172.31.255.255.'
-        ),
-        createQuestion(
-          'em2-3',
-          'A system administrator needs to divide the empty network IP block 192.168.10.0/24 into four separate, isolated logical host submodules. Which CIDR mask should be assigned to each slice?',
-          ['/25', '/26', '/27', '/28'],
-          1,
-          'Subdividing a /24 network block into 4 even subnets requires borrowing 2 network bits (2^2 = 4 subnets). 24 + 2 = /26 CIDR prefixes.'
-        ),
-        createQuestion(
-          'em2-4',
-          'Your network intrusion detection system alerts on UDP packets targeted towards port 53. Which directory infrastructure service is likely being probed or spoofed on that port?',
-          ['Domain Name System (DNS)', 'Dynamic Host Configuration Protocol (DHCP)', 'Network Time Protocol (NTP)', 'Remote Desktop Protocol (RDP)'],
-          0,
-          'DNS operates on standard UDP (and sometimes TCP) port 53.'
-        ),
-        createQuestion(
-          'em2-5',
-          'Which protocol is unencrypted and carries web traffic over port 80, highly exposing user payloads to sniffing and packet hijacking if HTTPS is not enforced?',
-          ['SSH', 'HTTP', 'FTP', 'RDP'],
-          1,
-          'HTTP is the archaic clear-text protocol running on port 80.'
-        ),
-        createQuestion(
-          'em2-6',
-          'You notice unauthenticated ARP frames being broadcast to map local server IPs to false MAC addresses. What attack is currently being executed?',
-          ['ARP Poisoning / Spoofing', 'DNS Cache Poisoning', 'DDoS SYN Flood', 'MAC Flood Attack'],
-          0,
-          'ARP Poisoning is the classic attacker technique mapping hardware MAC addresses dynamically to targeted corporate gateway IPs on Layer 2.'
-        ),
-        createQuestion(
-          'em2-7',
-          'Which statement correctly describes the architectural difference between NAS and SAN configurations?',
-          ['NAS runs over dedicated fiber networks only; SAN runs over standard IP networks', 'NAS serves file-level networks using protocols like NFS/SMB; SAN serves block-level storage directly', 'NAS maps block-level disks via iSCSI; SAN operates strictly over browser cookies', 'NAS requires Intel CPU virtualization; SAN relies solely on loopback 127.0.0.1'],
-          1,
-          'NAS operates as file-ready network mounts shared over traditional SMB/NFS protocols, while SAN represents block-level raw disk arrays.'
-        ),
-        createQuestion(
-          'em2-8',
-          'A secure HTTPS website requires an SSL/TLS Handshake. What is the very first packet exchange initiated by a web browser?',
-          ['Server Hello with Certificate', 'Client Hello with supported cipher suites', 'Symmetric key validation frame', 'CA security directory lookup call'],
-          1,
-          'The browser initiates a TLS handshake with a Client Hello containing supported parameters and ciphers.'
-        )
-      ]
+      timeLimit: 90,
+      questions: group2MasterExamQuestions
     }
   },
 
@@ -950,22 +679,7 @@ Multi-Factor Authentication (MFA) requires users to verify their identities by p
         quiz: {
           id: 'q-cia-triad',
           title: 'CIA Triad & Access Verification Quiz',
-          questions: [
-            createQuestion(
-              'qn-cia-q1',
-              'An enterprise system administrator executes a daily scheduled task to verify that local file hashes match their original hashes. Which pillar of the CIA Triad is being audited?',
-              ['Confidentiality', 'Integrity', 'Availability', 'Authorization'],
-              1,
-              'Integrity focuses on assuring that data has not been modified, tampered with, or corrupted. File hashing checks are the primary tool used to verify data integrity.'
-            ),
-            createQuestion(
-              'qn-cia-q2',
-              'A user presents a standard alpha-numeric password alongside physical fingerprint verification to access their terminal. Which MFA factors are being utilized?',
-              ['Something You Know and Something You Have', 'Something You Know and Something You Are', 'Something You Have and Something You Are', 'Something You Do and Somewhere You Are'],
-              1,
-              'An alpha-numeric password is "Something You Know" (knowledge factor), and a fingerprint is a biometric indicator falling under "Something You Are" (inherence factor).'
-            )
-          ]
+          questions: ciaTriadQuestions
         }
       },
       {
@@ -1013,22 +727,7 @@ SSO allows users to authenticate once and access multiple independent local or c
         quiz: {
           id: 'q-auth-methods',
           title: 'Enterprise AAA & SSO Quiz',
-          questions: [
-            createQuestion(
-              'qn-auth-q1',
-              'What primary token is returned by the Authentication Service (AS) of a Kerberos KDC to allow a client to request access to specific resources later?',
-              ['Service Ticket (ST)', 'Ticket Granting Ticket (TGT)', 'LDAP Access Token', 'Symmetric Session Certificate'],
-              1,
-              'Under Kerberos, the AS returns a Ticket Granting Ticket (TGT). The user presents this TGT to the Ticket Granting Service (TGS) to obtain individual Service Tickets (ST).'
-            ),
-            createQuestion(
-              'qn-auth-q2',
-              'Which protocol encrypts the entire administrative transmission payload and operates on TCP Port 49, offering superior administrative protection over RADIUS?',
-              ['LDAP', 'TACACS+', 'SAM-L 2.0', 'OIDC'],
-              1,
-              'TACACS+ operates over TCP Port 49, separates AAA functions completely, and encrypts the entire transmission payload, separating it from RADIUS which only encrypts user passwords.'
-            )
-          ]
+          questions: authMethodologiesQuestions
         }
       },
       {
@@ -1077,22 +776,7 @@ Organizations protect high-value targets by combining defensive layers:
         quiz: {
           id: 'q-operations-metrics',
           title: 'Teams, Status Metrics, & Security Models Quiz',
-          questions: [
-            createQuestion(
-              'qn-op-q1',
-              'A firewall utility blocks a standard employee from uploading an approved financial sheet, raising a critical data leak alert. How should this event be classified?',
-              ['True Positive', 'True Negative', 'False Positive', 'False Negative'],
-              2,
-              'An alarm raised for genuine, authorized activity is classified as a False Positive.'
-            ),
-            createQuestion(
-              'qn-op-q2',
-              'Which design philosophy operates on the assumption that any host is hostile by default, enforcing continuous session authentication, device health checks, and granular micro-segmentation?',
-              ['Perimeter Defense Fortress Model', 'Defense-in-Depth Stratification', 'Zero Trust Architecture', 'Administrative Compliance Auditing'],
-              2,
-              'Zero Trust Architecture assumes there are no safe zones within a network, requiring continuous authentication and micro-segmentation for all hosts.'
-            )
-          ]
+          questions: operationsMetricsQuestions
         }
       },
       {
@@ -1140,22 +824,7 @@ To understand how complex attacks unfold and systematically manage network risk,
         quiz: {
           id: 'q-analytic-models',
           title: 'Threat Frameworks & Corporate Governance Quiz',
-          questions: [
-            createQuestion(
-              'qn-fr-q1',
-              "During which linear phase of the standard 7-stage Cyber Kill Chain does an attacker create custom backdoors onto the victim's operating system to persist through system reboots?",
-              ['Delivery', 'Exploitation', 'Installation', 'Command & Control (C2)'],
-              2,
-              'The Installation stage is defined by establishing a persistent presence, such as installing backdoors or services, on the compromised host.'
-            ),
-            createQuestion(
-              'qn-fr-q2',
-              'An IT director decides to outsourcing all web transaction databases to a secure third-party provider, relinquishing direct control. Which risk response strategy was chosen?',
-              ['Risk Mitigation', 'Risk Avoidance', 'Risk Acceptance', 'Risk Transference'],
-              3,
-              'Risk Transference shifts the financial, operational, or legal burden of risks to an external third party.'
-            )
-          ]
+          questions: analyticalFrameworksQuestions
         }
       }
     ],
@@ -1163,51 +832,8 @@ To understand how complex attacks unfold and systematically manage network risk,
       id: 'ex-sec-risk',
       title: 'Security & Hacking Concepts Master Exam',
       moduleId: 'mod-group3',
-      timeLimit: 20,
-      questions: [
-        createQuestion(
-          'em3-q1',
-          "A security team is conducting a table-top assessment. They map the adversary's capabilities and infrastructures back to their target systems using a diamond-shaped network of models. Which analytical model is being applied?",
-          ['Mitre ATT&CK Tactical Framework', 'Lockheed Martin Cyber Kill Chain', 'The Diamond Model of Intrusion Analysis', 'Defense-in-Depth Hierarchy'],
-          2,
-          'The Diamond Model connects Adversary, Infrastructure, Capability, and Victim to analyze and find links across intrusion campaigns.'
-        ),
-        createQuestion(
-          'em3-q2',
-          'Which identity solution operates primarily over UDP Ports 1812 and 1813 to manage remote client AAA operations, yet only encrypts the password transmission packet segment?',
-          ['RADIUS', 'LDAP', 'TACACS+', 'Kerberos'],
-          0,
-          'RADIUS uses UDP ports 1812 (authentication) and 1813 (accounting), encrypting only the user password in its packet payloads.'
-        ),
-        createQuestion(
-          'em3-q3',
-          'A malicious attacker executes local privilege escalations on a target file server, yet fails to access adjacent financial storage buckets due to strict internal VLAN isolation. This demonstrates:',
-          ['Symmetric Digital Signatures', 'The Diamond Model execution', 'Defense-in-Depth / Micro-segmentation', 'Risk Transference models'],
-          2,
-          'By using multiple defensive controls (like segmenting the internal network), organizations ensure that if one layer fails, others are there to contain the threat.'
-        ),
-        createQuestion(
-          'em3-q4',
-          'An intrusion analyst notices that a server is actively responding to administrative commands sent from an external IP address over a hidden channel. At which stage of the Cyber Kill Chain is this attack?',
-          ['Exploitation', 'Installation', 'Command and Control (C2)', 'Actions on Objectives'],
-          2,
-          'Developing interactive, administrative channels from compromised hosts to external IP addresses happens during the Command & Control (C2) phase.'
-        ),
-        createQuestion(
-          'em3-q5',
-          'Which factor category does a custom USB security key that generates temporary cryptographic codes over NFC fall under?',
-          ['Something You Know', 'Something You Have', 'Something You Are', 'Somewhere You Are'],
-          1,
-          'Physical authentication assets (like local USB keys or smartcards) fall under the "Something You Have" (possession) factor.'
-        ),
-        createQuestion(
-          'em3-q6',
-          'An organization needs to document standard step-by-step technical procedures to guide security analysts through containing and isolating a malware outbreak. What should they deploy?',
-          ['Disaster Recovery Backups', 'Enterprise Risk Assessments', 'Tactical Incident Runbooks', 'Compliance Audit Questionnaires'],
-          2,
-          'Incident Runbooks provide tactical, step-by-step instructions for responding to specific security incidents.'
-        )
-      ]
+      timeLimit: 90,
+      questions: group3MasterExamQuestions
     }
   },
 
@@ -1271,22 +897,7 @@ Modern encryption is split into two primary architectures:
         quiz: {
           id: 'q-crypto-basics',
           title: 'Cryptography, Key Types, & PKI Quiz',
-          questions: [
-            createQuestion(
-              'qn-cr-q1',
-              'What primary objective does adding unique cryptographic "Salts" to plaintexts before executing hashing algorithms achieve?',
-              ['Establishes asymmetric digital signatures', 'Slows CPU decryption speed during Diffie-Hellman handshakes', 'Ensures identical passwords generate different, unique hashes to neutralize Rainbow Tables', 'Translates character encodings from HTTPS to ASCII formatted configurations'],
-              2,
-              'Salting introduces unique randomized entropy per record so that identical user passphrases do not produce matching hashes in database lists.'
-            ),
-            createQuestion(
-              'qn-cr-q2',
-              'An administrator wants to encrypt large backup databases on local physical storage arrays quickly and efficiently. Which cryptographic category is best suited for bulk disk encryption?',
-              ['Asymmetric Cryptography', 'Symmetric Cryptography', 'Digital Obfuscation Scrambling', 'Diffie-Hellman Key Exchange'],
-              1,
-              'Symmetric cryptography (e.g., AES) is much faster and computationally efficient than asymmetric cryptography, making it the industry choice for bulk data encryption.'
-            )
-          ]
+          questions: cryptographyBasicsQuestions
         }
       },
       {
@@ -1343,22 +954,7 @@ Malicious software is classified by its behaviors and propagation methods:
         quiz: {
           id: 'q-vulnerabilities-exploits',
           title: 'Memory Bugs, Privilege Escalation & Malware Quiz',
-          questions: [
-            createQuestion(
-              'qn-vu-q1',
-              "What memory vulnerability allows an attacker to execute custom shellcode by providing large input strings that overwrite the CPU's Return Address Point instruction pointer?",
-              ['Memory Leak', 'Buffer Overflow', 'Obfuscation Scrambling', 'Horizontal Privilege Escalation'],
-              1,
-              'A Buffer Overflow allows users to input more data than a buffer can hold, overwriting key stack registers to redirect system execution.'
-            ),
-            createQuestion(
-              'qn-vu-q2',
-              'An attacker leverages pre-installed system binaries (like PowerShell or certutil) to carry out malicious actions, bypassing traditional file-based antivirus scanners. Which concept does this describe?',
-              ['Symmetric Key Exchange', 'Directory Traversal', 'Living off the Land (LOLBAS)', 'Worm Replication'],
-              2,
-              'Living off the Land (LOLBAS/GTFOBins) leverages trust-vouched system binaries to carry out malicious actions, allowing attackers to avoid dropping external malware files.'
-            )
-          ]
+          questions: vulnerabilitiesExploitsQuestions
         }
       },
       {
@@ -1415,22 +1011,7 @@ Web applications are highly visible targets for external attackers. The Open Web
         quiz: {
           id: 'q-owasp-web-security',
           title: 'OWASP Top 10 & Web Attacks Quiz',
-          questions: [
-            createQuestion(
-              'qn-ow-q1',
-              'Which web vulnerability allows an attacker to inject client-side scripts that execute within the browser of anyone who views a compromised forum post?',
-              ['Reflected XSS', 'Stored (Persistent) XSS', 'Cross-Site Request Forgery (CSRF)', 'Directory Traversal'],
-              1,
-              'Stored (Persistent) XSS happens when malicious scripts are saved to database storage and execute in the browser of any user who visits that page.'
-            ),
-            createQuestion(
-              'qn-ow-q2',
-              'What primary coding practice should a web developer implement to prevent SQL Injection (SQLi) vulnerabilities?',
-              ['Employing base-64 string obfuscation on forms', 'Enforcing client-side password hashing on submit', 'Implementing Parameterized Queries (Prepared Statements)', 'Deploying symmetric AES encryption on all text forms'],
-              2,
-              'Parameterized queries ensure the database engine treats input as text data, not executable code, completely blocking SQL injection attacks.'
-            )
-          ]
+          questions: owaspWebSecurityQuestions
         }
       },
       {
@@ -1488,22 +1069,7 @@ The human element is often a system\\'s weakest link. Adversaries combination ph
         quiz: {
           id: 'q-social-networks',
           title: 'Social Engineering & Network Intrusion Quiz',
-          questions: [
-            createQuestion(
-              'qn-so-q1',
-              'What specific term describes a high-value phishing campaign targeting senior executives like C-level managers to steal corporate secrets?',
-              ['Smishing', 'Whaling', 'Tailgating', 'Spim'],
-              1,
-              'Whaling specifically targets high-value corporate executives like CEOs, CFOs, or Board members.'
-            ),
-            createQuestion(
-              'qn-so-q2',
-              'An attacker transmits forged deauthentication packets to disconnect clients from corporate Wi-Fi network and redirect them to their rogue router. What attack has occurred?',
-              ['SQL Injection', 'Evil Twin / Rogue AP Attack', 'VLAN Hopping double-tagging', 'Symmetric Key Exchange hijack'],
-              1,
-              'An Evil Twin attack uses rogue access points with matching Wi-Fi names; deauthentication packets are often used to force clients over to the rogue clone.'
-            )
-          ]
+          questions: socialEngineeringQuestions
         }
       }
     ],
@@ -1512,50 +1078,7 @@ The human element is often a system\\'s weakest link. Adversaries combination ph
       title: 'Cryptography & Attack Matrix Master Exam',
       moduleId: 'mod-group4',
       timeLimit: 20,
-      questions: [
-        createQuestion(
-          'em4-q1',
-          'A user arrives at a cloned landing page after typing a valid web domain. Security logs reveal that a local DNS database contains false IP mapping entries. What attack has occurred?',
-          ['DNS Poisoning', 'SQL Injection', 'Smishing', 'CSRF cookie hijack'],
-          0,
-          'DNS Poisoning maps legitimate domains to false destination IPs, redirecting users to malicious cloned servers.'
-        ),
-        createQuestion(
-          'em4-q2',
-          "Which attack methodology tricks a user's browser into sending state-changing requests (like initiating bank transfers) using their active authentication cookie?",
-          ['Cross-Site Scripting (XSS)', 'Cross-Site Request Forgery (CSRF)', 'SQL Injection (SQLi)', 'Directory Traversal'],
-          1,
-          'CSRF exploits the domain-wide trust browsers have in cookie authentication, tricking active user sessions into executing malicious, unauthorized requests.'
-        ),
-        createQuestion(
-          'em4-q3',
-          'An attacker appends custom directory dots and slashes (e.g. "../../etc/passwd") to retrieve operating files from a server. What vulnerability is being exploited?',
-          ['Memory Leak buffer fault', 'Directory Traversal', 'Zero-Day execution', 'Symmetric Key bypass'],
-          1,
-          'Directory Traversal uses file system markers (such as "../" or "..\\") to bypass web directory roots and access restricted operating system files.'
-        ),
-        createQuestion(
-          'em4-q4',
-          "An organization's servers are flooded with millions of UDP packets originating from globally distributed botnet networks. How should this exploit be classified?",
-          ['DNS Spoofing', 'SQL injection attack', 'Distributed Denial of Service (DDoS)', 'VLAN Hopping execution'],
-          2,
-          'A DDoS attack floods target bandwidth or system resources using networks of compromised, globally distributed devices (botnets).'
-        ),
-        createQuestion(
-          'em4-q5',
-          'Which cryptographic hashing attack involves using a precomputed database of password hashes to crack stolen credential lists instantly?',
-          ['Obfuscation scramble', 'Rainbow Table Attack', 'Diffie-Hellman Key hijack', 'Replay transaction exploit'],
-          1,
-          'Rainbow Tables contain precomputed hashes of common passwords; salting is the primary defense used to neutralize them.'
-        ),
-        createQuestion(
-          'em4-q6',
-          'An attacker intercepts active web traffic, captures access tokens, and transmits them unmodified to authenticate to a system later. What is this?',
-          ['Buffer Overflow', 'Replay Attack', 'SQL Injection (SQLi)', 'Whaling campaign'],
-          1,
-          'Replay Attacks capture unencrypted transmission parameters or authentication keys and transmit them later to gain unauthorized access.'
-        )
-      ]
+      questions: group4MasterExamQuestions
     }
   },
 
@@ -1640,22 +1163,7 @@ C++ provides direct hardware control, manual memory management, and is the choic
         quiz: {
           id: 'q-programming-fundamentals',
           title: 'Sysadmin Languages & Concepts Quiz',
-          questions: [
-            createQuestion(
-              'qn-pr-q1',
-              'Which language yields a compiled, standalone statically-linked binary with built-in concurrency support, making it popular for writing fast network utilities like scanners?',
-              ['Python', 'Go (Golang)', 'Bash Scripting', 'JavaScript (Node.js)'],
-              1,
-              'Go is widely praised in security engineering for compiling down to single, portable static binaries with powerful built-in concurrency engines.'
-            ),
-            createQuestion(
-              'qn-pr-q2',
-              'How does PowerShell fundamentally differ from traditional UNIX command shells like Bash when returning data from system terminal inputs?',
-              ['Bash returns encrypted streams; PowerShell is plain text', 'PowerShell returns structured .NET object arrays; Bash returns plain text streams', 'Bash compiles on-demand; PowerShell compiles statically', 'PowerShell lacks access to OS directories.'],
-              1,
-              'PowerShell is object-oriented, passing .NET objects between piped cmdlets, whereas Bash passes characters and text bytes.'
-            )
-          ]
+          questions: programmingFundamentalsQuestions
         }
       },
       {
@@ -1707,22 +1215,7 @@ Modern organizations use massive public or blended models:
         quiz: {
           id: 'q-cloud-security',
           title: 'Cloud Architectures & Service Boundaries Quiz',
-          questions: [
-            createQuestion(
-              'qn-cl-q1',
-              'Under the Shared Responsibility Model of a PaaS database instance, who is strictly responsible for running OS-level security patches and kernel updates?',
-              ['The tenant customer', 'The cloud platform hosting provider', 'The independent database software developer', 'The third-party network administrator'],
-              1,
-              'Under Platform as a Service (PaaS), the cloud provider manages host runtimes, operating systems, and core kernel updates, freeing the tenant to focus purely on application configurations and data.'
-            ),
-            createQuestion(
-              'qn-cl-q2',
-              'An enterprise uses Terraform to script-drive and boot entire identical virtual local networks across separate test facilities. What concept does this represent?',
-              ['SaaS account synchronization', 'Serverless computing (FaaS)', 'Infrastructure as Code (IaC)', 'CapEx physical planning'],
-              2,
-              'Infrastructure as Code (IaC) uses declarative software scripts to build and manage infrastructure components consistently and automatically.'
-            )
-          ]
+          questions: cloudSecurityModelQuestions
         }
       }
     ],
@@ -1731,50 +1224,7 @@ Modern organizations use massive public or blended models:
       title: 'Programming & Cloud Security Master Exam',
       moduleId: 'mod-group5',
       timeLimit: 20,
-      questions: [
-        createQuestion(
-          'em5-q1',
-          'Which cloud deployment pattern represents a complete, finished application delivered over web browsers requiring zero software installations or system setups from the customer?',
-          ['Infrastructure as a Service (IaaS)', 'Platform as a Service (PaaS)', 'Software as a Service (SaaS)', 'Bare-Metal Hypervisor virtualization'],
-          2,
-          'SaaS delivers complete, user-ready systems maintained fully by the vender.'
-        ),
-        createQuestion(
-          'em5-q2',
-          'An engineering team transitions their virtual apps to execute on transient containers that spawn instantly on incoming HTTP triggers and scale to zero during idle periods. This is:',
-          ['Infrastructure as Code (IaC)', 'CapEx resource allocation', 'Serverless computing', 'Private Cloud isolation'],
-          2,
-          'Serverless/FaaS architectures use isolated micro-containers on demand to process discrete events and scale down completely when idle.'
-        ),
-        createQuestion(
-          'em5-q3',
-          'A cybersecurity developer needs to distribute standard utility scanner binaries across thousands of dynamic employee systems. Why would they select Go (Golang) over Python?',
-          ['Go requires a local runtime interpreter installed on all systems', 'Go compiles to standalone, statically-linked binaries needing no dynamic local libraries', 'Go only runs on specialized Web browsers', 'Go is an uncompiled object-oriented script language'],
-          1,
-          'Go compiles code to self-contained, lightweight statically-linked executables, whereas Python requires target machines to have interpreter utilities and libraries installed.'
-        ),
-        createQuestion(
-          'em5-q4',
-          'Which financial model describes an physical on-premise datacenter purchase pattern, focusing heavily on early capital acquisitions?',
-          ['Operational Expenditure (OpEx)', 'Capital Expenditure (CapEx)', 'Dynamic Metered Billing', 'On-Demand Server Licensing'],
-          1,
-          'CapEx represents upfront capital investments in physical assets (servers, physical facilities), contrasting with the cloud metered utility billing model (OpEx).'
-        ),
-        createQuestion(
-          'em5-q5',
-          'A security developer writes a Bash script that runs daily on local syslogs, parses lines for failed login alerts, and routes warnings to a webhook. Under which category does this fall?',
-          ['Client-Side script manipulation', 'System automation and administrative pipeline operations', 'SaaS subscription service coordination', 'Low-level stack pointer reverse engineering'],
-          1,
-          'Using glue shell scripts to crawl system files and trigger hooks is a classic example of security automation and sysadmin pipelines.'
-        ),
-        createQuestion(
-          'em5-q6',
-          'What framework dictates how a tenant client must secure, configure, and maintain Guest Operating Systems, applications, and firewalls on their virtual machine?',
-          ['SaaS License Agreements', 'Standard CapEx physical constraints', 'The Shared Responsibility Model', 'The DNS Registry configuration'],
-          2,
-          'The Shared Responsibility Model explicitly defines where the providers physical boundary ends and the cloud tenants logical control starts.'
-        )
-      ]
+      questions: group5MasterExamQuestions
     }
   },
 
@@ -1831,22 +1281,7 @@ Modern host defense goes far beyond basic file scanners:
         quiz: {
           id: 'q-endpoint-hardening',
           title: 'Hardening & Network Admission Quiz',
-          questions: [
-            createQuestion(
-              'qn-ha-q1',
-              'Which technology restricts local client access by auditing host health metrics (e.g. verifying active firewall and patch states) before granting physical LAN permissions?',
-              ['MAC Filtering', 'Group Policy Objects (GPO)', 'Network Access Control (NAC)', 'Traffic Sinkholes'],
-              2,
-              'NAC systems act as hardware health gatekeepers, verifying compliance profiles before authorizing active local network connections.'
-            ),
-            createQuestion(
-              'qn-ha-q2',
-              'An enterprise administrator needs to disable USB mass storage mounts across 5,000 corporate Windows machines globally. What directory control is best?',
-              ['Operating System local registries', 'Group Policy Objects (GPOs)', 'Host Intrusion Prevention Systems (HIPS)', 'Extensible Authentication Protocol (EAP)'],
-              1,
-              'Group Policy Objects (GPOs) allow Windows administrators to manage, enforce, and distribute system configurations to thousands of Active Directory nodes automatically.'
-            )
-          ]
+          questions: endpointHardeningQuestions
         }
       },
       {
@@ -1899,22 +1334,7 @@ Cybersecurity engineers actively secure communication pipelines by replacing une
         quiz: {
           id: 'q-soc-operations',
           title: 'Logs, SIEM, & Security Protocol Quiz',
-          questions: [
-            createQuestion(
-              'qn-so-q1',
-              'Which protocol transition secures remote console command line sessions inside target machines, encrypting credential parameters over TCP Port 22?',
-              ['FTP to SFTP', 'Telnet to SSH', 'HTTP to HTTPS', 'LDAP to LDAPS'],
-              1,
-              'Telnet (Port 23) transmits commands and passwords in plain text. SSH (Port 22) uses secure cryptographic handshakes to encrypt sessions.'
-            ),
-            createQuestion(
-              'qn-so-q2',
-              'What real-time operations engine integrates automated script execution templates (playbooks) to instantly block anomalous firewalls or isolate infected hardware?',
-              ['Passive Intrusion Detection Systems (IDS)', 'Security Orchestration, Automation, and Response (SOAR)', 'Basic Netflow Collector databases', 'MAC Filter Management services'],
-              1,
-              'SOAR platforms automate operational response playbooks, triggering programmatic defenses like API-driven system lockdowns when incidents are detected.'
-            )
-          ]
+          questions: socOperationsQuestions
         }
       },
       {
@@ -1968,22 +1388,7 @@ As technical teams fight to recover systems, incident managers must relay operat
         quiz: {
           id: 'q-incident-response-lifecycle',
           title: 'Incident Lifecycle & Forensics Class Quiz',
-          questions: [
-            createQuestion(
-              'qn-ir-q1',
-              'What SANS/NIST incident response phase coordinates restoring patched database instances, restoring systems from offsite backups, and routing live traffic back online?',
-              ['Eradication', 'Containment', 'Recovery', 'Lessons Learned'],
-              2,
-              'The Recovery phase returns clean system operations back to live production safely and verifies that services are running correctly.'
-            ),
-            createQuestion(
-              'qn-ir-q2',
-              'Which digital storage component represents the highest volatile state, requiring instant dump extraction before power cycles during forensic assessments?',
-              ['Solid State Disks (SSD)', 'Host Random Access Memory (RAM)', 'System Registry files on storage', 'Archive database files'],
-              1,
-              'RAM holds active memory configurations, clear-text cryptographic keys, and ephemeral logs that vanish completely when system power is disconnected.'
-            )
-          ]
+          questions: incidentResponseQuestions
         }
       },
       {
@@ -2021,22 +1426,7 @@ Global compliance standards provide systematic structures used to govern corpora
         quiz: {
           id: 'q-compliance-frameworks',
           title: 'Operational Rules & Compliance Audit Quiz',
-          questions: [
-            createQuestion(
-              'qn-co-q1',
-              'Which globally aligned compliance standard dictates requirements for establishing, maintaining, and certifying an institutional Information Security Management System (ISMS)?',
-              ['ISO/IEC 27001', 'NIST SP 800-53', 'CIS Controls List', 'NIST SP 800-37 (RMF)'],
-              0,
-              'ISO 27001 is the leading international standard dictating rigorous requirements for operational ISMS audits and business certifications.'
-            ),
-            createQuestion(
-              'qn-co-q2',
-              'Which specialized NIST publication dictates the 7-step Risk Management Framework (RMF) structured process schema used to authorize and manage information systems?',
-              ['NIST SP 800-53', 'NIST SP 800-37', 'NIST SP 800-115', 'NIST SP 800-30'],
-              1,
-              'NIST SP 800-37 explicitly outlines the official security lifecycle steps of the Risk Management Framework (RMF).'
-            )
-          ]
+          questions: complianceFrameworksQuestions
         }
       }
     ],
@@ -2044,51 +1434,8 @@ Global compliance standards provide systematic structures used to govern corpora
       id: 'ex-group6',
       title: 'Defensive Engineering & Governance Master Exam',
       moduleId: 'mod-group6',
-      timeLimit: 20,
-      questions: [
-        createQuestion(
-          'em6-q1',
-          'A SOC analyst needs to quarantine a workstation infected with ransomware. Which phase of the SANS/NIST Incident Response Process are they executing?',
-          ['Identification', 'Containment', 'Eradication', 'Recovery'],
-          1,
-          'Quarantining infected systems to stop ransomware from spreading laterally represents the core action of the Containment phase.'
-        ),
-        createQuestion(
-          'em6-q2',
-          'Which core directory control utility enables Windows domain administrators to systematically enforce password policies, disable services, and prevent execution profiles globally?',
-          ['Network Access Control (NAC)', 'Group Policy Objects (GPO)', 'Unified Threat Management (UTM)', 'Standard Access Lists (ACLs)'],
-          1,
-          'GPOs provide global policy management across Active Directory, allowing administrators to secure and harden enterprise endpoints.'
-        ),
-        createQuestion(
-          'em6-q3',
-          'Which secure protocol standard secures active directory database lookups across enterprise endpoints, encrypting LDAP traffic over TCP Port 636?',
-          ['SFTP (Port 22)', 'SSH (Port 22)', 'LDAPS (Port 636)', 'DNSSEC (Port 53)'],
-          2,
-          'LDAPS (LDAP over TLS/SSL) encrypts directory queries using secure SSL/TLS channels, utilizing default TCP Port 636.'
-        ),
-        createQuestion(
-          'em6-q4',
-          'A security administrator configures an external DNS server zone to intercept user search queries for known malware domains and redirect them to a safe local diagnostic server. This is called:',
-          ['A Jump Server gateway', 'A DNS Traffic Sinkhole', 'A MAC-filtering firewall ruleset', 'A local Host IPS constraint'],
-          1,
-          'DNS Sinkholing forces malicious outbound lookups to resolve to safe, isolated diagnostic IPs, neutralizing potential command & control redirects.'
-        ),
-        createQuestion(
-          'em6-q5',
-          'According to forensics and legal practices, what is the primary purpose of maintaining a continuous Chain of Custody log for digital evidence seized during an investigation?',
-          ['To guarantee the files are converted to compatible PDF structures', 'To authenticate evidence integrity and secure court admissibility by accounting for every individual who accessed it', 'To coordinate PR announcements to media outlets', 'To satisfy NIST 800-53 administrative controls'],
-          1,
-          'The Chain of Custody proves that evidence has not been tampered with or modified from the moment of capture, making it advisable in legal proceedings.'
-        ),
-        createQuestion(
-          'em6-q6',
-          'An enterprise deployment replaces unsecured clear-text FTP transfers with a secure pipeline encapsulating data in SSH tunnels over TCP Port 22. What protocol is deployed?',
-          ['FTPS', 'HTTPS', 'SFTP', 'SRTP'],
-          2,
-          'SFTP (SSH File Transfer Protocol) runs natively over secure SSH connections (TCP Port 22) to protect file transfers.'
-        )
-      ]
+      timeLimit: 90,
+      questions: group6MasterExamQuestions
     }
   },
 
@@ -2142,22 +1489,7 @@ When parsing dense system configurations, system logs, or security telemetry fil
         quiz: {
           id: 'q-network-diagnostics',
           title: 'Network Diagnostics Quiz',
-          questions: [
-            createQuestion(
-              'qn-nd-q1',
-              'Which native console command prints a list of all active TCP/UDP socket lines, their connection states, and corresponding process identifiers (PIDs)?',
-              ['arp -a', 'ping -t', 'netstat', 'nslookup'],
-              2,
-              'netstat (with options like -ano or -tulnp) reveals all active network connections, listening ports, and the hosting system process IDs.'
-            ),
-            createQuestion(
-              'qn-nd-q2',
-              'A digital forensics analyst needs to construct bit-for-bit exact copies of an compromised hard drive. Which native Linux utility performs this block-level duplication?',
-              ['cat', 'dd', 'grep', 'tail'],
-              1,
-              'The dd (disk duplicator or data duplicator) tool writes bit-by-bit physical disk clones, which is crucial for preserving evidentiary integrity.'
-            )
-          ]
+          questions: networkDiagnosticsQuestions
         }
       },
       {
@@ -2205,22 +1537,7 @@ To streamline testing and diagnostics, security analysts utilize specialized ope
         quiz: {
           id: 'q-forensics-threat-platforms',
           title: 'Forensics & Sandbox Quiz',
-          questions: [
-            createQuestion(
-              'qn-ft-q1',
-              'Which threat examination platform provides interactive virtualized sandboxing, allowing an analyst to safely execute malicious software and watch process execution trees live?',
-              ['VirusTotal', 'WHOIS lookup', 'any.run', 'wireshark'],
-              2,
-              'any.run is an interactive sandbox that visualizes complete execution steps, network calls, and file modifications in real-time.'
-            ),
-            createQuestion(
-              'qn-ft-q2',
-              'What standardized workspace layout is globally utilized by forensic teams to generate exact, hash-verifiable digital clones of target data storage drives?',
-              ['winhex editor', 'Autopsy user suite', 'FTK Imager', 'Kali Linux distro'],
-              2,
-              'FTK Imager generates exact physical disk images (such as .E01 or raw files) and records MD5/SHA hashes to prove zero alteration occurred.'
-            )
-          ]
+          questions: forensicsThreatPlatformsQuestions
         }
       },
       {
@@ -2260,22 +1577,7 @@ Dynamic lab networks let students exploit and harden systems safely, looking for
         quiz: {
           id: 'q-ctfs-roe',
           title: 'Scopes & Target Platforms Quiz',
-          questions: [
-            createQuestion(
-              'qn-ct-q1',
-              'Which document dictates exactly what subnets can be tested, what tools can be executed, and what hours the testers can run scans during a professional security audit?',
-              ['NIST Risk mitigation blueprint', 'The Rules of Engagement (RoE)', 'CompTIA Certification syllabus', 'A standard CSV asset inventory list'],
-              1,
-              'The Rules of Engagement (RoE) represents the legally binding agreement outlining precise engagement scopes, authorized utilities, and emergency protocols.'
-            ),
-            createQuestion(
-              'qn-ct-q2',
-              'Which CTF range specializes in providing prebuilt offline virtual machines that you download and load into virtual hypervisors (like VirtualBox) to practice intrusion testing local servers?',
-              ['TryHackMe', 'Hack The Box', 'VulnHub', 'picoCTF'],
-              2,
-              'VulnHub provides complete standalone offline virtual machine configurations that security analysts can download and test locally without an internet connection.'
-            )
-          ]
+          questions: ctfsRoeQuestions
         }
       },
       {
@@ -2315,22 +1617,7 @@ A key part of establishing credibility and career progression in security operat
         quiz: {
           id: 'q-industry-credentials',
           title: 'Credentials & Timelines Quiz',
-          questions: [
-            createQuestion(
-              'qn-ic-q1',
-              'Which standard junior-to-mid security validation certifies baseline competency across cryptographic structures, network hardening controls, and security operation tasks?',
-              ['CompTIA Security+', 'CCNA Security', 'CISSP audit registration', 'CISM leadership credentials'],
-              0,
-              'CompTIA Security+ is universally recognized as the premier entry-to-mid security certificate verifying basic operational security knowledge.'
-            ),
-            createQuestion(
-              'qn-ic-q2',
-              'Which certification requires candidates to analyze 8 broad architectural domains and undergoes a rigorous credentialing verification of 5 years of verified security experience?',
-              ['CompTIA Security+', 'Cisco CCNA', 'CISSP', 'CEH'],
-              2,
-              'The CISSP is a senior architecture standard requiring candidates to pass an adaptive exam and prove at least 5 years of professional workspace experience.'
-            )
-          ]
+          questions: industryCredentialsQuestions
         }
       }
     ],
@@ -2338,51 +1625,8 @@ A key part of establishing credibility and career progression in security operat
       id: 'ex-group7',
       title: 'Practical Tooling & Industry Credentials Master Exam',
       moduleId: 'mod-group7',
-      timeLimit: 20,
-      questions: [
-        createQuestion(
-          'em7-q1',
-          'A cybersecurity engineer needs to monitor an interface card natively on a server terminal to capture continuous web and system packets. Which console tool is best suited?',
-          ['netstat', 'tcpdump', 'nslookup', 'arp'],
-          1,
-          'tcpdump is a CLI packet processor that intercepts and logs raw Ethernet/IP frames of system interfaces.'
-        ),
-        createQuestion(
-          'em7-q2',
-          'Which document is legally required before starting security assessments, defining authorized scopes, timelines, contact addresses, and target directories?',
-          ['NIST Risk mitigation blueprint', 'The Rules of Engagement (RoE)', 'CompTIA Certification syllabus', 'CIS Critical audit control checklist'],
-          1,
-          'The Rules of Engagement (RoE) is the contract defining authorized boundaries, allowed tools, and rules of engagement.'
-        ),
-        createQuestion(
-          'em7-q3',
-          'A system engineer wants to quickly scan a target network subnet to map open ports and identify running service versions. Which utility is best for this task?',
-          ['arp', 'nmap', 'nslookup', 'route'],
-          1,
-          'Nmap scans addresses to locate active ports, identify operating systems, and enumerate vulnerability indicators.'
-        ),
-        createQuestion(
-          'em7-q4',
-          'A digital forensics analyst discovers a suspect server has been powered down, causing them to lose key indicators of compromise. What volatile storage contains this ephemeral data?',
-          ['Solid State drive partitioning', 'Host Random Access Memory (RAM)', 'Mechanical storage arrays', 'Optical recovery archives'],
-          1,
-          'RAM holds active configuration logs, clear-text encryption keys, and volatile session data that erase completely upon power loss.'
-        ),
-        createQuestion(
-          'em7-q5',
-          'Which open-source platform is designed to act as an intentional vulnerable decoy database to trap attackers and analyze active command patterns?',
-          ['A dynamic Sandbox', 'An enterprise Honeypot', 'A GPO rule', 'A Jump Server gateway'],
-          1,
-          'Honeypots are decoy networks/databases designed to attract attackers so operational teams can observe threat actor methods.'
-        ),
-        createQuestion(
-          'em7-q6',
-          'An IT professional is looking to progress into advanced advisory security positions. Which globally recognized standard calls for at least 5 years of domain experience and tests 8 security domains?',
-          ['CompTIA Security+', 'CEH multiple-choice exam', 'CISSP', 'CCNA routing certification'],
-          2,
-          'The CISSP (Certified Information Systems Security Professional) is widely considered the industry benchmark for senior security design and governance.'
-        )
-      ]
+      timeLimit: 120,
+      questions: group7MasterExamQuestions
     }
   }
 ];

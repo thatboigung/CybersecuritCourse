@@ -97,7 +97,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
   }, [searchQuery]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="flex flex-col gap-6 bg-[#1C1C1E] rounded-2xl">
       {filteredAreas.map((area, index) => {
         const IconComponent = (Icons as any)[area.icon] || Icons.Shield;
         const theme = getColorClasses(area.color);
@@ -112,7 +112,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
             transition={{ delay: index * 0.05, type: 'spring', damping: 20, stiffness: 220 }}
             onClick={() => onSelect(area)}
             className={cn(
-              "group relative overflow-hidden bg-[#1C1C1E] hover:bg-[#2C2C2E]/60 p-6 rounded-2xl text-left flex flex-col h-full transition-all duration-300 hover:scale-[1.01] shadow-md border-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none cursor-pointer",
+              "group relative overflow-hidden  hover:bg-[#2C2C2E]/60 p-6 text-left flex flex-col h-full transition-all duration-300  shadow-md border-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none cursor-pointer",
               theme.glow
             )}
             id={`area-${area.id}`}
@@ -125,7 +125,6 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
                 <IconComponent className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[9px] font-mono tracking-widest uppercase text-slate-500">Subject Area {index + 1} of 7</span>
                 <h3 className="text-base md:text-lg font-bold text-slate-100 group-hover:text-[#0A84FF] transition-colors leading-snug">{area.name}</h3>
               </div>
             </div>
@@ -137,7 +136,6 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
             <div className="mt-auto space-y-3">
               {/* Progress Bar Header */}
               <div className="flex justify-between items-center text-[10px] font-mono">
-                <span className="text-slate-500 uppercase">Syllabus Progress</span>
                 <span className={cn("font-bold", theme.text)}>{stats.pct}%</span>
               </div>
               
@@ -149,13 +147,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
                 />
               </div>
 
-              {/* Lesson completion fraction label */}
-              <div className="flex justify-between items-center text-[9px] font-mono text-slate-400 pt-2">
-                <span>{stats.completedCount} / {stats.lessonsCount} Core Lessons</span>
-                <span className="flex items-center gap-1 text-slate-400 group-hover:text-[#0A84FF] transition-colors font-medium">
-                  Start Course <Icons.ArrowUpRight className="w-3" />
-                </span>
-              </div>
+            
             </div>
           </motion.button>
         );

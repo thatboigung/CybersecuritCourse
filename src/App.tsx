@@ -275,7 +275,6 @@ export default function App() {
                   </div>
                   <div>
                     <h1 className="text-sm font-bold text-white tracking-tight leading-none uppercase">Security Master</h1>
-                    <span className="text-[8px] font-mono text-[#8E8E93] tracking-widest uppercase leading-none mt-1 block">Workstation Decrypted</span>
                   </div>
                 </div>
               </div>
@@ -285,7 +284,6 @@ export default function App() {
                   <span className="text-[10px] font-mono font-bold text-slate-200 uppercase leading-none">
                     {localStorage.getItem('cyber_candidate_name') || 'Sec Cadet'}
                   </span>
-                  <span className="text-[8px] text-slate-500 font-mono uppercase tracking-widest leading-none mt-1 block">Clearance: Lvl 1</span>
                 </div>
                 
                 <button 
@@ -367,7 +365,6 @@ export default function App() {
                     {/* Integrated Analytics Module */}
                     <div className="relative z-10 grid grid-cols-2 gap-4 w-full md:w-auto md:min-w-[320px] bg-transparent p-5 rounded-xl border border-[#2C2C2E] text-left">
                       <div className="space-y-1 text-left">
-                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block">Active Streak</span>
                         <div className="text-2xl md:text-3xl font-black font-mono text-white flex items-center gap-1.5">
                           <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
                           {stats.streak} <span className="text-xs text-slate-400 font-semibold uppercase">Days</span>
@@ -375,7 +372,6 @@ export default function App() {
                       </div>
 
                       <div className="space-y-1 text-left">
-                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block">Quiz Accuracy</span>
                         <div className="text-2xl md:text-3xl font-black font-mono text-white flex items-center gap-1.5">
                           <Target className="w-5 h-5 text-[#0A84FF]" />
                           {stats.avgAccuracy}%
@@ -384,7 +380,6 @@ export default function App() {
 
                       <div className="col-span-2 pt-3 border-t border-[#2C2C2E] space-y-2 text-left">
                         <div className="flex justify-between text-[9px] font-mono uppercase text-slate-500 tracking-wider">
-                          <span>Syllabus Progress</span>
                           <span className="text-slate-350 font-bold">{stats.completedCount} / 30 Completed</span>
                         </div>
                         <div className="w-full bg-[#2C2C2E] h-2 rounded-full overflow-hidden">
@@ -403,7 +398,6 @@ export default function App() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                       <div>
                         <h3 className="text-xl font-bold text-slate-100 tracking-tight leading-none uppercase">Syllabus Areas</h3>
-                        <p className="text-slate-500 font-mono mt-2 uppercase tracking-widest text-[9px]">Choose a security domain to start learning</p>
                       </div>
                       
                       <div className="relative group">
