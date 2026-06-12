@@ -56,7 +56,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   { 
     id: 'all-lessons', 
     title: 'Master of Cyber', 
-    description: 'Complete all lessons across the 7-group development roadmap.', 
+    description: 'Complete all lessons across the 8-group development roadmap.', 
     icon: 'Zap', 
     earned: false, 
     rarity: 'Legendary' 
@@ -117,6 +117,14 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     earned: false, 
     rarity: 'Legendary' 
   },
+  { 
+    id: 'cert-group8', 
+    title: 'Senior Capstone & Research Fellow', 
+    description: 'Earned by passing the Group 8 Capstone Defense Exam. Prepares you for: Final Year Dissertation Defense, Lead Systems Architect positions, and CISO advisory portfolios.', 
+    icon: 'GraduationCap', 
+    earned: false, 
+    rarity: 'Legendary' 
+  },
 ];
 
 export const achievementService = {
@@ -148,6 +156,7 @@ export const achievementService = {
     awardIfPassed('cert-group5', 'ex-group5');
     awardIfPassed('cert-group6', 'ex-group6');
     awardIfPassed('cert-group7', 'ex-group7');
+    awardIfPassed('cert-group8', 'ex-group8');
 
     // Also other achievements
     if (!earnedIds['first-lesson'] && progress.completedLessons.length >= 1) {
@@ -224,6 +233,8 @@ export const achievementService = {
         saveAchievement('cert-group6');
       } else if (latestExamId === 'ex-group7') {
         saveAchievement('cert-group7');
+      } else if (latestExamId === 'ex-group8') {
+        saveAchievement('cert-group8');
       }
     }
 

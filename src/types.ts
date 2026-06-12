@@ -1,6 +1,6 @@
 /**
  * Cybersecurity Master's Learning Web App - Core Types & Schemas
- * Based on a 7-Group Technical Roadmap
+ * Based on a 8-Group Technical Roadmap
  */
 
 export interface RoadmapArea {
