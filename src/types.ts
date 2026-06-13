@@ -1,6 +1,6 @@
 /**
- * Cybersecurity Master's Learning Web App - Core Types & Schemas
- * Based on a 8-Group Technical Roadmap
+ * Sovereign DevSecOps Academy - Core Types & Schemas
+ * Based on a 3-Track Concurrent Curriculum
  */
 
 export interface RoadmapArea {
@@ -9,6 +9,7 @@ export interface RoadmapArea {
   description: string;
   icon: string; // Lucide icon name
   color: string; // Tailwind color name (e.g., "blue", "indigo")
+  courseGroup?: string; // e.g. "cyber_security", "hacking"
 }
 
 export interface QuizQuestion {
@@ -70,6 +71,7 @@ export interface Module {
   lessons: Lesson[];
   exam?: Exam; // Module final exam
   practicalLab?: PracticalLab; // Linked practical lab
+  libraryLinks?: { title: string; url: string }[];
 }
 
 export interface UserProgress {

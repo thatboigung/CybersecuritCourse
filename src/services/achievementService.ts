@@ -125,6 +125,86 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     earned: false, 
     rarity: 'Legendary' 
   },
+  {
+    id: 'badge-hacking-offensive',
+    title: 'Advanced Penetration Tester',
+    description: 'Mastered Cryptography & Systemic Enterprise Attack Paradigms by completing Courses 104 and 105.',
+    icon: 'Key',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-hacking-defensive',
+    title: 'DevSecOps & Defensive Engineer',
+    description: 'Mastered Incident Response & Security Tool Scripting by completing Courses 106 and 107.',
+    icon: 'Terminal',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-hacking-complete',
+    title: 'Sovereign Offensive Hacker',
+    description: 'Unlocked by successfully completing all 36 lessons across the complete Ethical Hacking pathway.',
+    icon: 'Terminal',
+    earned: false,
+    rarity: 'Legendary'
+  },
+  {
+    id: 'badge-fs-frontend',
+    title: 'Sovereign Interface Artisan',
+    description: 'Mastered UI Foundations, Async Logic Loops, and modern React/Tailwind architectures by completing Courses 201, 202, and 203.',
+    icon: 'Cpu',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-fs-backend',
+    title: 'Sovereign Backend Engineer',
+    description: 'Mastered Server-side Engines, databases (PostgreSQL), APIs (REST/JWT), Redis and Cloud DevOps by completing Courses 204, 205, 206, and 207.',
+    icon: 'Activity',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-fs-complete',
+    title: 'Sovereign Full-Stack Engineer',
+    description: 'Unlocked by successfully completing all 11 core classes across the complete Full-Stack Developer pathway.',
+    icon: 'Zap',
+    earned: false,
+    rarity: 'Legendary'
+  },
+  {
+    id: 'badge-math-core',
+    title: 'Computational Logician',
+    description: 'Mastered Discrete Logic, Vector Algebra & Optimization by completing Courses 301, 302, and 303.',
+    icon: 'Cpu',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-math-complete',
+    title: 'Sovereign Mathematical Programmer',
+    description: 'Unlocked by successfully completing all 8 foundational mathematics courses inside the DevSec academy math track.',
+    icon: 'Award',
+    earned: false,
+    rarity: 'Legendary'
+  },
+  {
+    id: 'badge-de-core',
+    title: 'Sovereign Analytics Architect',
+    description: 'Mastered data modeling, advanced SQL processing, big data storage structures, and lakehouse configurations by completing Courses 401, 402, and 403.',
+    icon: 'Database',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-de-complete',
+    title: 'Grandmaster Systems Architect',
+    description: 'Unlocked by successfully completing all 7 progressive modules inside the Data Science & Engineering path.',
+    icon: 'Award',
+    earned: false,
+    rarity: 'Legendary'
+  }
 ];
 
 export const achievementService = {
@@ -181,6 +261,39 @@ export const achievementService = {
         earnedNew = true;
       }
     }
+
+    // Check dynamic Hacking and Full-Stack badges based on lesson completion
+    const checkLessonBadge = (badgeId: string, requiredLessons: string[]) => {
+      if (!earnedIds[badgeId] && requiredLessons.every(id => progress.completedLessons.includes(id))) {
+        earnedIds[badgeId] = new Date().toISOString();
+        earnedNew = true;
+      }
+    };
+
+    const HACKING_104_LESSONS = ['h104-l1', 'h104-l2', 'h104-l3', 'h104-l4', 'h104-l5', 'h104-l6', 'h104-l7', 'h104-l8', 'h104-l9', 'h104-l10'];
+    const HACKING_105_LESSONS = ['h105-l1', 'h105-l2', 'h105-l3', 'h105-l4', 'h105-l5', 'h105-l6', 'h105-l7', 'h105-l8', 'h105-l9'];
+    const HACKING_106_LESSONS = ['h106-l1', 'h106-l2', 'h106-l3', 'h106-l4', 'h106-l5', 'h106-l6', 'h106-l7', 'h106-l8', 'h106-l9', 'h106-l10', 'h106-l11'];
+    const HACKING_107_LESSONS = ['h107-l1', 'h107-l2', 'h107-l3', 'h107-l4', 'h107-l5', 'h107-l6'];
+
+    const OFFENSIVE_HACKING_LESSONS = [...HACKING_104_LESSONS, ...HACKING_105_LESSONS];
+    const DEFENSIVE_HACKING_LESSONS = [...HACKING_106_LESSONS, ...HACKING_107_LESSONS];
+    const COMPLETE_HACKING_LESSONS = [...OFFENSIVE_HACKING_LESSONS, ...DEFENSIVE_HACKING_LESSONS];
+
+    const FS_FRONTEND_LESSONS = ['fs201-l1', 'fs201-l2', 'fs202-l1', 'fs202-l2', 'fs203-l1', 'fs203-l2'];
+    const FS_BACKEND_LESSONS = ['fs204-l1', 'fs204-l2', 'fs205-l1', 'fs206-l1', 'fs207-l1'];
+    const COMPLETE_FS_LESSONS = [...FS_FRONTEND_LESSONS, ...FS_BACKEND_LESSONS];
+
+    const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
+    const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
+
+    checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
+    checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
+    checkLessonBadge('badge-hacking-complete', COMPLETE_HACKING_LESSONS);
+    checkLessonBadge('badge-fs-frontend', FS_FRONTEND_LESSONS);
+    checkLessonBadge('badge-fs-backend', FS_BACKEND_LESSONS);
+    checkLessonBadge('badge-fs-complete', COMPLETE_FS_LESSONS);
+    checkLessonBadge('badge-math-core', MATH_CORE_LESSONS);
+    checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));
@@ -252,6 +365,39 @@ export const achievementService = {
     if (completedLessonsCount === lessonIdsCount && lessonIdsCount > 0) {
       saveAchievement('all-lessons');
     }
+
+    // Check dynamic Hacking and Full-Stack badges on active progress checks
+    const progress = progressService.getProgress();
+    const checkLessonBadge = (badgeId: string, requiredLessons: string[]) => {
+      if (!earnedIds[badgeId] && requiredLessons.every(id => progress.completedLessons.includes(id))) {
+        saveAchievement(badgeId);
+      }
+    };
+
+    const HACKING_104_LESSONS = ['h104-l1', 'h104-l2', 'h104-l3', 'h104-l4', 'h104-l5', 'h104-l6', 'h104-l7', 'h104-l8', 'h104-l9', 'h104-l10'];
+    const HACKING_105_LESSONS = ['h105-l1', 'h105-l2', 'h105-l3', 'h105-l4', 'h105-l5', 'h105-l6', 'h105-l7', 'h105-l8', 'h105-l9'];
+    const HACKING_106_LESSONS = ['h106-l1', 'h106-l2', 'h106-l3', 'h106-l4', 'h106-l5', 'h106-l6', 'h106-l7', 'h106-l8', 'h106-l9', 'h106-l10', 'h106-l11'];
+    const HACKING_107_LESSONS = ['h107-l1', 'h107-l2', 'h107-l3', 'h107-l4', 'h107-l5', 'h107-l6'];
+
+    const OFFENSIVE_HACKING_LESSONS = [...HACKING_104_LESSONS, ...HACKING_105_LESSONS];
+    const DEFENSIVE_HACKING_LESSONS = [...HACKING_106_LESSONS, ...HACKING_107_LESSONS];
+    const COMPLETE_HACKING_LESSONS = [...OFFENSIVE_HACKING_LESSONS, ...DEFENSIVE_HACKING_LESSONS];
+
+    const FS_FRONTEND_LESSONS = ['fs201-l1', 'fs201-l2', 'fs202-l1', 'fs202-l2', 'fs203-l1', 'fs203-l2'];
+    const FS_BACKEND_LESSONS = ['fs204-l1', 'fs204-l2', 'fs205-l1', 'fs206-l1', 'fs207-l1'];
+    const COMPLETE_FS_LESSONS = [...FS_FRONTEND_LESSONS, ...FS_BACKEND_LESSONS];
+
+    const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
+    const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
+
+    checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
+    checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
+    checkLessonBadge('badge-hacking-complete', COMPLETE_HACKING_LESSONS);
+    checkLessonBadge('badge-fs-frontend', FS_FRONTEND_LESSONS);
+    checkLessonBadge('badge-fs-backend', FS_BACKEND_LESSONS);
+    checkLessonBadge('badge-fs-complete', COMPLETE_FS_LESSONS);
+    checkLessonBadge('badge-math-core', MATH_CORE_LESSONS);
+    checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));

@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
 import { 
   Trophy, Target, Flame, Award, Star, Zap, Clock, BookOpen, 
-  CheckCircle2, Lock, Shield, Cpu, Key, Terminal, Activity, ShieldAlert
+  CheckCircle2, Lock, Shield, Cpu, Key, Terminal, Activity, ShieldAlert,
+  Database
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { achievementService } from '../services/achievementService';
@@ -18,6 +19,7 @@ const ICON_MAP: Record<string, any> = {
   Zap,
   Activity,
   Terminal,
+  Database
 };
 
 export default function AchievementsView() {

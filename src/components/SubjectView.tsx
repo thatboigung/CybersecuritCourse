@@ -4,7 +4,7 @@ import { MODULES } from '../data';
 import { 
   ArrowLeft, CheckCircle2, Play, ExternalLink, HelpCircle, FileText, 
   ChevronRight, Award, Lock, BookOpen, AlertTriangle, ShieldCheck, 
-  Wifi, CircleDot, RefreshCw, Terminal
+  Wifi, CircleDot, RefreshCw, Terminal, Library
 } from 'lucide-react';
 import QuizEngine from './QuizEngine';
 import PracticalLabView from './PracticalLabView';
@@ -29,12 +29,39 @@ export default function SubjectView({ area, onBack }: SubjectViewProps) {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
   const [isExamActive, setIsExamActive] = useState(false);
-  const [studyTab, setStudyTab] = useState<'syllabus' | 'lab'>('syllabus');
+  const [studyTab, setStudyTab] = useState<'syllabus' | 'lab' | 'library'>('syllabus');
   
   // Refresh state triggers
   const [sessionNonce, setSessionNonce] = useState(0);
 
   const activeModule = relatedModules[activeModuleIndex] || null;
+
+  // Library links format
+  const libraryLinks = useMemo(() => {
+    const list: { title: string; url: string; source: string }[] = [];
+    
+    // Explicit library links defined on the module
+    if (activeModule?.libraryLinks) {
+      activeModule.libraryLinks.forEach(link => {
+        list.push({ title: link.title, url: link.url, source: 'Core Reference' });
+      });
+    }
+    
+    // Auto-extracted lesson video links for supplementary resource list
+    if (activeModule?.lessons) {
+      activeModule.lessons.forEach((les, idx) => {
+        if (les.youtubeVideoId) {
+          list.push({ 
+            title: `Lecture ${idx + 1} Video: ${les.title}`, 
+            url: `https://www.youtube.com/watch?v=${les.youtubeVideoId}`,
+            source: 'Supplementary Material'
+          });
+        }
+      });
+    }
+    
+    return list;
+  }, [activeModule]);
 
   const currentLab = useMemo(() => {
     if (!activeModule) return null;
@@ -259,16 +286,182 @@ export default function SubjectView({ area, onBack }: SubjectViewProps) {
                   <Terminal className={cn("shrink-0", studyTab === 'lab' ? "w-3.5 h-3.5 text-white" : "w-4 h-4 text-slate-400")} />
                   {studyTab === 'lab' && <span>Hands-on Practical Lab</span>}
                 </button>
+                <button 
+                  onClick={() => setStudyTab('library')}
+                  className={cn(
+                    "py-2 transition-all cursor-pointer font-sans outline-none focus:outline-none focus:ring-0 focus-visible:outline-none flex items-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wider",
+                    studyTab === 'library' 
+                      ? "bg-black text-white px-4 font-black shadow-md border border-[#2C2C2E]/50" 
+                      : "text-[#8E8E93] hover:text-white px-3"
+                  )}
+                  title="Syllabus Library"
+                >
+                  <Library className={cn("shrink-0", studyTab === 'library' ? "w-3.5 h-3.5 text-white" : "w-4 h-4 text-slate-400")} />
+                  {studyTab === 'library' && <span>Syllabus Library</span>}
+                </button>
               </div>
 
               {/* Study Panel switching state renders */}
-              {studyTab === 'lab' && currentLab ? (
-                /* LAB MODE: THE SPECIALIZED PRACTICAL LAB VIEW */
-                <PracticalLabView 
-                  lab={currentLab} 
-                  onClose={() => setStudyTab('syllabus')} 
-                  onCompleteSuccess={() => setSessionNonce(prev => prev + 1)}
-                />
+              {studyTab === 'lab' ? (
+                currentLab ? (
+                  /* LAB MODE: THE SPECIALIZED PRACTICAL LAB VIEW */
+                  <PracticalLabView 
+                    lab={currentLab} 
+                    onClose={() => setStudyTab('syllabus')} 
+                    onCompleteSuccess={() => setSessionNonce(prev => prev + 1)}
+                  />
+                ) : (
+                  /* NO LAB REGISTERED: MAJESTIC PLAYGROUND & TEMPLATE GENERATOR FOR FULL STACK IDEs */
+                  <div className="p-8 rounded-xl bg-[#1C1C1E] border border-[#2C2C2E] text-left animate-in fade-in duration-300 space-y-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                        <Terminal className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-100">Local Development Sandbox & Terminal Workspace</h4>
+                        <p className="text-[10px] font-mono text-slate-500">Manual Host Verification Systems Active</p>
+                      </div>
+                    </div>
+                    
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      For this specific module, execution milestones are designed to run in your local container workspace. Deploy the virtual environment on your computer to compile structural templates and start practicing real full-stack deployments.
+                    </p>
+
+                    <div className="p-5 bg-black rounded-lg border border-[#2C2C2E]/60 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-mono tracking-widest uppercase text-[#0A84FF] font-bold">Recommended Local Setup Commands</span>
+                        <span className="text-[8px] font-mono text-slate-500">Terminal</span>
+                      </div>
+                      <pre className="text-xs font-mono text-indigo-300 leading-relaxed overflow-x-auto p-1 max-w-full">
+{`# Create a clean project workspace directory
+mkdir -p devsecops-workspace && cd devsecops-workspace
+
+# Spin up a ready-to-test safe Node container environments
+docker run -it --name system-developer-sandbox \\
+  -p 3000:3000 \\
+  -v "$(pwd)":/workspace \\
+  node:20-alpine sh`}
+                      </pre>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-xs text-slate-400">
+                      <CircleDot className="w-4 h-4 text-[#0A84FF] shrink-0" />
+                      <span>Use this standalone testing environment to complete the supplementary course milestones and practice writing secure code.</span>
+                    </div>
+                  </div>
+                )
+              ) : studyTab === 'library' ? (
+                /* LIBRARY MODE: CORE REFERENCE LINKS & SUPPLEMENTARY TALKS */
+                <div className="space-y-6 animate-in fade-in duration-300 text-left">
+                  <div className="flex items-center justify-between border-0">
+                    <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#94a3b8] text-slate-500 px-1">Syllabus Reference Library</h4>
+                    <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-md border border-indigo-500/20 font-bold">{libraryLinks.length} Resources</span>
+                  </div>
+
+                  {libraryLinks.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {libraryLinks.map((link, idx) => {
+                        const isPrimary = idx < (activeModule?.libraryLinks?.length || 0);
+                        return (
+                          <a 
+                            key={`${link.url}-${idx}`}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              "relative p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between group shadow-lg min-w-0 overflow-hidden cursor-pointer",
+                              isPrimary 
+                                ? "bg-indigo-950/25 border-indigo-500/20 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.1)]" 
+                                : "bg-[#1C1C1E] border-[#2C2C2E]/65 hover:border-[#0A84FF]/40 hover:shadow-[0_0_20px_rgba(10,132,255,0.05)]"
+                            )}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="space-y-1 min-w-0">
+                                <span className={cn(
+                                  "text-[8px] font-mono uppercase tracking-widest font-black",
+                                  isPrimary ? "text-indigo-400" : "text-slate-500"
+                                )}>
+                                  {link.source}
+                                </span>
+                                <h5 className={cn(
+                                  "font-bold text-sm leading-snug group-hover:text-indigo-400 transition-colors break-words whitespace-normal mt-1",
+                                  isPrimary ? "text-slate-100" : "text-slate-200"
+                                )}>
+                                  {link.title}
+                                </h5>
+                              </div>
+                              
+                              <div className={cn(
+                                "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors bg-black border border-[#2C2C2E] text-slate-400",
+                                isPrimary ? "group-hover:text-indigo-400" : "group-hover:text-[#0A84FF]"
+                              )}>
+                                <ExternalLink className="w-4 h-4 text-slate-400" />
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-1.5 mt-4 text-[10px] font-mono text-slate-500">
+                              <span className="truncate max-w-full">{link.url}</span>
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="p-12 text-center bg-[#1C1C1E]/50 border border-[#2C2C2E]/50 rounded-2xl">
+                      <BookOpen className="w-8 h-8 text-slate-500 mx-auto mb-2 opacity-30" />
+                      <p className="text-xs text-slate-400 font-mono">No supplementary library links registered for this module.</p>
+                    </div>
+                  )}
+
+                  {area.courseGroup === 'full_stack' && (
+                    <div className="mt-8 pt-8 border-t border-[#2C2C2E]/50 space-y-4">
+                      <div className="flex items-center justify-between border-0">
+                        <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#94a3b8] text-slate-500 px-1">Best Complete Career Channels</h4>
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-bold">Recommended</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {[
+                          { name: "FreeCodeCamp", url: "https://www.youtube.com/@freecodecamp", desc: "Interactive programming tutorials, certifications, and complete full-stack video guides." },
+                          { name: "Traversy Media", url: "https://www.youtube.com/@TraversyMedia", desc: "In-depth crash courses, web APIs, and direct stack deployment step-by-steps." },
+                          { name: "Net Ninja", url: "https://www.youtube.com/@NetNinja", desc: "Structured, beginner-friendly frontend & backend playlists and package walkthroughs." },
+                          { name: "Programming with Mosh", url: "https://www.youtube.com/@ProgrammingwithMosh", desc: "Clear, conceptually detailed course breakdowns for professional developers." },
+                          { name: "Dave Gray Teaches Code", url: "https://www.youtube.com/@DaveGrayTeachesCode", desc: "Impeccable technical tutorials on React, Node.js, and web standards." }
+                        ].map((channel, idx) => (
+                          <a 
+                            key={channel.url}
+                            href={channel.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative p-5 rounded-2xl border bg-emerald-950/5 border-emerald-500/10 hover:border-emerald-500/35 hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] transition-all duration-300 flex flex-col justify-between group shadow-lg min-w-0 pointer-events-auto cursor-pointer"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="space-y-1 min-w-0">
+                                <span className="text-[8px] font-mono uppercase tracking-widest font-black text-emerald-400">
+                                  Top channel
+                                </span>
+                                <h5 className="font-bold text-sm leading-snug group-hover:text-emerald-400 transition-colors break-words whitespace-normal mt-1 text-slate-100">
+                                  {channel.name}
+                                </h5>
+                                <p className="text-xs text-slate-400 mt-1 line-clamp-3 leading-normal">
+                                  {channel.desc}
+                                </p>
+                              </div>
+                              
+                              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors bg-black border border-[#2C2C2E] text-slate-400 group-hover:text-emerald-400">
+                                <ExternalLink className="w-4 h-4 text-slate-400" />
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-1.5 mt-4 text-[10px] font-mono text-slate-550 text-slate-500">
+                              <span className="truncate max-w-full">{channel.url}</span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               ) : (
                 /* INDEX: DIRECTORY OF MODULE LESSONS & EXAMS (Completely Borderless) */
                 <div className="space-y-6 animate-in fade-in duration-300 text-left">

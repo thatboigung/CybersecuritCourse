@@ -1,3 +1,7 @@
+import { MATH_ROADMAP_AREAS, MATH_MODULES } from './data/mathData';
+import { HACKING_ROADMAP_AREAS, HACKING_MODULES } from './data/hackingData';
+import { FULL_STACK_ROADMAP_AREAS, FULL_STACK_MODULES } from './data/fullStackData';
+import { DATA_ENGINEERING_ROADMAP_AREAS, DATA_ENGINEERING_MODULES } from './data/dataEngineeringData';
 import { RoadmapArea, Module, Lesson, Quiz, Exam, QuizQuestion } from './types';
 import {
   hardwareQuestions,
@@ -62,63 +66,79 @@ import {
 } from './data/group8Questions';
 
 // Define our 7 Group-based Roadmap Areas
-export const ROADMAP_AREAS: RoadmapArea[] = [
+const BASE_ROADMAP_AREAS: RoadmapArea[] = [
   {
     id: 'group-1',
     name: 'Fundamental IT & OS',
     description: 'Master computer hardware components, connectivity interfaces, Windows & Linux setups, absolute/relative permissions, and host hypervisors.',
     icon: 'Monitor',
-    color: 'blue'
+    color: 'blue',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-2',
     name: 'Networking & Infrastructure',
     description: 'Understand the standard 7-layer OSI model, IP CIDR subnetting schemes, client DHCP/DNS, routers/switches, and secure encrypted communications.',
     icon: 'Network',
-    color: 'indigo'
+    color: 'indigo',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-3',
     name: 'Security & Hacking Concepts',
     description: 'Explore the CIA Triad confidentiality, single sign-on authentication, team paradigms, and analytical threat-tracking frameworks.',
     icon: 'ShieldCheck',
-    color: 'amber'
+    color: 'amber',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-4',
     name: 'Cryptography & Attack Matrix',
     description: 'Deep dive into hashing salts, symmetric block ciphers, OWASP vulnerabilities, privilege escalation, social engineering, and network-based exploits.',
     icon: 'Key',
-    color: 'rose'
+    color: 'rose',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-5',
     name: 'Programming & Cloud Sys',
     description: 'Learn system-admin scripting languages, shared cloud responsibility matrices, capital/operational expenditure shifts, and container deployment flows.',
     icon: 'Cpu',
-    color: 'violet'
+    color: 'violet',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-6',
     name: 'Defensive Engineering & IR',
     description: 'Enforce tactical endpoint hardening, SIEM log normalization engines, the standard 6-step incident response, and ISO/NIST certification frameworks.',
     icon: 'Activity',
-    color: 'emerald'
+    color: 'emerald',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-7',
     name: 'Practical Tooling & Certs',
     description: 'Operate active command-line network diagnostics, forensics PCAP parsers, OSINT intelligence, and map your industry certification career roadmap.',
     icon: 'Terminal',
-    color: 'cyan'
+    color: 'cyan',
+    courseGroup: 'cyber_security'
   },
   {
     id: 'group-8',
     name: 'Dissertations & Capstone Projects',
     description: 'Acquire practical security skills with 10 real-world final year style Capstone Projects covering network topology, forensics, defense systems, and vulnerability scans.',
     icon: 'GraduationCap',
-    color: 'fuchsia'
+    color: 'fuchsia',
+    courseGroup: 'cyber_security'
   }
+];
+
+export const ROADMAP_AREAS: RoadmapArea[] = [
+  ...MATH_ROADMAP_AREAS,
+  ...BASE_ROADMAP_AREAS,
+  ...HACKING_ROADMAP_AREAS,
+  ...FULL_STACK_ROADMAP_AREAS,
+  ...DATA_ENGINEERING_ROADMAP_AREAS
 ];
 
 // Helper to make quiz questions
@@ -126,7 +146,7 @@ const createQuestion = (id: string, text: string, options: string[], correctAnsw
   id, text, options, correctAnswerIndex, explanation
 });
 
-export const MODULES: Module[] = [
+const BASE_MODULES: Module[] = [
   // GROUP 1: Fundamental IT Skills & Operating Systems
   {
     id: 'mod-group1',
@@ -2240,13 +2260,11 @@ To recognize your dedication to mapping your professional pathways and pursuing 
         title: 'Capstone 1: Enterprise Router-on-a-Stick Secure VLAN Schema',
         duration: 45,
         youtubeVideoId: 'ZtqBQ68cfJc',
-        content: `### 🛠️ Capstone Project 1: Secure Enterprise Multi-VLAN Router-on-a-Stick Topology
+        content: `### Lecture Notes: Capstone 1: Secure Enterprise Multi-VLAN Router-on-a-Stick Topology
 
-### 🎥 Enterprise VLANS & Router-on-a-Stick Reference
-* **[Designing Secure Multi-VLAN Cisco Networks] (https://www.youtube.com/watch?v=ZtqBQ68cfJc)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 In an enterprise environment, flat network designs pose catastrophic security issues. A compromised client terminal inside a guest WiFi segment can easily peer-discover secure internal treasury databases. This senior project requires designing, allocating, and defending a segmented multi-VLAN enterprise architecture using a single physical router link connected to a Layer 2 switch using subinterfaces—commonly called **Router-on-a-Stick inter-VLAN routing**.
 
@@ -2346,6 +2364,17 @@ Router(config-subif)# exit
 1. Ping from VLAN 20 (\`10.10.20.5\`) to Gateway (\`10.10.20.1\`) must succeed.
 2. Ping from VLAN 30 (\`10.10.30.5\`) to management server (\`10.10.10.15\`) must be actively **BLOCKED/DROPPED** by ACL.
 3. Validate Native VLAN state matches: \`show interfaces trunk\` on Cisco IOS must output Native VLAN as **99**, not **1**.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 1: Secure Enterprise Multi-VLAN Router-on-a-Stick Topology Video Tutorial Walkthrough](https://www.youtube.com/watch?v=ZtqBQ68cfJc)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Network Architect Milestone - Master of the Secure Trunk Gateway**. Carry your architectural discipline with pride; never let flat architectures corrupt your corporate perimeter.
 `,
         quiz: {
           id: 'q-capstone-p1',
@@ -2359,13 +2388,11 @@ Router(config-subif)# exit
         title: 'Capstone 2: Wazuh & ELK Stack SIEM Deployment Forge',
         duration: 50,
         youtubeVideoId: '8f8U8E_pD0g',
-        content: `### 🛠️ Capstone Project 2: Wazuh & ELK Stack SIEM Deployment
+        content: `### Lecture Notes: Capstone 2: Wazuh & ELK Stack SIEM Deployment
 
-### 🎥 Wazuh SIEM Deployment Reference
-* **[Deploying Wazuh Open Source SIEM Platform] (https://www.youtube.com/watch?v=8f8U8E_pD0g)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Security Operations Centers (SOCs) require central correlation interfaces to monitor distributed endpoints. Manual inspection of local system journals is impossible to scale. This capstone guides the architectural implementation of a full central **Security Information & Event Management (SIEM)** server deploying the **Wazuh Manager** integrated with an **Elasticsearch/OpenSearch** logging index.
 
@@ -2435,6 +2462,17 @@ ssh invalid_candidate@192.168.100.22 -p 22
 2. Verify that Rule ID **100015** is triggered on the dashboard with a high severity level (Level 12).
 3. System check of Wazuh agent connectivity status check:
    \`/var/ossec/bin/agent_control -l\` on the manager must show agent \`192.168.100.22\` status as **Active**.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 2: Wazuh & ELK Stack SIEM Deployment Video Tutorial Walkthrough](https://www.youtube.com/watch?v=8f8U8E_pD0g)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Security Operations Sentinel - Guardian of the Ingestion Feeds**. May your alerts remain low, your index mappings complete, and your logs clear. Safeguard your pipelines from malicious intrusion.
 `,
         quiz: {
           id: 'q-capstone-p2',
@@ -2448,13 +2486,11 @@ ssh invalid_candidate@192.168.100.22 -p 22
         title: 'Capstone 3: SAML & OpenID Connect Enterprise Auth Gateway',
         duration: 45,
         youtubeVideoId: 'S-uGe99pT8Q',
-        content: `### 🛠️ Capstone Project 3: SAML, OAuth2, & OpenID Connect (OIDC) Secure Gateway
+        content: `### Lecture Notes: Capstone 3: SAML, OAuth2, & OpenID Connect (OIDC) Secure Gateway
 
-### 🎥 OAuth 2.0 & OpenID Connect Explained
-* **[OAuth 2.0 and OIDC Security Deep Dive] (https://www.youtube.com/watch?v=S-uGe99pT8Q)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Decentralized credentials lead to weak password policies and high compromise rates. Modern enterprise infrastructure demands a centralized Identity Provider (IdP) leveraging OAuth2, OIDC, and SAML to authenticate multi-tier corporate apps. In this project, students implement and secure a central **identity portal (Keycloak)** acting as OAuth2/OIDC Trust Authority to authorize third-party SPAs.
 
@@ -2526,6 +2562,17 @@ To defend the SSO configuration, protect authorization codes from interception b
    \`http://10.50.0.10:8080/realms/enterprise-corp/protocol/openid-connect/auth...\`
 2. Test an authentication flow using POSTMAN. Submit the authorization code back to Keycloak\'s token endpoint and confirm receipt of a valid, formatted OIDC token set.
 3. Attempt to query target API resource with a tampered JWT payload; confirm the gateway throws an immediate **HTTP 401 Unauthorized** error.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 3: SAML, OAuth2, & OpenID Connect (OIDC) Secure Gateway Video Tutorial Walkthrough](https://www.youtube.com/watch?v=S-uGe99pT8Q)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Authenticator of Identity - Keeper of the Gateway Trust**. Secure the portals of access; let no unauthorized cipher pass. Trust is hard-won, but easily broken without central authentication.
 `,
         quiz: {
           id: 'q-capstone-p3',
@@ -2539,13 +2586,11 @@ To defend the SSO configuration, protect authorization codes from interception b
         title: 'Capstone 4: Two-Tier HSM-Backed PKI & ACME Auto SSL Rotation',
         duration: 45,
         youtubeVideoId: 'U_Y3F8xQdOk',
-        content: `### 🛠️ Capstone Project 4: Two-Tier Private PKI CA & ACME Automated SSL Rotation
+        content: `### Lecture Notes: Capstone 4: Two-Tier Private PKI CA & ACME Automated SSL Rotation
 
-### 🎥 PKI Certificate Infrastructure Reference
-* **[Designing Secure Private PKI Authorities] (https://www.youtube.com/watch?v=U_Y3F8xQdOk)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Exposing self-signed certificates or running active systems with long-lived (multi-year) static cryptographic keys leaves infrastructures highly vulnerable to man-in-the-middle exploits and key breaches. This senior project requires designing and deploying a secure, resilient, enterprise-grade **two-tier Public Key Infrastructure (PKI)**. The student must configure an **Offline Root CA** to act as trust anchor, an online **Intermediate CA** to sign server requests, and an automated challenge workflow using the **ACME protocol** to rotate leaf certificates in short 90-day intervals.
 
@@ -2628,6 +2673,17 @@ server {
    \`openssl s_client -connect app.enterprise.local:443 -showcerts\`
    (Verify chain outputs: Depth 0 = Leaf, Depth 1 = Subordinate CA, Depth 2 = Root CA)
 2. Run mock rotation test: \`sudo certbot renew --dry-run\`. Must return **Success**.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 4: Two-Tier Private PKI CA & ACME Automated SSL Rotation Video Tutorial Walkthrough](https://www.youtube.com/watch?v=U_Y3F8xQdOk)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Cryptographic Trustee - Master of the Root CA**. Safeguard the keys of trust. Let no self-signed certificate linger, and let the rotating ACME challenge preserve absolute secrecy across all secure domains.
 `,
         quiz: {
           id: 'q-capstone-p4',
@@ -2641,13 +2697,11 @@ server {
         title: 'Capstone 5: Vuln-Aggregation Parser & Exploit Threat Intelligence',
         duration: 45,
         youtubeVideoId: '10gP84jZsz4',
-        content: `### 🛠️ Capstone Project 5: Automated Scanner Parser & Exploit Intelligence Dashboard
+        content: `### Lecture Notes: Capstone 5: Automated Scanner Parser & Exploit Intelligence Dashboard
 
-### 🎥 Vulnerability & Metasploit Orchestrator Reference
-* **[Building Automated Vulnerability Scanners & Exploit Mappers] (https://www.youtube.com/watch?v=10gP84jZsz4)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Network vulnerability scanners produce massive, unstructured XML or JSON reporting files that overflow security operations logs. Without clear correlation, critical vulnerabilities are easily lost. This capstone guides the creation of an automated vulnerability intelligence program designed to parse raw scan outputs (like Nmap Vulners XML or OpenVAS indices), cross-reference CVEs with active exploits in **Exploit-DB** or **Metasploit**, and present remediation priorities based on real exploitation risk.
 
@@ -2723,6 +2777,17 @@ nmap -sV --script=vulners -oX nmap_scan_report.xml 192.168.100.22 --top-ports 10
 1. Confirm generation of the parsed XML report inside your Python pipeline root namespace.
 2. Verify XML elements contain valid child attributes: \`element.find('address')\` must resolve a valid IP address value.
 3. Test that vulnerabilities with a **CVSS >= 9.0** AND an **exploit_ready: True** flag trigger immediate priority alerts.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 5: Automated Scanner Parser & Exploit Intelligence Dashboard Video Tutorial Walkthrough](https://www.youtube.com/watch?v=10gP84jZsz4)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Vulnerability Cartographer - Master of Threat Context**. Keep mapping the cracks. Translate raw alerts into actionable intelligence, and prioritize with extreme clarity.
 `,
         quiz: {
           id: 'q-capstone-p5',
@@ -2736,13 +2801,11 @@ nmap -sV --script=vulners -oX nmap_scan_report.xml 192.168.100.22 --top-ports 10
         title: 'Capstone 6: DevSecOps GitOps Automated CI/CD Security Pipeline',
         duration: 50,
         youtubeVideoId: 'bLhG7wWq0Rk',
-        content: `### 🛠️ Capstone Project 6: DevSecOps CI/CD Security Pipeline with Quality Gates
+        content: `### Lecture Notes: Capstone 6: DevSecOps CI/CD Security Pipeline with Quality Gates
 
-### 🎥 DevSecOps CI/CD Pipeline Reference
-* **[Building Secure DevSecOps GitOps Build Pipelines] (https://www.youtube.com/watch?v=bLhG7wWq0Rk)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 In agile web development, manually reviewing every code commit for vulnerabilities before deployment is too slow. Integrating security testing directly into continuous integration/continuous deployment (CI/CD) pipelines automates code defense. Students will configure a GitOps pipeline that scans source code (SAST), checks third-party dependencies (SCA), audits container images, and breaks builds that fail core security quality gates.
 
@@ -2823,6 +2886,17 @@ git push origin main
 1. Verify that committing the vulnerable package triggers the pipeline runner.
 2. Confirm the pipeline fails at **Step 2 (Trivy Dependency Audit)**, blocking deployment.
 3. Check scanner logs to verify that vulnerabilities are reported with accurate CVE IDs and CVSS ratings.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 6: DevSecOps CI/CD Security Pipeline with Quality Gates Video Tutorial Walkthrough](https://www.youtube.com/watch?v=bLhG7wWq0Rk)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign DevSecOps Integrator - Sentinel of the Source Control Pipeline**. Break the build to save the product. Weave security at every step and enforce code defense as a basic operational discipline.
 `,
         quiz: {
           id: 'q-capstone-p6',
@@ -2836,13 +2910,11 @@ git push origin main
         title: 'Capstone 7: Forensic Sandbox Malware Detonation & Volatility Engine',
         duration: 45,
         youtubeVideoId: 'N9N4fS4Vjzo',
-        content: `### 🛠️ Capstone Project 7: Sandbox Malware Detonation & Volatility Memory Forensics
+        content: `### Lecture Notes: Capstone 7: Sandbox Malware Detonation & Volatility Memory Forensics
 
-### 🎥 Volgatility Memory Analysis Reference
-* **[Operating Sandbox Malware Detonation & Advanced Volatility Forensics] (https://www.youtube.com/watch?v=N9N4fS4Vjzo)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Advanced Persistent Threats (APTs) often execute payloads directly in RAM (fileless malware), leaving zero files on storage disk partitions. In this capstone, students design a secure, isolated malware detonation environment, retrieve a raw memory dump, and analyze it using the **Volatility Forensics Framework** to isolate registry anomalies, running processes, and trace active sockets.
 
@@ -2896,6 +2968,17 @@ sha256sum /tmp/malware_extracts/executable.4012.exe
 1. Identify the parent PID of malicious process \`4012\` (Must match shell/launcher process like \`cmd.exe\` or \`powershell.exe\`).
 2. Verify socket states via \`netscan\`. Confirm IP address connections to external ports like \`4444\` or \`8080\`.
 3. Locate the registry persistence key using \`printkey\` plugin to prove persistence installation.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 7: Sandbox Malware Detonation & Volatility Memory Forensics Video Tutorial Walkthrough](https://www.youtube.com/watch?v=N9N4fS4Vjzo)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Digital Forensics Investigator - Master of Memory Volatility**. Analyze without fear. Detonate in safety, trace the ciphers in RAM, and piece together the digital evidence.
 `,
         quiz: {
           id: 'q-capstone-p7',
@@ -2909,13 +2992,11 @@ sha256sum /tmp/malware_extracts/executable.4012.exe
         title: 'Capstone 8: Secure API Gateway, WAF & OWASP Defense Shields',
         duration: 45,
         youtubeVideoId: 'SykP3U2Q8eA',
-        content: `### 🛠️ Capstone Project 8: Secure API Gateway with OWASP Defenses
+        content: `### Lecture Notes: Capstone 8: Secure API Gateway with OWASP Defenses
 
-### 🎥 OWASP Web Application Defensive Coding Reference
-* **[OWASP API Vulnerability Defense Design] (https://www.youtube.com/watch?v=SykP3U2Q8eA)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Web APIs are prime targets for automated exploit bots, SQL injections, and brute-force starvation attacks. Flat API microservices without an intermediary security layer are highly vulnerable. This senior project requires designing, coding, and defending a **Secure API Gateway** implementing strict OWASP mitigation rules: parameterized inputs, robust Cross-Origin Resource Sharing (CORS) headers, and token-bucket sliding rate limiters to defend resources.
 
@@ -3001,6 +3082,17 @@ curl -X POST -H "Content-Type: application/json" \
 1. Check response headers. Verify that **X-Frame-Options** is set to \`SAMEORIGIN\` and **X-Content-Type-Options** is configured as \`nosniff\`.
 2. Send more than 100 requests in a tight loop to verify rate-limiting triggers an **HTTP 429 Too Many Requests** error.
 3. Validate CORS origin constraints. Attempting a request with an invalid origin header must throw a standard preflight failure.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 8: Secure API Gateway with OWASP Defenses Video Tutorial Walkthrough](https://www.youtube.com/watch?v=SykP3U2Q8eA)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign API Defender - Sentinel of the Gateway Shields**. Block the bots and validate the inputs. No malformed request or SQL injection must penetrate your microserver architecture.
 `,
         quiz: {
           id: 'q-capstone-p8',
@@ -3014,13 +3106,11 @@ curl -X POST -H "Content-Type: application/json" \
         title: 'Capstone 9: Site-to-Site WireGuard/IPsec VPN Gateway with PFS',
         duration: 45,
         youtubeVideoId: 'S_iS91U638K',
-        content: `### 🛠️ Capstone Project 9: Site-to-Site VPN Gateway Tunneling
+        content: `### Lecture Notes: Capstone 9: Site-to-Site VPN Gateway Tunneling
 
-### 🎥 Enterprise VPN Site-to-Site Systems Reference
-* **[Designing Secure Site-to-Site WireGuard/IPsec Gateways] (https://www.youtube.com/watch?v=S_iS91U638K)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Connecting distributed enterprise branch networks over the public internet exposes traffic to interception. Standard unencrypted tunnels are vulnerable to rogue inspection. Students will design and deploy a secure, low-latency **Site-to-Site VPN Tunnel** connecting two corporate offices using **WireGuard**. The tunnel must enforce shared authentication, mutual key pairs, and Perfect Forward Secrecy (PFS).
 
@@ -3091,6 +3181,17 @@ sudo wg show wg0
 1. Run \`wg show\` on Gateway Alpha, verify peer connection shows active **handshake** received within last 60 seconds.
 2. Run \`traceroute 10.20.0.15\` from an local Alpha workspace node. Verify packet routes path through gateway address \`10.99.0.2\` without traversing public intermediate nodes in clear text.
 3. Check status of kernel forwarding: \`sysctl net.ipv4.ip_forward\`. Must output value \`1\` to allow routing.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 9: Site-to-Site VPN Gateway Tunneling Video Tutorial Walkthrough](https://www.youtube.com/watch?v=S_iS91U638K)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Tunneling Craftsman - Guardian of the Encrypted Transit**. Construct your tunnels with perfect forward secrecy. Keep branch networks united and communications strictly confidential across public lanes.
 `,
         quiz: {
           id: 'q-capstone-p9',
@@ -3104,13 +3205,11 @@ sudo wg show wg0
         title: 'Capstone 10: Cowrie/Dionaea Distributed Active Honeynet System',
         duration: 45,
         youtubeVideoId: 'S0j9S1F2D8s',
-        content: `### 🛠️ Capstone Project 10: Multi-node Defensive Honeynet & STIX Feed Generator
+        content: `### Lecture Notes: Capstone 10: Multi-node Defensive Honeynet & STIX Feed Generator
 
-### 🎥 Honeywalls & Cyber Threat Intelligence Reference
-* **[Deploying Honeywalls & Structuring STIX Threat Feeds] (https://www.youtube.com/watch?v=S0j9S1F2D8s)**
+Welcome back to the final capstone laboratory, class. As your professor, I will guide you through this final milestone project. This capstone serves as the ultimate technical integration, requiring you to combine security concepts, networking, implementation ciphers, and validation rules to defend a modern enterprise infrastructure. Let us approach this challenge with academic precision and a continuous drive to learn.
 
 ---
-
 #### 🎓 Project Hypothesis & Design Scenario
 Defenders must capture details on live internet attacks to proactively block malicious IPs. Deploying decoy nodes (**honeypots**) allows you to map attacker IP addresses, passwords, and shell scripts. This capstone requires implementing an active multi-node **Honeynet** (using **Cowrie** for SSH/Telnet and **Dionaea** for network exploits) and converting captured events into standardized threat feeds (**STIX/TAXII** format) to dynamically update active edge firewalls.
 
@@ -3177,6 +3276,17 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 2222
 1. Connect to port 22 from an external IP: \`ssh root@192.168.10.90\`. Enter dummy credentials.
 2. Inspect Cowrie output: \`tail -f /opt/cowrie/var/log/cowrie/cowrie.json\`. Ensure the login attempt is logged.
 3. Verify the generated STIX payload contains correct JSON properties, including \`type: "indicator"\`.
+
+---
+
+#### 5. Recommended Video Lectures
+* [Capstone 10: Multi-node Defensive Honeynet & STIX Feed Generator Video Tutorial Walkthrough](https://www.youtube.com/watch?v=S0j9S1F2D8s)
+
+---
+
+#### 6. Academic Milestones and Scholar Award
+
+To recognize your dedication to complex security integration and practical defense, I officially award you the **Sovereign Threat Intelligence Strategist - Architect of Active Decoy Walls**. Observe to learn, decoy to defend. Let attacker errors update your edge shields automatically, making your defenses dynamic and self-healing.
 `,
         quiz: {
           id: 'q-capstone-p10',
@@ -3193,4 +3303,13 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 2222
       questions: group8MasterExamQuestions
     }
   }
+];
+
+
+export const MODULES: Module[] = [
+  ...MATH_MODULES,
+  ...BASE_MODULES,
+  ...HACKING_MODULES,
+  ...FULL_STACK_MODULES,
+  ...DATA_ENGINEERING_MODULES
 ];

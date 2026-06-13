@@ -9,12 +9,13 @@ const SubjectView = lazy(() => import('./components/SubjectView'));
 const Sidebar = lazy(() => import('./components/Sidebar'));
 const SettingsView = lazy(() => import('./components/SettingsView'));
 const AchievementsView = lazy(() => import('./components/AchievementsView'));
+const CalendarView = lazy(() => import('./components/CalendarView'));
 const Onboarding = lazy(() => import('./components/Onboarding'));
 
 import PricingModal from './components/PricingModal';
 import { 
   ShieldCheck, Search, Bell, User, Sparkles, Menu, X, Zap, Target, 
-  BookOpen, Loader2, Home, Award, Settings, WifiOff, CloudDownload, Terminal, Cpu, Info
+  BookOpen, Loader2, Home, Award, Settings, WifiOff, CloudDownload, Terminal, Cpu, Info, Calendar
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './lib/utils';
@@ -58,7 +59,7 @@ export default function App() {
     return localStorage.getItem('cyber_tpin') !== null && localStorage.getItem('cyber_candidate_name') !== null;
   });
   const [selectedArea, setSelectedArea] = useState<RoadmapArea | null>(null);
-  const [view, setView] = useState<'home' | 'settings' | 'achievements'>('home');
+  const [view, setView] = useState<'home' | 'settings' | 'achievements' | 'calendar'>('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -101,7 +102,7 @@ export default function App() {
   }, []);
 
   // Navigate utility
-  const navigateInternal = useCallback((newView: 'home' | 'settings' | 'achievements', newArea: RoadmapArea | null = null) => {
+  const navigateInternal = useCallback((newView: 'home' | 'settings' | 'achievements' | 'calendar', newArea: RoadmapArea | null = null) => {
     setView(newView);
     setSelectedArea(newArea);
     window.history.pushState({ view: newView, area: newArea }, '');
@@ -121,6 +122,7 @@ export default function App() {
     const achievementsCount = achievementService.getAchievements().filter(a => a.earned).length;
     const allExams = MODULES.filter(m => m.exam).map(m => m.exam!);
     const examAttemptsCount = Object.values(progress.examAttempts).filter(e => e.passed).length;
+    const totalLessons = MODULES.flatMap(m => m.lessons).length;
     
     // Streak days estimate
     const streak = completedCount > 0 ? Math.min(14, completedCount + 2) : 0;
@@ -132,7 +134,7 @@ export default function App() {
       ? Math.round(allScoresCombined.reduce((acc, s) => acc + s, 0) / allScoresCombined.length)
       : 0;
 
-    return { completedCount, achievementsCount, avgAccuracy, streak, examAttemptsCount, totalExamsCount: allExams.length };
+    return { completedCount, achievementsCount, avgAccuracy, streak, examAttemptsCount, totalExamsCount: allExams.length, totalLessons };
   }, [sessionNonce, view, selectedArea]);
 
   const handleOnboardingComplete = useCallback(() => {
@@ -151,6 +153,10 @@ export default function App() {
 
   const handleAchievementsClick = useCallback(() => {
     navigateInternal('achievements', null);
+  }, [navigateInternal]);
+
+  const handleCalendarClick = useCallback(() => {
+    navigateInternal('calendar', null);
   }, [navigateInternal]);
 
   const handleAreaSelect = useCallback((area: RoadmapArea) => {
@@ -219,6 +225,7 @@ export default function App() {
           onHomeClick={handleHomeClick}
           onSettingsClick={handleSettingsClick}
           onAchievementsClick={handleAchievementsClick}
+          onCalendarClick={handleCalendarClick}
           activeView={view}
           className="hidden md:flex"
         />
@@ -236,6 +243,17 @@ export default function App() {
           >
             <Cpu className="w-4.5 h-4.5" />
             <span className="text-[9px] font-bold uppercase tracking-wider">Workspace</span>
+          </button>
+
+          <button 
+            onClick={handleCalendarClick}
+            className={cn(
+              "flex flex-col items-center justify-center gap-1 cursor-pointer select-none outline-none flex-1 py-1 text-center transition-all",
+              view === 'calendar' ? "text-[#0A84FF]" : "text-[#8E8E93]"
+            )}
+          >
+            <Calendar className="w-4.5 h-4.5" />
+            <span className="text-[9px] font-bold uppercase tracking-wider">Timetable</span>
           </button>
           
           <button 
@@ -274,7 +292,7 @@ export default function App() {
                     <Cpu className="w-4 h-4 text-[#0A84FF]" />
                   </div>
                   <div>
-                    <h1 className="text-sm font-bold text-white tracking-tight leading-none uppercase">Security Master</h1>
+                    <h1 className="text-sm font-bold text-white tracking-tight leading-none uppercase">DevSec Academy</h1>
                   </div>
                 </div>
               </div>
@@ -329,6 +347,16 @@ export default function App() {
                 >
                   <AchievementsView />
                 </motion.div>
+              ) : view === 'calendar' ? (
+                <motion.div
+                  key="calendar"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <CalendarView />
+                </motion.div>
               ) : !selectedArea ? (
                 <motion.div
                   key="dashboard"
@@ -380,12 +408,12 @@ export default function App() {
 
                       <div className="col-span-2 pt-3 border-t border-[#2C2C2E] space-y-2 text-left">
                         <div className="flex justify-between text-[9px] font-mono uppercase text-slate-500 tracking-wider">
-                          <span className="text-slate-350 font-bold">{stats.completedCount} / 30 Completed</span>
+                          <span className="text-slate-350 font-bold">{stats.completedCount} / {stats.totalLessons} Completed</span>
                         </div>
                         <div className="w-full bg-[#2C2C2E] h-2 rounded-full overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(100, (stats.completedCount / 30) * 100)}%` }}
+                            animate={{ width: `${Math.min(100, (stats.completedCount / (stats.totalLessons || 1)) * 100)}%` }}
                             className="bg-[#0A84FF] h-full rounded-full" 
                           />
                         </div>

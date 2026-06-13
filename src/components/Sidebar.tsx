@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Home, Settings, Trophy, LogOut, Terminal, Layers } from 'lucide-react';
+import { ShieldAlert, Home, Settings, Trophy, LogOut, Terminal, Layers, CalendarDays } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { RoadmapArea } from '../types';
@@ -9,7 +9,8 @@ interface SidebarProps {
   onHomeClick: () => void;
   onSettingsClick: () => void;
   onAchievementsClick: () => void;
-  activeView: 'home' | 'settings' | 'achievements';
+  onCalendarClick: () => void;
+  activeView: 'home' | 'settings' | 'achievements' | 'calendar';
   className?: string;
 }
 
@@ -18,12 +19,14 @@ export default function Sidebar({
   onHomeClick, 
   onSettingsClick, 
   onAchievementsClick,
+  onCalendarClick,
   activeView, 
   className 
 }: SidebarProps) {
   
   const navItems = [
     { icon: Layers, label: 'Dashboard', active: activeView === 'home' && !selectedArea, onClick: onHomeClick },
+    { icon: CalendarDays, label: 'Timetable', active: activeView === 'calendar', onClick: onCalendarClick },
     { icon: Trophy, label: 'Achievements', active: activeView === 'achievements', onClick: onAchievementsClick },
     { icon: Settings, label: 'Settings', active: activeView === 'settings', onClick: onSettingsClick },
   ];

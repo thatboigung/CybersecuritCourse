@@ -1,6 +1,6 @@
 {
-  "name": "MastersInCyber",
-  "description": "A self-hosted Cybersecurity Master's Learning Web App tailored around a rigorous 7-area roadmapping curriculum, markdown notes, streamed micro-lectures, and final module exams.",
+  "name": "DevSec Academy",
+  "description": "An interactive concurrent-pacing learning suite for Cyber Security, Ethical Hacking, and Full-Stack development. Features custom multi-track timetables, lecture outlines, practice quizzes, and interactive credential tracking.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

@@ -108,14 +108,14 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                 </div>
                 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-indigo-400 uppercase">Cybersecurity Study Companion</span>
+                  <span className="text-[10px] font-mono tracking-widest text-indigo-400 uppercase">3-Track Mastery Suite</span>
                   <h1 className="text-2xl md:text-3xl font-black text-slate-100 tracking-tight leading-tight">
-                    Cybersecurity Master
+                    DevSec Academy
                   </h1>
                 </div>
 
                 <p className="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto">
-                  A comprehensive training program covering 7 domains of security study with lessons, quizzes, and practice exams.
+                  A high-calibre co-curriculum unifying Cyber Security, Ethical Hacking, and Full-Stack development engineered with concurrent-study timetables, smart practice queries, and practical milestones.
                 </p>
 
                 <div className="pt-6">
