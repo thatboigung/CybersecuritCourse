@@ -286,6 +286,9 @@ export const achievementService = {
     const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
     const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
 
+    const DE_CORE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1'];
+    const COMPLETE_DE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1', 'de404-l1', 'de404-l2', 'de405-l1', 'de406-l1', 'de407-l1'];
+
     checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-complete', COMPLETE_HACKING_LESSONS);
@@ -294,6 +297,8 @@ export const achievementService = {
     checkLessonBadge('badge-fs-complete', COMPLETE_FS_LESSONS);
     checkLessonBadge('badge-math-core', MATH_CORE_LESSONS);
     checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
+    checkLessonBadge('badge-de-core', DE_CORE_LESSONS);
+    checkLessonBadge('badge-de-complete', COMPLETE_DE_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));
@@ -390,6 +395,9 @@ export const achievementService = {
     const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
     const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
 
+    const DE_CORE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1'];
+    const COMPLETE_DE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1', 'de404-l1', 'de404-l2', 'de405-l1', 'de406-l1', 'de407-l1'];
+
     checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-complete', COMPLETE_HACKING_LESSONS);
@@ -398,6 +406,8 @@ export const achievementService = {
     checkLessonBadge('badge-fs-complete', COMPLETE_FS_LESSONS);
     checkLessonBadge('badge-math-core', MATH_CORE_LESSONS);
     checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
+    checkLessonBadge('badge-de-core', DE_CORE_LESSONS);
+    checkLessonBadge('badge-de-complete', COMPLETE_DE_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));
