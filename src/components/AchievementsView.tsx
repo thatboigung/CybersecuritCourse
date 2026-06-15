@@ -74,11 +74,11 @@ export default function AchievementsView() {
         <div>
           <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500 font-bold">Your Learning Profile</span>
           <h2 className="text-2xl md:text-3xl font-bold text-slate-100 tracking-tight mt-0.5 animate-fade-in">Hall of Achievements</h2>
-          <p className="text-slate-405 text-slate-400 font-medium text-xs md:text-sm">Track your learning milestones, earned badges, and course statistics here.</p>
+          <p className="text-slate-400 font-medium text-xs md:text-sm">Track your learning milestones, earned badges, and course statistics here.</p>
         </div>
         
-        <div className="flex items-center gap-4 p-5 md:p-6 bg-[#111625] rounded-2xl text-slate-100 shadow-md shrink-0">
-          <div className="w-12 h-12 rounded-xl bg-[#1b2234] text-indigo-400 flex items-center justify-center shadow-md">
+        <div className="flex items-center gap-4 p-5 md:p-6 bg-[#161618] border border-zinc-800/70 rounded-2xl text-slate-100 shadow-md shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-[#2C2C2E]/50 border border-zinc-800 text-indigo-400 flex items-center justify-center shadow-md">
             <Trophy className="w-6 h-6 text-indigo-400" />
           </div>
           <div className="text-left">
@@ -91,8 +91,8 @@ export default function AchievementsView() {
       {/* Stats Summary Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {cardsStats.map((stat, idx) => (
-          <div key={idx} className="bg-[#111625] p-6 rounded-2xl flex flex-col gap-6 shadow-md text-left">
-            <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0", stat.bg)}>
+          <div key={idx} className="bg-[#161618] border border-zinc-800/70 p-6 rounded-2xl flex flex-col gap-6 shadow-md text-left">
+            <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border border-zinc-800/40", stat.bg)}>
               <stat.icon className={cn("w-5 h-5", stat.color)} />
             </div>
             <div>
@@ -107,7 +107,7 @@ export default function AchievementsView() {
       <div className="space-y-8">
         <div className="flex items-center gap-4">
           <h3 className="text-lg font-bold text-slate-100 tracking-tight">Skill Badges</h3>
-          <div className="h-[1px] bg-slate-800/40 flex-1" />
+          <div className="h-[1px] bg-zinc-800 flex-1" />
           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-bold">{earnedCount} / {achievements.length} Unlocked</span>
         </div>
         
@@ -118,20 +118,20 @@ export default function AchievementsView() {
               <div 
                 key={badge.id}
                 className={cn(
-                  "p-6 rounded-2xl transition-all duration-300 relative overflow-hidden flex flex-col h-full shadow-md text-left border-0",
+                  "p-6 rounded-2xl transition-all duration-300 relative overflow-hidden flex flex-col h-full shadow-md text-left border",
                   badge.earned 
-                    ? "bg-[#111625]" 
-                    : "bg-[#111625]/45 opacity-60 grayscale"
+                    ? "bg-[#161618] border-zinc-800/70" 
+                    : "bg-[#161618]/45 border-zinc-900/40 opacity-60 grayscale"
                 )}
               >
                 {badge.earned && (
                   <div className="absolute top-4 right-4">
                     <span className={cn(
-                      "px-2.5 py-0.5 rounded text-[8px] font-mono font-bold uppercase tracking-widest border-0",
+                      "px-2.5 py-0.5 rounded text-[8px] font-mono font-bold uppercase tracking-widest b-0",
                       badge.rarity === 'Legendary' ? "bg-amber-500/10 text-amber-400" :
-                      badge.rarity === 'Epic' ? "bg-rose-500/10 text-rose-450 text-rose-400" :
+                      badge.rarity === 'Epic' ? "bg-rose-500/10 text-rose-400" :
                       badge.rarity === 'Rare' ? "bg-indigo-500/10 text-indigo-400" :
-                      "bg-slate-800/60 text-slate-400"
+                      "bg-[#2C2C2E]/60 text-slate-400"
                     )}>
                       {badge.rarity}
                     </span>
@@ -139,10 +139,10 @@ export default function AchievementsView() {
                 )}
 
                 <div className={cn(
-                  "w-12 h-12 rounded-xl flex items-center justify-center mb-6",
+                  "w-12 h-12 rounded-xl flex items-center justify-center mb-6 border",
                   badge.earned 
-                    ? "bg-indigo-500/10 text-indigo-400" 
-                    : "bg-[#1b2234] text-slate-500"
+                    ? "bg-indigo-500/10 border-indigo-500/10 text-indigo-400" 
+                    : "bg-[#2C2C2E]/50 border-zinc-850 text-slate-550 text-slate-500"
                 )}>
                   {badge.earned ? <BadgeIcon className="w-6 h-6" /> : <Lock className="w-5 h-5" />}
                 </div>
@@ -153,7 +153,7 @@ export default function AchievementsView() {
                 </div>
                 
                 {badge.earned && (
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-emerald-600 text-left">
+                  <div className="mt-6 pt-4 border-t border-zinc-830 border-zinc-800/60 flex items-center gap-1.5 text-emerald-405 text-emerald-400 text-left">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span className="text-[9px] font-mono uppercase tracking-widest font-bold">Unlocked ✓</span>
                   </div>

@@ -88,8 +88,8 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
     return list;
   }, []);
 
-  // Split filteredAreas into Mathematics, Cyber Security, Ethical Hacking, Full Stack Developer, and Data Engineering sections
-  const { mathematicsAreas, cyberSecurityAreas, hackingAreas, fullStackAreas, dataEngineeringAreas } = useMemo(() => {
+  // Split filteredAreas into Mathematics, Cyber Security, Ethical Hacking, Full Stack Developer, Data Engineering, and Tech Business sections
+  const { mathematicsAreas, computerScienceAreas, cyberSecurityAreas, hackingAreas, fullStackAreas, dataEngineeringAreas, techBusinessAreas } = useMemo(() => {
     const list = [...ROADMAP_AREAS];
     const filtered = searchQuery
       ? list.filter(area => 
@@ -100,15 +100,16 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
 
     return {
       mathematicsAreas: filtered.filter(area => area.courseGroup === 'mathematics'),
+      computerScienceAreas: filtered.filter(area => area.courseGroup === 'computer_science'),
       cyberSecurityAreas: filtered.filter(area => !area.courseGroup || area.courseGroup === 'cyber_security'),
       hackingAreas: filtered.filter(area => area.courseGroup === 'hacking'),
       fullStackAreas: filtered.filter(area => area.courseGroup === 'full_stack'),
       dataEngineeringAreas: filtered.filter(area => area.courseGroup === 'data_engineering'),
+      techBusinessAreas: filtered.filter(area => area.courseGroup === 'tech_business'),
     };
   }, [searchQuery]);
 
   const renderAreaRow = (area: RoadmapArea) => {
-    const IconComponent = (Icons as any)[area.icon] || Icons.Shield;
     const theme = getColorClasses(area.color);
     const stats = areaProgresses[area.id] || { pct: 0, lessonsCount: 0, completedCount: 0 };
     
@@ -119,30 +120,13 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         onClick={() => onSelect(area)}
         id={`area-${area.id}`}
       >
-        {/* Outer Left Side: Icon & Titles */}
+        {/* Outer Left Side: Titles */}
         <div className="flex items-center gap-4 flex-1 min-w-0">
-          {/* Icon box exactly styling from the image */}
-          <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105 border border-transparent", theme.bg, theme.text, theme.border)}>
-            <IconComponent className="w-5 h-5" />
-          </div>
-          
           {/* Text section */}
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-[#0A84FF] transition-colors leading-snug">
-                {area.name}
-              </h3>
-            </div>
-            
-            {/* Stats Tag - e.g. "4 INTERACTIVE CLASSES" matching image */}
-            <div className="text-[10px] sm:text-xs font-bold tracking-widest text-[#8E8E93] uppercase mt-0.5">
-              {stats.lessonsCount} INTERACTIVE CLASSES
-            </div>
-
-            {/* Truncated Description - taking up just 1 line with ellipsis */}
-            <p className="text-slate-400 font-sans text-xs leading-relaxed max-w-xl truncate mt-1">
-              {area.description}
-            </p>
+            <h3 className="text-sm sm:text-base font-semibold text-slate-100 group-hover:text-[#0A84FF] transition-colors leading-snug">
+              {area.name}
+            </h3>
           </div>
         </div>
 
@@ -181,19 +165,11 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
     <div className="relative space-y-10">
       {/* Mathematics for Programmers Section */}
       {mathematicsAreas.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 border-l-2 border-indigo-500 pl-4 py-1">
-            <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl self-start sm:self-center">
-              <Icons.Compass className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold tracking-wider uppercase text-indigo-400">
-                Mathematics Course Track
-              </h2>
-              <p className="text-xs text-slate-400">
-                Master the progressive mathematical foundations tailored for advanced software engineering, data science, and complex optimization loops.
-              </p>
-            </div>
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Mathematics Course Track
+            </h2>
           </div>
           
           <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
@@ -202,21 +178,28 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
+      {/* Computer Science Basics Section */}
+      {computerScienceAreas.length > 0 && (
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Computer Science Basics Course Track
+            </h2>
+          </div>
+          
+          <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
+            {computerScienceAreas.map(renderAreaRow)}
+          </div>
+        </div>
+      )}
+
       {/* Cyber Security Group Section */}
       {cyberSecurityAreas.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 border-l-2 border-[#0A84FF] pl-4 py-1">
-            <div className="p-2 bg-[#0A84FF]/10 text-[#0A84FF] rounded-xl self-start sm:self-center">
-              <Icons.Shield className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold tracking-wider uppercase text-slate-200">
-                Cyber Security Path
-              </h2>
-              <p className="text-xs text-slate-400">
-                Core foundational IT, networks, cryptography, administration, defense structures, and capstone dissertations.
-              </p>
-            </div>
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Cyber Security Path
+            </h2>
           </div>
           
           <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
@@ -227,19 +210,11 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
 
       {/* Ethical Hacking Group Section */}
       {hackingAreas.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 border-l-2 border-rose-500 pl-4 py-1">
-            <div className="p-2 bg-rose-500/10 text-rose-400 rounded-xl self-start sm:self-center">
-              <Icons.Terminal className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold tracking-wider uppercase text-rose-400">
-                Ethical Hacking Path
-              </h2>
-              <p className="text-xs text-slate-400">
-                Advanced systemic enterprise attack paradigms, social engineering defense, and controlled security exploits.
-              </p>
-            </div>
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Ethical Hacking Path
+            </h2>
           </div>
           
           <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
@@ -250,19 +225,11 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
 
       {/* Full Stack Developer Group Section */}
       {fullStackAreas.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 border-l-2 border-amber-500 pl-4 py-1">
-            <div className="p-2 bg-amber-500/10 text-amber-550 rounded-xl self-start sm:self-center">
-              <Icons.Code className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold tracking-wider uppercase text-amber-500">
-                Full Stack Developer Path
-              </h2>
-              <p className="text-xs text-slate-400">
-                Master static layouts, client logic loops, frontend components (React/Tailwind), and backend engines with cloud DevOps.
-              </p>
-            </div>
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Full Stack Developer Path
+            </h2>
           </div>
           
           <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
@@ -273,19 +240,11 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
 
       {/* Data Science & Engineering Group Section */}
       {dataEngineeringAreas.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 border-l-2 border-cyan-500 pl-4 py-1">
-            <div className="p-2 bg-cyan-500/10 text-cyan-400 rounded-xl self-start sm:self-center">
-              <Icons.Database className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold tracking-wider uppercase text-cyan-400">
-                Data Science & Engineering Path
-              </h2>
-              <p className="text-xs text-slate-400">
-                Master underlying distributed filesystems, advanced SQL processing, big data pipelines, workflow orchestration DAGs, and MLOps platforms.
-              </p>
-            </div>
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Data Science & Engineering Path
+            </h2>
           </div>
           
           <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
@@ -293,8 +252,23 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
           </div>
         </div>
       )}
+
+      {/* Tech-Driven Business & Marketing Group Section */}
+      {techBusinessAreas.length > 0 && (
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Tech-Driven Business & Marketing Path
+            </h2>
+          </div>
+          
+          <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
+            {techBusinessAreas.map(renderAreaRow)}
+          </div>
+        </div>
+      )}
       
-      {mathematicsAreas.length === 0 && cyberSecurityAreas.length === 0 && hackingAreas.length === 0 && fullStackAreas.length === 0 && dataEngineeringAreas.length === 0 && (
+      {mathematicsAreas.length === 0 && computerScienceAreas.length === 0 && cyberSecurityAreas.length === 0 && hackingAreas.length === 0 && fullStackAreas.length === 0 && dataEngineeringAreas.length === 0 && techBusinessAreas.length === 0 && (
         <div className="text-center py-12 text-slate-500 border border-zinc-800/50 rounded-2xl bg-[#161618]/30">
           No courses found matching "{searchQuery}"
         </div>

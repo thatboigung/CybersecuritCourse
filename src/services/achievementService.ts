@@ -204,6 +204,38 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     icon: 'Award',
     earned: false,
     rarity: 'Legendary'
+  },
+  {
+    id: 'badge-tb-core',
+    title: 'Sovereign Technopreneur',
+    description: 'Mastered SaaS unit economics, user discovery, and quantitative security risk math like ALE by completing Courses 501 and 502.',
+    icon: 'Activity',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-tb-complete',
+    title: 'Grandmaster Growth-Leads Architect',
+    description: 'Unlocked by successfully completing all 4 progressive courses inside the Tech-Driven Business & Marketing path.',
+    icon: 'Award',
+    earned: false,
+    rarity: 'Legendary'
+  },
+  {
+    id: 'badge-cs-core',
+    title: 'Computational Thinker',
+    description: 'Mastered standard systems logic, hardware representation, basic networking structures, and OS platforms.',
+    icon: 'Cpu',
+    earned: false,
+    rarity: 'Epic'
+  },
+  {
+    id: 'badge-cs-complete',
+    title: 'Sovereign Computer Scientist',
+    description: 'Unlocked by successfully completing all 8 foundational courses inside the Computer Science Basics path.',
+    icon: 'Award',
+    earned: false,
+    rarity: 'Legendary'
   }
 ];
 
@@ -283,11 +315,37 @@ export const achievementService = {
     const FS_BACKEND_LESSONS = ['fs204-l1', 'fs204-l2', 'fs205-l1', 'fs206-l1', 'fs207-l1'];
     const COMPLETE_FS_LESSONS = [...FS_FRONTEND_LESSONS, ...FS_BACKEND_LESSONS];
 
-    const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
-    const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
+    const MATH_CORE_LESSONS = [
+      'math301-l1', 'math301-l2', 'math301-l3', 'math301-l4', 'math301-l5', 'math301-l6',
+      'math302-l1', 'math302-l2', 'math302-l3', 'math302-l4',
+      'math303-l1', 'math303-l2', 'math303-l3'
+    ];
+    const COMPLETE_MATH_LESSONS = [
+      'math301-l1', 'math301-l2', 'math301-l3', 'math301-l4', 'math301-l5', 'math301-l6',
+      'math302-l1', 'math302-l2', 'math302-l3', 'math302-l4',
+      'math303-l1', 'math303-l2', 'math303-l3',
+      'math304-l1', 'math304-l2',
+      'math305-l1', 'math305-l2', 'math305-l3', 'math305-l4',
+      'math306-l1', 'math306-l2', 'math306-l3',
+      'math307-l1', 'math307-l2'
+    ];
 
     const DE_CORE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1'];
     const COMPLETE_DE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1', 'de404-l1', 'de404-l2', 'de405-l1', 'de406-l1', 'de407-l1'];
+
+    const TB_CORE_LESSONS = ['tb501-l1', 'tb501-l2', 'tb502-l1', 'tb502-l2'];
+    const COMPLETE_TB_LESSONS = ['tb501-l1', 'tb501-l2', 'tb502-l1', 'tb502-l2', 'tb503-l1', 'tb503-l2', 'tb504-l1', 'tb504-l2'];
+
+    const CS_CORE_LESSONS = [
+      'cs101-l1', 'cs101-l2', 'cs102-l1', 'cs102-l2',
+      'cs103-l1', 'cs103-l2', 'cs104-l1', 'cs104-l2'
+    ];
+    const COMPLETE_CS_LESSONS = [
+      'cs101-l1', 'cs101-l2', 'cs102-l1', 'cs102-l2',
+      'cs103-l1', 'cs103-l2', 'cs104-l1', 'cs104-l2',
+      'cs105-l1', 'cs105-l2', 'cs106-l1', 'cs106-l2',
+      'cs107-l1', 'cs107-l2', 'cs108-l1', 'cs108-l2'
+    ];
 
     checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
@@ -299,6 +357,10 @@ export const achievementService = {
     checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
     checkLessonBadge('badge-de-core', DE_CORE_LESSONS);
     checkLessonBadge('badge-de-complete', COMPLETE_DE_LESSONS);
+    checkLessonBadge('badge-tb-core', TB_CORE_LESSONS);
+    checkLessonBadge('badge-tb-complete', COMPLETE_TB_LESSONS);
+    checkLessonBadge('badge-cs-core', CS_CORE_LESSONS);
+    checkLessonBadge('badge-cs-complete', COMPLETE_CS_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));
@@ -392,11 +454,37 @@ export const achievementService = {
     const FS_BACKEND_LESSONS = ['fs204-l1', 'fs204-l2', 'fs205-l1', 'fs206-l1', 'fs207-l1'];
     const COMPLETE_FS_LESSONS = [...FS_FRONTEND_LESSONS, ...FS_BACKEND_LESSONS];
 
-    const MATH_CORE_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1'];
-    const COMPLETE_MATH_LESSONS = ['math301-l1', 'math301-l2', 'math302-l1', 'math303-l1', 'math304-l1', 'math305-l1', 'math306-l1', 'math307-l1'];
+    const MATH_CORE_LESSONS = [
+      'math301-l1', 'math301-l2', 'math301-l3', 'math301-l4', 'math301-l5', 'math301-l6',
+      'math302-l1', 'math302-l2', 'math302-l3', 'math302-l4',
+      'math303-l1', 'math303-l2', 'math303-l3'
+    ];
+    const COMPLETE_MATH_LESSONS = [
+      'math301-l1', 'math301-l2', 'math301-l3', 'math301-l4', 'math301-l5', 'math301-l6',
+      'math302-l1', 'math302-l2', 'math302-l3', 'math302-l4',
+      'math303-l1', 'math303-l2', 'math303-l3',
+      'math304-l1', 'math304-l2',
+      'math305-l1', 'math305-l2', 'math305-l3', 'math305-l4',
+      'math306-l1', 'math306-l2', 'math306-l3',
+      'math307-l1', 'math307-l2'
+    ];
 
     const DE_CORE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1'];
     const COMPLETE_DE_LESSONS = ['de401-l1', 'de401-l2', 'de402-l1', 'de402-l2', 'de403-l1', 'de404-l1', 'de404-l2', 'de405-l1', 'de406-l1', 'de407-l1'];
+
+    const TB_CORE_LESSONS = ['tb501-l1', 'tb501-l2', 'tb502-l1', 'tb502-l2'];
+    const COMPLETE_TB_LESSONS = ['tb501-l1', 'tb501-l2', 'tb502-l1', 'tb502-l2', 'tb503-l1', 'tb503-l2', 'tb504-l1', 'tb504-l2'];
+
+    const CS_CORE_LESSONS = [
+      'cs101-l1', 'cs101-l2', 'cs102-l1', 'cs102-l2',
+      'cs103-l1', 'cs103-l2', 'cs104-l1', 'cs104-l2'
+    ];
+    const COMPLETE_CS_LESSONS = [
+      'cs101-l1', 'cs101-l2', 'cs102-l1', 'cs102-l2',
+      'cs103-l1', 'cs103-l2', 'cs104-l1', 'cs104-l2',
+      'cs105-l1', 'cs105-l2', 'cs106-l1', 'cs106-l2',
+      'cs107-l1', 'cs107-l2', 'cs108-l1', 'cs108-l2'
+    ];
 
     checkLessonBadge('badge-hacking-offensive', OFFENSIVE_HACKING_LESSONS);
     checkLessonBadge('badge-hacking-defensive', DEFENSIVE_HACKING_LESSONS);
@@ -408,6 +496,10 @@ export const achievementService = {
     checkLessonBadge('badge-math-complete', COMPLETE_MATH_LESSONS);
     checkLessonBadge('badge-de-core', DE_CORE_LESSONS);
     checkLessonBadge('badge-de-complete', COMPLETE_DE_LESSONS);
+    checkLessonBadge('badge-tb-core', TB_CORE_LESSONS);
+    checkLessonBadge('badge-tb-complete', COMPLETE_TB_LESSONS);
+    checkLessonBadge('badge-cs-core', CS_CORE_LESSONS);
+    checkLessonBadge('badge-cs-complete', COMPLETE_CS_LESSONS);
 
     if (earnedNew) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(earnedIds));

@@ -164,7 +164,7 @@ export default function App() {
   }, [navigateInternal]);
 
   return (
-    <div className="min-h-screen flex font-sans bg-black text-slate-300 selection:bg-[#0A84FF]/30 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans bg-black text-slate-300 selection:bg-[#0A84FF]/30 selection:text-white overflow-x-hidden">
       {/* App Initializer layer */}
       <AnimatePresence>
         {isInitializing && <AppLoader key="loader" />}
@@ -191,7 +191,6 @@ export default function App() {
                 </div>
                 <div>
                   <div className="text-[10px] font-mono font-bold text-slate-200 uppercase tracking-widest leading-none">Offline Ready</div>
-                  <div className="text-[9px] text-[#8E8E93] mt-1 leading-none">Console is available locally.</div>
                 </div>
               </div>
               <button onClick={() => setOfflineReady(false)} className="p-1 hover:bg-[#2C2C2E] rounded cursor-pointer">
@@ -210,8 +209,6 @@ export default function App() {
                 <WifiOff className="w-4 h-4" />
               </div>
               <div>
-                <div className="text-[10px] font-mono font-bold text-[#FF453A] uppercase tracking-widest leading-none">Disconnected</div>
-                <div className="text-[9px] text-[#8E8E93] mt-1 leading-none">Relying on stored data.</div>
               </div>
             </motion.div>
           )}
@@ -227,7 +224,7 @@ export default function App() {
           onAchievementsClick={handleAchievementsClick}
           onCalendarClick={handleCalendarClick}
           activeView={view}
-          className="hidden md:flex"
+          className="hidden md:block"
         />
       )}
 
@@ -238,7 +235,7 @@ export default function App() {
             onClick={handleHomeClick}
             className={cn(
               "flex flex-col items-center justify-center gap-1 cursor-pointer select-none outline-none flex-1 py-1 text-center transition-all",
-              view === 'home' && !selectedArea ? "text-[#0A84FF]" : "text-[#8E8E93]"
+              view === 'home' && !selectedArea ? "text-white" : "text-[#8E8E93]"
             )}
           >
             <Cpu className="w-4.5 h-4.5" />
@@ -249,7 +246,7 @@ export default function App() {
             onClick={handleCalendarClick}
             className={cn(
               "flex flex-col items-center justify-center gap-1 cursor-pointer select-none outline-none flex-1 py-1 text-center transition-all",
-              view === 'calendar' ? "text-[#0A84FF]" : "text-[#8E8E93]"
+              view === 'calendar' ? "text-white" : "text-[#8E8E93]"
             )}
           >
             <Calendar className="w-4.5 h-4.5" />
@@ -260,7 +257,7 @@ export default function App() {
             onClick={handleAchievementsClick}
             className={cn(
               "flex flex-col items-center justify-center gap-1 cursor-pointer select-none outline-none flex-1 py-1 text-center transition-all",
-              view === 'achievements' ? "text-[#0A84FF]" : "text-[#8E8E93]"
+              view === 'achievements' ? "text-white" : "text-[#8E8E93]"
             )}
           >
             <Award className="w-4.5 h-4.5" />
@@ -271,7 +268,7 @@ export default function App() {
             onClick={handleSettingsClick}
             className={cn(
               "flex flex-col items-center justify-center gap-1 cursor-pointer select-none outline-none flex-1 py-1 text-center transition-all",
-              view === 'settings' ? "text-[#0A84FF]" : "text-[#8E8E93]"
+              view === 'settings' ? "text-white" : "text-[#8E8E93]"
             )}
           >
             <Settings className="w-4.5 h-4.5" />
@@ -281,40 +278,7 @@ export default function App() {
       )}
 
       {/* Workspace Panel View controller */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
-        {/* Dynamic workspace header if not inside syllabus viewing */}
-        {isAuthenticated && !selectedArea && (
-          <header className="sticky top-0 z-[40] bg-black/90 border-b border-[#2C2C2E] backdrop-blur-md transition-all animate-fade-in animate-fade-in">
-            <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-3 cursor-pointer" onClick={handleHomeClick}>
-                  <div className="w-9 h-9 bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl flex items-center justify-center text-[#0A84FF] font-mono text-sm shadow-md">
-                    <Cpu className="w-4 h-4 text-[#0A84FF]" />
-                  </div>
-                  <div>
-                    <h1 className="text-sm font-bold text-white tracking-tight leading-none uppercase">DevSec Academy</h1>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="hidden md:flex flex-col items-end">
-                  <span className="text-[10px] font-mono font-bold text-slate-200 uppercase leading-none">
-                    {localStorage.getItem('cyber_candidate_name') || 'Sec Cadet'}
-                  </span>
-                </div>
-                
-                <button 
-                  onClick={() => setIsPricingOpen(true)}
-                  className="h-9 px-3.5 bg-[#1C1C1E] border border-[#2C2C2E] hover:bg-[#2C2C2E] rounded-xl flex items-center justify-center transition-colors text-slate-350 text-[10px] font-mono uppercase font-bold tracking-wider shadow-md outline-none focus:outline-none focus:ring-0 focus-visible:outline-none cursor-pointer"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#0A84FF] mr-1.5" />
-                  Status Guide
-                </button>
-              </div>
-            </div>
-          </header>
-        )}
+      <div className="flex-1 flex flex-col min-w-0">
 
         {/* Workspace core stages views */}
         <main className={cn(
@@ -364,78 +328,19 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.25 }}
-                  className="space-y-12 pb-32"
+                  className="space-y-8 pb-32 animate-fade-in"
                 >
-                  {/* Dashboard Hero Panel (Zero Borders & Outlines) */}
-                  <div className="w-full p-6 md:p-12 bg-[#1C1C1E] text-slate-300 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-8 min-h-[260px] shadow-sm rounded-2xl border border-[#2C2C2E]">
-                    <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none">
-                      <div className="absolute top-[-20%] right-[-10%] w-96 h-96 rounded-full bg-[#0A84FF] blur-[120px]" />
-                    </div>
-                    
-                    <div className="relative z-10 space-y-5 md:max-w-[55%] text-left">
-                      <div className="flex items-center gap-3">
-                        <span className="bg-transparent text-white text-[9px] font-sans uppercase tracking-widest font-bold">
-                          Study Dashboard
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-1 text-left">
-                        <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-none text-slate-100">
-                          Welcome, {localStorage.getItem('cyber_candidate_name') || 'Student'}
-                        </h2>
-                      </div>
-
-                      <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-sans mt-2 text-left">
-                        Welcome back. Access your lessons, take practice quizzes, and track your study achievements.
-                      </p>
-                    </div>
-
-                    {/* Integrated Analytics Module */}
-                    <div className="relative z-10 grid grid-cols-2 gap-4 w-full md:w-auto md:min-w-[320px] bg-transparent p-5 rounded-xl border border-[#2C2C2E] text-left">
-                      <div className="space-y-1 text-left">
-                        <div className="text-2xl md:text-3xl font-black font-mono text-white flex items-center gap-1.5">
-                          <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
-                          {stats.streak} <span className="text-xs text-slate-400 font-semibold uppercase">Days</span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1 text-left">
-                        <div className="text-2xl md:text-3xl font-black font-mono text-white flex items-center gap-1.5">
-                          <Target className="w-5 h-5 text-[#0A84FF]" />
-                          {stats.avgAccuracy}%
-                        </div>
-                      </div>
-
-                      <div className="col-span-2 pt-3 border-t border-[#2C2C2E] space-y-2 text-left">
-                        <div className="flex justify-between text-[9px] font-mono uppercase text-slate-500 tracking-wider">
-                          <span className="text-slate-350 font-bold">{stats.completedCount} / {stats.totalLessons} Completed</span>
-                        </div>
-                        <div className="w-full bg-[#2C2C2E] h-2 rounded-full overflow-hidden">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(100, (stats.completedCount / (stats.totalLessons || 1)) * 100)}%` }}
-                            className="bg-[#0A84FF] h-full rounded-full" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Syllabus / Library Grid section */}
                   <section className="space-y-8">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                      <div>
-                        <h3 className="text-xl font-bold text-slate-100 tracking-tight leading-none uppercase">Syllabus Areas</h3>
-                      </div>
-                      
-                      <div className="relative group">
+                    <div className="flex justify-start">
+                      <div className="relative group w-full md:max-w-md">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0A84FF] transition-colors" />
                         <input 
                           type="text" 
                           placeholder="Search catalog..." 
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl py-3.5 pl-11 pr-5 text-xs text-slate-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none transition-all w-full md:w-80 shadow-sm font-sans placeholder:text-slate-500"
+                          className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl py-3.5 pl-11 pr-5 text-xs text-slate-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none transition-all w-full shadow-sm font-sans placeholder:text-slate-500"
                         />
                       </div>
                     </div>

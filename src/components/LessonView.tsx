@@ -70,6 +70,9 @@ export default function LessonView({
   // Quiz active state
   const [activeQuiz, setActiveQuiz] = useState<any>(null);
 
+  // Reset progress confirmation state
+  const [isResetConfirming, setIsResetConfirming] = useState(false);
+
   // Mobile active sub-tab (Reading vs Activity Checklist)
   const [mobileTab, setMobileTab] = useState<'reading' | 'checklist'>('reading');
 
@@ -150,17 +153,21 @@ export default function LessonView({
 
   // Reset progress of this lecture
   const handleResetLectureProgress = () => {
-    if (window.confirm('Are you sure you want to reset reading progress for this lecture?')) {
-      setCompletedCheckpoints([]);
-      localStorage.removeItem(`cyber_lecture_checkpoints_${lesson.id}`);
-      localStorage.removeItem(`cyber_lecture_scroll_${lesson.id}`);
-      if (progressService.isLessonCompleted(lesson.id)) {
-        progressService.toggleLessonComplete(lesson.id);
-      }
-      setScrollPercent(0);
-      if (containerRef.current) {
-        containerRef.current.scrollTop = 0;
-      }
+    if (!isResetConfirming) {
+      setIsResetConfirming(true);
+      setTimeout(() => setIsResetConfirming(false), 3000);
+      return;
+    }
+    setIsResetConfirming(false);
+    setCompletedCheckpoints([]);
+    localStorage.removeItem(`cyber_lecture_checkpoints_${lesson.id}`);
+    localStorage.removeItem(`cyber_lecture_scroll_${lesson.id}`);
+    if (progressService.isLessonCompleted(lesson.id)) {
+      progressService.toggleLessonComplete(lesson.id);
+    }
+    setScrollPercent(0);
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
     }
   };
 
@@ -549,10 +556,16 @@ export default function LessonView({
               
               <button 
                 onClick={handleResetLectureProgress}
-                className="p-2 hover:bg-[#20293d] rounded-lg text-slate-400 hover:text-rose-400 transition-colors focus:outline-none focus:ring-0 cursor-pointer"
-                title="Reset lecture tracking metrics"
+                className={cn(
+                  "p-2 rounded-lg transition-all focus:outline-none focus:ring-0 cursor-pointer flex items-center gap-1 text-xs font-mono font-bold uppercase",
+                  isResetConfirming 
+                    ? "bg-rose-500/10 text-rose-400 border border-rose-500/25 px-2.5 py-1.5" 
+                    : "text-slate-400 hover:text-rose-400 hover:bg-[#20293d]"
+                )}
+                title={isResetConfirming ? "Confirm lecture reset" : "Reset lecture tracking metrics"}
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-3.5 h-3.5" />
+                {isResetConfirming && <span className="text-[9px]">Sure?</span>}
               </button>
             </div>
 

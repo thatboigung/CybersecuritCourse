@@ -3,7 +3,7 @@ import { RoadmapArea, Module } from '../types';
 export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   {
     id: 'de-401',
-    name: 'Course 401: Computer Science Foundations & Core Infrastructure',
+    name: 'Computer Science Foundations & Core Infrastructure',
     description: 'Mastering the underlying operational systems, networking baselines, and data generation mechanics.',
     icon: 'Cpu',
     color: 'blue',
@@ -11,7 +11,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-402',
-    name: 'Course 402: Database Engineering & Storage Architecture',
+    name: 'Database Engineering & Storage Architecture',
     description: 'Processing, modeling, and persisting datasets across transactional and analytical storage engines.',
     icon: 'Database',
     color: 'indigo',
@@ -19,7 +19,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-403',
-    name: 'Course 403: Data Warehousing, Data Lakes & Modern Analytics',
+    name: 'Data Warehousing, Data Lakes & Modern Analytics',
     description: 'Architecting enterprise analytical platforms, distributed file spaces, and business intelligence views.',
     icon: 'Cloud',
     color: 'violet',
@@ -27,7 +27,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-404',
-    name: 'Course 404: Big Data Processing, Batch & Stream Engineering',
+    name: 'Big Data Processing, Batch & Stream Engineering',
     description: 'Writing data transformations, managing massive parallel compute loops, and real-time streams.',
     icon: 'Zap',
     color: 'amber',
@@ -35,7 +35,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-405',
-    name: 'Course 405: Workflow Orchestration & Data Governance',
+    name: 'Workflow Orchestration & Data Governance',
     description: 'Sequencing complex jobs, quality monitoring, metadata lineages, and compliance controls.',
     icon: 'Split',
     color: 'emerald',
@@ -43,7 +43,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-406',
-    name: 'Course 406: Containers, DevOps, Cloud Provisioning & Observability',
+    name: 'Containers, DevOps, Cloud Provisioning & Observability',
     description: 'Packaging data structures, orchestrating containers, declaring IaC arrays, and tracing telemetry.',
     icon: 'Activity',
     color: 'rose',
@@ -51,7 +51,7 @@ export const DATA_ENGINEERING_ROADMAP_AREAS: RoadmapArea[] = [
   },
   {
     id: 'de-407',
-    name: 'Course 407: Machine Learning Operations (MLOps) Foundations',
+    name: 'Machine Learning Operations (MLOps) Foundations',
     description: 'Connecting upstream data channels with live model serving containers and performance monitoring.',
     icon: 'Gauge',
     color: 'cyan',

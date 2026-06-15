@@ -27,7 +27,7 @@ export default function CalendarView() {
   });
 
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
-  const [activeSegment, setActiveSegment] = useState<'all' | 'mathematics' | 'cyber_security' | 'hacking' | 'full_stack' | 'data_engineering'>('all');
+  const [activeSegment, setActiveSegment] = useState<'all' | 'mathematics' | 'computer_science' | 'cyber_security' | 'hacking' | 'full_stack' | 'data_engineering' | 'tech_business'>('all');
   const [detailLesson, setDetailLesson] = useState<any | null>(null);
   const [sessionNonce, setSessionNonce] = useState(0);
 
@@ -45,19 +45,23 @@ export default function CalendarView() {
   }, [numWeeks]);
 
   // Read all lessons and link back to their modules and category groups
-  const { mathLessons, csLessons, hackingLessons, fsLessons, deLessons } = useMemo(() => {
+  const { mathLessons, compSciLessons, csLessons, hackingLessons, fsLessons, deLessons, tbLessons } = useMemo(() => {
     const math: any[] = [];
+    const compSci: any[] = [];
     const cs: any[] = [];
     const hack: any[] = [];
     const fs: any[] = [];
     const de: any[] = [];
+    const tb: any[] = [];
 
     MODULES.forEach(mod => {
       const area = ROADMAP_AREAS.find(a => a.id === mod.areaId);
       const isMath = area?.courseGroup === 'mathematics';
+      const isCompSci = area?.courseGroup === 'computer_science';
       const isHacking = area?.courseGroup === 'hacking';
       const isFS = area?.courseGroup === 'full_stack';
       const isDE = area?.courseGroup === 'data_engineering';
+      const isTB = area?.courseGroup === 'tech_business';
 
       mod.lessons.forEach(lesson => {
         const payload = {
@@ -69,19 +73,23 @@ export default function CalendarView() {
 
         if (isMath) {
           math.push(payload);
+        } else if (isCompSci) {
+          compSci.push(payload);
         } else if (isHacking) {
           hack.push(payload);
         } else if (isFS) {
           fs.push(payload);
         } else if (isDE) {
           de.push(payload);
+        } else if (isTB) {
+          tb.push(payload);
         } else {
           cs.push(payload);
         }
       });
     });
 
-    return { mathLessons: math, csLessons: cs, hackingLessons: hack, fsLessons: fs, deLessons: de };
+    return { mathLessons: math, compSciLessons: compSci, csLessons: cs, hackingLessons: hack, fsLessons: fs, deLessons: de, tbLessons: tb };
   }, []);
 
   // Chunks compiler
@@ -97,19 +105,23 @@ export default function CalendarView() {
   // Generate dynamic schedule data
   const schedule = useMemo(() => {
     const mathChunks = chunkLessons(mathLessons, numWeeks);
+    const compSciChunks = chunkLessons(compSciLessons, numWeeks);
     const csChunks = chunkLessons(csLessons, numWeeks);
     const hackChunks = chunkLessons(hackingLessons, numWeeks);
     const fsChunks = chunkLessons(fsLessons, numWeeks);
     const deChunks = chunkLessons(deLessons, numWeeks);
+    const tbChunks = chunkLessons(tbLessons, numWeeks);
 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     return Array.from({ length: numWeeks }, (_, weekIdx) => {
       const mathWeek = mathChunks[weekIdx] || [];
+      const compSciWeek = compSciChunks[weekIdx] || [];
       const csWeek = csChunks[weekIdx] || [];
       const hackWeek = hackChunks[weekIdx] || [];
       const fsWeek = fsChunks[weekIdx] || [];
       const deWeek = deChunks[weekIdx] || [];
+      const tbWeek = tbChunks[weekIdx] || [];
 
       const days = daysOfWeek.map(name => ({ name, tasks: [] as any[] }));
 
@@ -123,6 +135,19 @@ export default function CalendarView() {
           label: 'Mathematics',
           themeColor: '#6366F1',
           badgeStyle: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+        });
+      });
+
+      // Distribute Computer Science
+      compSciWeek.forEach((lesson, index) => {
+        const weekdaysIndices = [0, 2, 4]; // Mon, Wed, Fri
+        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
+        days[dayIdx].tasks.push({
+          ...lesson,
+          type: 'computer_science',
+          label: 'Computer Science',
+          themeColor: '#8B5CF6',
+          badgeStyle: 'bg-violet-500/10 text-violet-400 border-violet-500/20'
         });
       });
 
@@ -178,8 +203,21 @@ export default function CalendarView() {
         });
       });
 
+      // Distribute Tech Business
+      tbWeek.forEach((lesson, index) => {
+        const weekdaysIndices = [1, 2, 3, 5]; // Tue, Wed, Thu, Sat
+        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
+        days[dayIdx].tasks.push({
+          ...lesson,
+          type: 'tech_business',
+          label: 'Tech Business',
+          themeColor: '#8B5CF6',
+          badgeStyle: 'bg-violet-500/10 text-violet-400 border-violet-500/20'
+        });
+      });
+
       // Sunday is Weekly Review + Capstone Check
-      if (mathWeek.length > 0 || csWeek.length > 0 || hackWeek.length > 0 || fsWeek.length > 0 || deWeek.length > 0) {
+      if (mathWeek.length > 0 || compSciWeek.length > 0 || csWeek.length > 0 || hackWeek.length > 0 || fsWeek.length > 0 || deWeek.length > 0 || tbWeek.length > 0) {
         days[6].tasks.push({
           id: `review-wk-${weekIdx}`,
           title: "Weekly Multi-Disciplinary Synthesis Check",
@@ -205,7 +243,7 @@ export default function CalendarView() {
         days
       };
     });
-  }, [mathLessons, csLessons, hackingLessons, fsLessons, deLessons, numWeeks]);
+  }, [mathLessons, compSciLessons, csLessons, hackingLessons, fsLessons, deLessons, tbLessons, numWeeks]);
 
   // Aggregate completion scores
   const stats = useMemo(() => {
@@ -302,118 +340,81 @@ export default function CalendarView() {
   const activeWeekSchedule = schedule[selectedWeek] || { days: [] };
 
   return (
-    <div className="space-y-10" id="calendar-planner-portal">
-      {/* Visual Header Panel */}
-      <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-8">
-        <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none">
-          <div className="absolute top-[-30%] right-[-10%] w-96 h-96 rounded-full bg-[#0A84FF] blur-[120px]" />
+    <div className="space-y-8" id="calendar-planner-portal">
+      {/* Minimalist Subheaded Header */}
+      <div className="text-left py-2 border-b border-[#2C2C2E]/60">
+        <div className="flex items-center gap-2 mb-1.5">
+          <Calendar className="w-4 h-4 text-[#0A84FF]" />
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">Roadmap Timetable</span>
         </div>
-
-        <div className="relative z-10 space-y-3 md:max-w-xl text-left">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#0A84FF]/10 text-[#0A84FF] text-[9px] font-mono rounded-full uppercase tracking-widest font-black border border-[#0A84FF]/20">
-            <Calendar className="w-3.5 h-3.5" /> Concurrent study planner
-          </div>
-          <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white leading-tight uppercase">
-            Multi-Discipline Master Timetable
-          </h2>
-          <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-sans mt-2">
-            Studying Mathematics, Cyber Security, Ethical Hacking, and Full Stack concurrently builds profound technical synergies. Note: Completed lessons automatically disappear from your active timetable to ensure you stay laser-focused on pending milestones!
-          </p>
-        </div>
-
-        {/* Timetable completion stats */}
-        <div className="relative z-10 bg-black/40 border border-[#2C2C2E] px-6 py-5 rounded-2xl md:min-w-[280px] space-y-3 shadow-inner text-left">
-          <div className="flex justify-between items-baseline">
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-semibold">OVERALL TIMETABLE</span>
-            <span className="text-2xl font-black font-mono text-emerald-400">{stats.percent}%</span>
-          </div>
-
-          <div className="w-full bg-[#2C2C2E] h-2 rounded-full overflow-hidden">
-            <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${stats.percent}%` }} />
-          </div>
-
-          <div className="flex justify-between text-[10px] font-mono text-slate-400 pb-2 border-b border-[#2C2C2E]/40">
-            <span>Tasks Completed</span>
-            <span className="font-bold text-slate-200">{stats.completedTasksCount} / {stats.totalTasksCount}</span>
-          </div>
-
-          <div className="flex items-center justify-between text-[9px] font-mono text-emerald-400 pt-1">
-            <span>⚡ FOCUS SHARPENED</span>
-            <span className="font-extrabold uppercase">Done Topics Auto-Hidden</span>
-          </div>
-        </div>
+        <h2 className="text-xl md:text-2xl font-black text-white tracking-tight uppercase">
+          Master Plan
+        </h2>
       </div>
 
       {/* Plan selector & filtering parameters */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Sidebar settings option */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-5 space-y-5 text-left">
-            <div className="flex items-center gap-2 border-b border-[#2C2C2E] pb-3">
-              <Sliders className="w-4 h-4 text-[#0A84FF]" />
-              <h4 className="text-xs font-mono uppercase font-black text-slate-300 tracking-wider">Configure Calendar Pacing</h4>
+        <div className="lg:col-span-4 space-y-4">
+          <div className="bg-[#1C1C1E] border border-[#2C2C2E]/60 rounded-xl p-4 space-y-4 text-left">
+            <div className="flex items-center gap-1.5 border-b border-[#2C2C2E]/55 pb-2">
+              <Sliders className="w-3.5 h-3.5 text-[#0A84FF]" />
+              <h4 className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider">Pace</h4>
             </div>
 
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
               {plans.map((p) => (
                 <button
                   key={p.value}
                   onClick={() => setNumWeeks(p.value)}
                   className={cn(
-                    "w-full text-left p-3.5 rounded-xl border transition-all relative flex flex-col justify-between group cursor-pointer outline-none focus:outline-none focus:ring-0",
+                    "text-left p-2.5 rounded-lg border transition-all cursor-pointer outline-none focus:outline-none focus:ring-0 flex flex-col justify-between",
                     numWeeks === p.value 
-                      ? "bg-[#0A84FF]/10 border-[#0A84FF] shadow-md" 
-                      : "bg-black/50 border-[#2C2C2E] hover:border-[#3A3A3C]"
+                      ? "bg-[#0A84FF]/5 border-[#0A84FF] text-[#0A84FF]" 
+                      : "bg-black/20 border-[#2C2C2E] text-slate-400 hover:border-[#3A3A3C] hover:text-slate-200"
                   )}
                 >
-                  <div className="flex items-center justify-between w-full">
-                    <span className={cn(
-                      "text-xs font-bold leading-normal transition-colors",
-                      numWeeks === p.value ? "text-[#0A84FF]" : "text-slate-100 group-hover:text-slate-200"
-                    )}>
-                      {p.name}
-                    </span>
-                    {numWeeks === p.value && (
-                      <Check className="w-3.5 h-3.5 text-[#0A84FF] shrink-0" />
-                    )}
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-1">{p.description}</p>
-                  <div className="flex justify-between items-center mt-2 pt-1.5 border-t border-[#2C2C2E]/50">
-                    <span className="text-[8px] font-mono text-slate-500 uppercase">{p.csRatio}</span>
-                  </div>
+                  <span className="text-xs font-bold leading-none">
+                    {p.name.split(' ')[0]}
+                  </span>
+                  <span className="text-[8px] font-mono tracking-tight text-slate-500 block mt-1 uppercase">
+                    {p.csRatio.split(' ')[0]}
+                  </span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-5 space-y-4 text-left">
-            <div className="flex items-center gap-2 border-b border-[#2C2C2E] pb-3">
-              <Filter className="w-4 h-4 text-[#0A84FF]" />
-              <h4 className="text-xs font-mono uppercase font-black text-slate-300 tracking-wider">Track Filter</h4>
+          <div className="bg-[#1C1C1E] border border-[#2C2C2E]/60 rounded-xl p-4 space-y-3 text-left">
+            <div className="flex items-center gap-1.5 border-b border-[#2C2C2E]/55 pb-2">
+              <Filter className="w-3.5 h-3.5 text-[#0A84FF]" />
+              <h4 className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider">Filters</h4>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               {[
-                { id: 'all', label: 'All Tracks Concurrently', style: 'bg-slate-500/10 text-slate-300 border-slate-500/20' },
-                { id: 'mathematics', label: '📐 Mathematics Track', style: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' },
-                { id: 'cyber_security', label: '🛡️ Cyber Security Base', style: 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/30' },
-                { id: 'hacking', label: '🕵️ Ethical Hacking', style: 'bg-rose-500/10 text-rose-400 border-rose-500/30' },
-                { id: 'full_stack', label: '💻 Full Stack Developer', style: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
-                { id: 'data_engineering', label: '🗄️ Data Engineering', style: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' },
+                { id: 'all', label: 'All Tracks', style: 'bg-slate-550/10 text-slate-300 border-slate-500/20' },
+                { id: 'mathematics', label: 'Mathematics', style: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
+                { id: 'computer_science', label: 'Computer Science', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
+                { id: 'cyber_security', label: 'Cyber Security', style: 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/20' },
+                { id: 'hacking', label: 'Ethical Hacking', style: 'bg-rose-500/10 text-rose-450 border-rose-500/20' },
+                { id: 'full_stack', label: 'Full Stack', style: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
+                { id: 'data_engineering', label: 'Data Engineering', style: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
+                { id: 'tech_business', label: 'Tech Business', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
               ].map((btn) => (
                 <button
                   key={btn.id}
                   onClick={() => setActiveSegment(btn.id as any)}
                   className={cn(
-                    "text-left px-3.5 py-2.5 rounded-xl border text-[11px] font-mono tracking-wide transition-all uppercase cursor-pointer flex justify-between items-center w-full",
+                    "text-left px-2.5 py-1.5 rounded-lg border text-[10px] font-mono tracking-wide transition-all uppercase cursor-pointer flex justify-between items-center w-full",
                     activeSegment === btn.id 
-                      ? btn.style + " font-black shadow-md" 
-                      : "bg-black/40 border-transparent text-slate-400 hover:text-slate-200"
+                      ? btn.style + " font-bold" 
+                      : "bg-black/10 border-transparent text-slate-400 hover:text-slate-200"
                   )}
                 >
                   <span>{btn.label}</span>
                   {activeSegment === btn.id && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                    <span className="w-1 h-1 rounded-full bg-current" />
                   )}
                 </button>
               ))}

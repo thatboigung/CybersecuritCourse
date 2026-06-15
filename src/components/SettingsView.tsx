@@ -17,6 +17,8 @@ export default function SettingsView() {
   });
   const [resetSuccess, setResetSuccess] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [resetConfirm, setResetConfirm] = useState(false);
 
   const handleSave = () => {
     localStorage.setItem('cyber_candidate_name', candidateName);
@@ -26,20 +28,27 @@ export default function SettingsView() {
   };
 
   const handleResetProgress = () => {
-    if (confirm('Are you absolutely sure you want to reset all your study progress, quiz scores, and exam history? This action cannot be undone.')) {
-      progressService.resetProgress();
-      setResetSuccess(true);
-      setTimeout(() => setResetSuccess(false), 3000);
-      window.location.reload(); // Refresh to flush UI states
+    if (!resetConfirm) {
+      setResetConfirm(true);
+      setTimeout(() => setResetConfirm(false), 4000);
+      return;
     }
+    progressService.resetProgress();
+    setResetSuccess(true);
+    setResetConfirm(false);
+    setTimeout(() => setResetSuccess(false), 3000);
+    window.location.reload(); // Refresh to flush UI states
   };
 
   const handleLogout = () => {
-    if (confirm('Are you sure you want to log out of your workstation? This will clear your temporary login credentials, but keep your progress saved in secure local storage.')) {
-      localStorage.removeItem('cyber_tpin');
-      localStorage.removeItem('cyber_candidate_name');
-      window.location.reload();
+    if (!logoutConfirm) {
+      setLogoutConfirm(true);
+      setTimeout(() => setLogoutConfirm(false), 4005);
+      return;
     }
+    localStorage.removeItem('cyber_tpin');
+    localStorage.removeItem('cyber_candidate_name');
+    window.location.reload();
   };
 
   const tabs = [
@@ -108,19 +117,28 @@ export default function SettingsView() {
               
               <button 
                 onClick={handleResetProgress}
-                className="w-full flex items-center justify-between p-4 bg-[#1C1C1E] border border-[#2C2C2E]/50 hover:bg-rose-950/20 rounded-xl transition-all cursor-pointer"
+                className={cn(
+                  "w-full flex items-center justify-between p-4 rounded-xl transition-all cursor-pointer border",
+                  resetConfirm 
+                    ? "bg-rose-950/30 border-rose-500/50" 
+                    : "bg-[#1C1C1E] border border-[#2C2C2E]/50 hover:bg-rose-950/20"
+                )}
               >
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-black border border-[#2C2C2E] rounded-lg text-rose-400 shadow-md">
-                    <RefreshCw className="w-4 h-4" />
+                    <RefreshCw className={cn("w-4 h-4", resetConfirm && "animate-spin")} />
                   </div>
                   <div className="text-left">
-                    <h5 className="text-xs font-bold text-slate-200">Clear Study Progress</h5>
+                    <h5 className="text-xs font-bold text-slate-200">
+                      {resetConfirm ? "Confirm deletion? Tap again" : "Clear Study Progress"}
+                    </h5>
                     <p className="text-[10px] text-slate-500">Reset all lesson progress logs, XP counts and exam statistics.</p>
                   </div>
                 </div>
                 {resetSuccess ? (
                   <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase">Cleared ✓</span>
+                ) : resetConfirm ? (
+                  <span className="text-[10px] font-mono font-bold text-rose-400 uppercase">Confirm?</span>
                 ) : (
                   <ChevronRight className="w-4 h-4 text-slate-500" />
                 )}
@@ -202,10 +220,15 @@ export default function SettingsView() {
             <div className="mt-12 pt-6 border-t border-slate-800/40 flex flex-col sm:flex-row sm:justify-between items-stretch sm:items-center gap-4 w-full">
               <button 
                 onClick={handleLogout}
-                className="flex items-center justify-center gap-2 px-5 py-3 bg-rose-500/10 hover:bg-rose-500/20 text-rose-450 text-rose-400 border border-rose-500/20 hover:border-rose-500/40 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-sm outline-none focus:outline-none cursor-pointer"
+                className={cn(
+                  "flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-sm outline-none focus:outline-none cursor-pointer border",
+                  logoutConfirm 
+                    ? "bg-rose-600 hover:bg-rose-700 text-white border-rose-600 animate-pulse" 
+                    : "bg-rose-500/10 hover:bg-rose-500/20 text-rose-450 text-rose-400 border border-rose-500/20 hover:border-rose-500/40"
+                )}
               >
                 <LogOut className="w-4 h-4" />
-                Log Out
+                {logoutConfirm ? 'Confirm Log Out?' : 'Log Out'}
               </button>
 
               <div className="flex items-center justify-end gap-3">

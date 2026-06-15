@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Home, Settings, Trophy, LogOut, Terminal, Layers, CalendarDays } from 'lucide-react';
+import { Layers, CalendarDays, Trophy, Settings, Terminal, ShieldCheck, Cpu } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { RoadmapArea } from '../types';
@@ -25,73 +25,63 @@ export default function Sidebar({
 }: SidebarProps) {
   
   const navItems = [
-    { icon: Layers, label: 'Dashboard', active: activeView === 'home' && !selectedArea, onClick: onHomeClick },
+    { icon: Layers, label: 'Workspace', active: activeView === 'home' && !selectedArea, onClick: onHomeClick },
     { icon: CalendarDays, label: 'Timetable', active: activeView === 'calendar', onClick: onCalendarClick },
-    { icon: Trophy, label: 'Achievements', active: activeView === 'achievements', onClick: onAchievementsClick },
+    { icon: Trophy, label: 'Awards', active: activeView === 'achievements', onClick: onAchievementsClick },
     { icon: Settings, label: 'Settings', active: activeView === 'settings', onClick: onSettingsClick },
   ];
 
+  const candidateName = localStorage.getItem('cyber_candidate_name') || 'Sec Cadet';
+
   return (
-    <aside className={cn(
-      "w-20 bg-black border-r border-[#2C2C2E] flex flex-col h-screen sticky top-0 z-50 py-8 items-center shrink-0",
+    <header className={cn(
+      "w-full bg-black/90 border-b border-[#2C2C2E] backdrop-blur-md sticky top-0 z-[100] h-16 transition-all",
       className
     )}>
-      {/* Platform Vector Brand Icon */}
-      <div 
-        className="w-10 h-10 bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl flex items-center justify-center text-[#0A84FF] mb-12 shadow-md cursor-pointer active:scale-95 transition-transform" 
-        onClick={onHomeClick}
-        title="Go to main dashboard"
-      >
-        <Terminal className="w-5 h-5 text-[#0A84FF]" />
-      </div>
-
-      {/* Primary Navigation Tools */}
-      <nav className="flex-1 flex flex-col gap-6 pt-2 w-full items-center">
-        {navItems.map((item, idx) => {
-          const isItemActive = item.active;
-          return (
-            <button
-              key={idx}
-              onClick={item.onClick}
-              title={item.label}
-              className={cn(
-                "w-12 h-12 flex items-center justify-center rounded-2xl transition-all relative group cursor-pointer outline-none focus:outline-none focus:ring-0 focus-visible:outline-none",
-                isItemActive 
-                  ? "bg-[#0A84FF] text-white shadow-ios" 
-                  : "text-[#8E8E93] hover:text-white hover:bg-[#1C1C1E]"
-              )}
-            >
-              <item.icon className="w-5 h-5 shrink-0" />
-              
-              {/* Tooltip */}
-              <div className="absolute left-16 px-2.5 py-1 bg-[#1C1C1E] border border-[#2C2C2E] text-white text-[10px] rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap tracking-wide z-[100] font-medium animate-in fade-in duration-150">
-                {item.label}
-              </div>
-
-              {isItemActive && (
-                <motion.div 
-                  layoutId="active-side-nav-indicator"
-                  className="absolute -right-[2px] w-1 h-6 bg-[#0A84FF] rounded-l-full"
-                />
-              )}
-            </button>
-          )
-        })}
-      </nav>
-
-      {/* Footer Exit Portal */}
-      <div className="flex flex-col gap-6 mt-auto">
-        <button 
-          onClick={onHomeClick}
-          title="Exit to Dashboard"
-          className="w-12 h-12 flex items-center justify-center rounded-2xl text-[#8E8E93] hover:text-white hover:bg-[#1C1C1E] transition-all group relative border-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none cursor-pointer"
-        >
-          <LogOut className="w-5 h-5 shrink-0" />
-          <div className="absolute left-16 px-2.5 py-1 bg-[#1C1C1E] border border-[#2C2C2E] text-white text-[10px] rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap tracking-wide z-[100] font-medium animate-in fade-in duration-150">
-            Exit View
+      <div className="max-w-7xl mx-auto h-full px-4 md:px-8 flex justify-between items-center">
+        
+        {/* Left Side: Brand Logo */}
+        <div className="flex items-center gap-3 cursor-pointer select-none active:opacity-90" onClick={onHomeClick}>
+          <div className="w-8 h-8 bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl flex items-center justify-center text-[#0A84FF] shadow-sm">
+            <Cpu className="w-4 h-4" />
           </div>
-        </button>
+          <div>
+            <h1 className="text-xs font-bold text-white tracking-wider uppercase">DevSec Academy</h1>
+          </div>
+        </div>
+
+        {/* Center: Sleek Horizontal Nav Tabs */}
+        <nav className="flex items-center gap-1 bg-[#1C1C1E] border border-[#2C2C2E] p-1 rounded-xl">
+          {navItems.map((item, idx) => {
+            const isItemActive = item.active;
+            return (
+              <button
+                key={idx}
+                onClick={item.onClick}
+                className={cn(
+                  "px-3.5 py-1.5 rounded-lg text-[11px] font-semibold tracking-wide transition-all uppercase flex items-center gap-1.5 cursor-pointer select-none outline-none focus:outline-none",
+                  isItemActive 
+                    ? "bg-white/10 text-white font-bold" 
+                    : "text-[#8E8E93] hover:text-slate-200"
+                )}
+              >
+                <item.icon className="w-3.5 h-3.5" />
+                <span>{item.label}</span>
+              </button>
+            )
+          })}
+        </nav>
+
+        {/* Right Side: Active Cadet Info */}
+        <div className="flex items-center gap-4">
+          <div className="hidden lg:flex flex-col items-end">
+            <span className="text-[10px] font-mono font-bold text-slate-350 uppercase leading-none">
+              {candidateName}
+            </span>
+          </div>
+        </div>
+
       </div>
-    </aside>
+    </header>
   );
 }
