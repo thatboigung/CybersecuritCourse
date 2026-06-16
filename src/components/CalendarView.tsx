@@ -13,17 +13,16 @@ import { Lesson, Quiz } from '../types';
 import ReactMarkdown from 'react-markdown';
 
 export default function CalendarView() {
-  // Configurable plans: 4 weeks (Bootcamp), 8 weeks (Accelerated), 12 weeks (Balanced), 16 weeks (Self-Paced)
+  // Plan options: 6-Month Plan (26 weeks) or 1-Year Plan (52 weeks)
   const plans = [
-    { value: 4, name: "4-Week Bootcamp", description: "Intensive 3-track sprint (3-4 hrs daily)", csRatio: "High Intensity" },
-    { value: 8, name: "8-Week Accelerated", description: "Steady daily progression (1.5-2 hrs daily)", csRatio: "Recommended Pace" },
-    { value: 12, name: "12-Week Balanced", description: "Standard career track pacing (1 hr daily)", csRatio: "Optimized Balance" },
-    { value: 16, name: "16-Week Thorough Mastery", description: "Comfortable self-paced track (30-45 mins daily)", csRatio: "Relaxed Pace" }
+    { value: 26, name: "6-Month Plan", description: "Steady progression over 26 weeks", csRatio: "26 Weeks" },
+    { value: 52, name: "1-Year Plan", description: "In-depth study track over 52 weeks", csRatio: "52 Weeks" }
   ];
 
   const [numWeeks, setNumWeeks] = useState<number>(() => {
     const saved = localStorage.getItem('cyber_cal_num_weeks');
-    return saved ? parseInt(saved) : 12;
+    const parsed = saved ? parseInt(saved) : 26;
+    return (parsed === 52) ? 52 : 26;
   });
 
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
@@ -44,18 +43,10 @@ export default function CalendarView() {
     setSelectedWeek(0); // Reset to week 1 on duration switch
   }, [numWeeks]);
 
-  // Read all lessons and link back to their modules and category groups
-  const { mathLessons, compSciLessons, physicsLessons, csLessons, hackingLessons, fsLessons, deLessons, roboticsLessons, tbLessons } = useMemo(() => {
-    const math: any[] = [];
-    const compSci: any[] = [];
-    const phys: any[] = [];
-    const cs: any[] = [];
-    const hack: any[] = [];
-    const fs: any[] = [];
-    const de: any[] = [];
-    const rob: any[] = [];
-    const tb: any[] = [];
-
+  // Read all lessons in a single sequential list starting with math and CS basics, up to marketing
+  const allOrderedLessons = useMemo(() => {
+    const list: any[] = [];
+    
     MODULES.forEach(mod => {
       const area = ROADMAP_AREAS.find(a => a.id === mod.areaId);
       const isMath = area?.courseGroup === 'mathematics';
@@ -67,37 +58,68 @@ export default function CalendarView() {
       const isRobotics = area?.courseGroup === 'robotics';
       const isTB = area?.courseGroup === 'tech_business';
 
+      let type = 'cyber_security';
+      let label = 'Cyber Security';
+      let themeColor = '#0A84FF';
+      let badgeStyle = 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/20';
+
+      if (isMath) {
+        type = 'mathematics';
+        label = 'Mathematics';
+        themeColor = '#6366F1';
+        badgeStyle = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+      } else if (isCompSci) {
+        type = 'computer_science';
+        label = 'Computer Science';
+        themeColor = '#8B5CF6';
+        badgeStyle = 'bg-violet-500/10 text-violet-400 border-violet-500/20';
+      } else if (isPhysics) {
+        type = 'physics';
+        label = 'Physics';
+        themeColor = '#6366F1';
+        badgeStyle = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+      } else if (isHacking) {
+        type = 'hacking';
+        label = 'Ethical Hacking';
+        themeColor = '#FF3B30';
+        badgeStyle = 'bg-rose-500/10 text-rose-450 border-rose-500/20';
+      } else if (isFS) {
+        type = 'full_stack';
+        label = 'Full Stack';
+        themeColor = '#34C759';
+        badgeStyle = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+      } else if (isDE) {
+        type = 'data_engineering';
+        label = 'Data Engineering';
+        themeColor = '#30D158';
+        badgeStyle = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+      } else if (isRobotics) {
+        type = 'robotics';
+        label = 'Robotics & Elec.';
+        themeColor = '#FF2D55';
+        badgeStyle = 'bg-rose-500/10 text-rose-450 border-rose-500/20';
+      } else if (isTB) {
+        type = 'tech_business';
+        label = 'Tech Business';
+        themeColor = '#8B5CF6';
+        badgeStyle = 'bg-violet-500/10 text-violet-400 border-violet-500/20';
+      }
+
       mod.lessons.forEach(lesson => {
-        const payload = {
+        list.push({
           ...lesson,
           moduleTitle: mod.title,
           areaName: area?.name,
-          color: area?.color || 'blue'
-        };
-
-        if (isMath) {
-          math.push(payload);
-        } else if (isCompSci) {
-          compSci.push(payload);
-        } else if (isPhysics) {
-          phys.push(payload);
-        } else if (isHacking) {
-          hack.push(payload);
-        } else if (isFS) {
-          fs.push(payload);
-        } else if (isDE) {
-          de.push(payload);
-        } else if (isRobotics) {
-          rob.push(payload);
-        } else if (isTB) {
-          tb.push(payload);
-        } else {
-          cs.push(payload);
-        }
+          color: area?.color || 'blue',
+          type,
+          label,
+          themeColor,
+          badgeStyle
+        });
       });
     });
 
-    return { mathLessons: math, compSciLessons: compSci, physicsLessons: phys, csLessons: cs, hackingLessons: hack, fsLessons: fs, deLessons: de, roboticsLessons: rob, tbLessons: tb };
+    return list;
   }, []);
 
   // Chunks compiler
@@ -110,169 +132,33 @@ export default function CalendarView() {
     return result;
   }
 
-  // Generate dynamic schedule data
+  // Generate dynamic schedule data sequentially
   const schedule = useMemo(() => {
-    const mathChunks = chunkLessons(mathLessons, numWeeks);
-    const compSciChunks = chunkLessons(compSciLessons, numWeeks);
-    const physicsChunks = chunkLessons(physicsLessons, numWeeks);
-    const csChunks = chunkLessons(csLessons, numWeeks);
-    const hackChunks = chunkLessons(hackingLessons, numWeeks);
-    const fsChunks = chunkLessons(fsLessons, numWeeks);
-    const deChunks = chunkLessons(deLessons, numWeeks);
-    const robChunks = chunkLessons(roboticsLessons, numWeeks);
-    const tbChunks = chunkLessons(tbLessons, numWeeks);
-
+    const lessonChunks = chunkLessons(allOrderedLessons, numWeeks);
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     return Array.from({ length: numWeeks }, (_, weekIdx) => {
-      const mathWeek = mathChunks[weekIdx] || [];
-      const compSciWeek = compSciChunks[weekIdx] || [];
-      const physicsWeek = physicsChunks[weekIdx] || [];
-      const csWeek = csChunks[weekIdx] || [];
-      const hackWeek = hackChunks[weekIdx] || [];
-      const fsWeek = fsChunks[weekIdx] || [];
-      const deWeek = deChunks[weekIdx] || [];
-      const robWeek = robChunks[weekIdx] || [];
-      const tbWeek = tbChunks[weekIdx] || [];
-
+      const weekLessons = lessonChunks[weekIdx] || [];
       const days = daysOfWeek.map(name => ({ name, tasks: [] as any[] }));
 
-      // Distribute Mathematics first
-      mathWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [0, 2, 3]; // Mon, Wed, Thu
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'mathematics',
-          label: 'Mathematics',
-          themeColor: '#6366F1',
-          badgeStyle: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-        });
+      // Distribute week's lessons among Monday to Saturday
+      weekLessons.forEach((lesson, index) => {
+        const dayIdx = index % 6;
+        days[dayIdx].tasks.push(lesson);
       });
 
-      // Distribute Computer Science
-      compSciWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [0, 2, 4]; // Mon, Wed, Fri
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'computer_science',
-          label: 'Computer Science',
-          themeColor: '#8B5CF6',
-          badgeStyle: 'bg-violet-500/10 text-violet-400 border-violet-500/20'
-        });
-      });
-
-      // Distribute Cyber Security (Base)
-      csWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [0, 2, 4, 1]; // Mon, Wed, Fri, Tue
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'cyber_security',
-          label: 'Cyber Security',
-          themeColor: '#0A84FF',
-          badgeStyle: 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/20'
-        });
-      });
-
-      // Distribute Ethical Hacking
-      hackWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [1, 3, 5, 0]; // Tue, Thu, Sat, Mon
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'hacking',
-          label: 'Ethical Hacking',
-          themeColor: '#FF3B30',
-          badgeStyle: 'bg-rose-500/10 text-rose-400 border-rose-500/20'
-        });
-      });
-
-      // Distribute Full Stack
-      fsWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [4, 5, 2]; // Fri, Sat, Wed
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'full_stack',
-          label: 'Full Stack',
-          themeColor: '#34C759',
-          badgeStyle: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-        });
-      });
-
-      // Distribute Data Engineering
-      deWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [1, 3, 5, 4]; // Tue, Thu, Sat, Fri
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'data_engineering',
-          label: 'Data Engineering',
-          themeColor: '#30D158',
-          badgeStyle: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
-        });
-      });
-
-      // Distribute Tech Business
-      tbWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [1, 2, 3, 5]; // Tue, Wed, Thu, Sat
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'tech_business',
-          label: 'Tech Business',
-          themeColor: '#8B5CF6',
-          badgeStyle: 'bg-violet-500/10 text-violet-400 border-violet-500/20'
-        });
-      });
-
-      // Distribute Robotics
-      robWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [2, 4, 5]; // Wed, Fri, Sat
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'robotics',
-          label: 'Robotics & Elec.',
-          themeColor: '#FF2D55',
-          badgeStyle: 'bg-rose-500/10 text-rose-450 border-rose-500/20'
-        });
-      });
-
-      // Distribute Physics
-      physicsWeek.forEach((lesson, index) => {
-        const weekdaysIndices = [1, 3, 5]; // Tue, Thu, Sat
-        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
-        days[dayIdx].tasks.push({
-          ...lesson,
-          type: 'physics',
-          label: 'A-Level Physics',
-          themeColor: '#6366F1',
-          badgeStyle: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-        });
-      });
-
-      // Sunday is Weekly Review + Capstone Check
-      if (mathWeek.length > 0 || compSciWeek.length > 0 || physicsWeek.length > 0 || csWeek.length > 0 || hackWeek.length > 0 || fsWeek.length > 0 || deWeek.length > 0 || robWeek.length > 0 || tbWeek.length > 0) {
+      // Sunday is always the Weekly Recap Check
+      if (weekLessons.length > 0) {
         days[6].tasks.push({
           id: `review-wk-${weekIdx}`,
-          title: "Weekly Multi-Disciplinary Synthesis Check",
+          title: "Weekly Curriculum Sequential Progress Check",
           duration: 30,
           type: 'review',
           label: 'Weekly Review',
           themeColor: '#FF9500',
           badgeStyle: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
           isCustomReview: true,
-          content: `### Weekly Recap & Cross-Course Synthesis Checklist\n\nCongratulations on completing Week ${weekIdx + 1}! Studying Cyber Security, Ethical Hacking, Full Stack and Data Engineering skills concurrently creates a compound master advantage.\n\n#### Key Architectural Connections:
-1. **Cloud Architecture & DevOps**: Moving from self-hosted virtual machines to container networks managed by Kubernetes and deployed securely with Terraform.
-2. **Pipelines & Analytical Databases**: Setting up robust ETL/ELT pipelines, managing high-throughput streaming via Apache Kafka, and optimizing Star/Snowflake query layouts.
-3. **Robust Security Controls**: Restricting access routes to core database storage layers with column-level or raw encryption, safeguarding API gateways, and maintaining persistent line of defense.\n\n#### Your Weekly Checkoff Goals:
-* [ ] Verify all this week's assigned lecture lessons are marked green.
-* [ ] Attempt at least one practice quiz to measure retainment.
-* [ ] Spend 15 minutes mapping this week's full-stack concepts to security defense configurations.
-* [ ] Hydrate well and rest to encode these complex memory sets.`
+          content: `### Weekly Recap & Course Progress Synthesis Checklist\n\nCongratulations on completing Week ${weekIdx + 1}! Following this sequential timetable helps you build deep context step-by-step.\n\n#### Key Milestones:\n1. **Topic Transition**: Mastering core concepts sequentially prepares your mind to connect separate disciplines seamlessly.\n2. **Synthesis & Integration**: Think about how each completed unit aligns with the prior topics.\n3. **Practical Validation**: Use tests to evaluate your level of competency.\n\n#### Your Weekly Checkoff Goals:\n* [ ] Verify all this week's assigned lecture lessons are marked green.\n* [ ] Attempt any related module exams or practice quizzes to check retention.\n* [ ] Review previous notes to solidify understanding.\n* [ ] Hydrate well and rest to encode these complex memory sets.`
         });
       }
 
@@ -281,7 +167,7 @@ export default function CalendarView() {
         days
       };
     });
-  }, [mathLessons, compSciLessons, csLessons, hackingLessons, fsLessons, deLessons, tbLessons, numWeeks]);
+  }, [allOrderedLessons, numWeeks]);
 
   // Aggregate completion scores
   const stats = useMemo(() => {
@@ -413,49 +299,11 @@ export default function CalendarView() {
                   )}
                 >
                   <span className="text-xs font-bold leading-none">
-                    {p.name.split(' ')[0]}
+                    {p.name}
                   </span>
                   <span className="text-[8px] font-mono tracking-tight text-slate-500 block mt-1 uppercase">
-                    {p.csRatio.split(' ')[0]}
+                    {p.csRatio}
                   </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-[#1C1C1E] border border-[#2C2C2E]/60 rounded-xl p-4 space-y-3 text-left">
-            <div className="flex items-center gap-1.5 border-b border-[#2C2C2E]/55 pb-2">
-              <Filter className="w-3.5 h-3.5 text-[#0A84FF]" />
-              <h4 className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider">Filters</h4>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              {[
-                { id: 'all', label: 'All Tracks', style: 'bg-slate-550/10 text-slate-300 border-slate-500/20' },
-                { id: 'mathematics', label: 'Mathematics', style: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
-                { id: 'computer_science', label: 'Computer Science', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
-                { id: 'physics', label: 'A-Level Physics', style: 'bg-indigo-500/10 text-indigo-450 border-indigo-500/20' },
-                { id: 'cyber_security', label: 'Cyber Security', style: 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/20' },
-                { id: 'hacking', label: 'Ethical Hacking', style: 'bg-rose-500/10 text-rose-450 border-rose-500/20' },
-                { id: 'full_stack', label: 'Full Stack', style: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-                { id: 'data_engineering', label: 'Data Engineering', style: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
-                { id: 'robotics', label: 'Robotics & Elec.', style: 'bg-rose-500/10 text-rose-450 border-rose-500/20' },
-                { id: 'tech_business', label: 'Tech Business', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
-              ].map((btn) => (
-                <button
-                  key={btn.id}
-                  onClick={() => setActiveSegment(btn.id as any)}
-                  className={cn(
-                    "text-left px-2.5 py-1.5 rounded-lg border text-[10px] font-mono tracking-wide transition-all uppercase cursor-pointer flex justify-between items-center w-full",
-                    activeSegment === btn.id 
-                      ? btn.style + " font-bold" 
-                      : "bg-black/10 border-transparent text-slate-400 hover:text-slate-200"
-                  )}
-                >
-                  <span>{btn.label}</span>
-                  {activeSegment === btn.id && (
-                    <span className="w-1 h-1 rounded-full bg-current" />
-                  )}
                 </button>
               ))}
             </div>
@@ -493,12 +341,8 @@ export default function CalendarView() {
           {/* Actual days grid list */}
           <div className="space-y-6">
             {activeWeekSchedule.days.map((day, dIdx) => {
-              // Filter day tasks based on segments and hide completed tasks
-              const filteredTasks = day.tasks.filter(task => {
-                if (!task.isCustomReview && isCompleted(task.id)) return false;
-                if (activeSegment === 'all') return true;
-                return task.type === activeSegment;
-              });
+              // Non-filtered list to make sure the user does all tasks sequential
+              const filteredTasks = day.tasks;
 
               if (filteredTasks.length === 0) return null;
 

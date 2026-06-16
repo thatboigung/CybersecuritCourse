@@ -14,6 +14,29 @@ interface SubjectGridProps {
 const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = '' }: SubjectGridProps) {
   const [selectedAreaInfo, setSelectedAreaInfo] = useState<RoadmapArea | null>(null);
 
+  const [recentId, setRecentId] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('recently_accessed_area_id');
+    } catch {
+      return null;
+    }
+  });
+
+  const handleSelectArea = (area: RoadmapArea) => {
+    try {
+      localStorage.setItem('recently_accessed_area_id', area.id);
+      setRecentId(area.id);
+    } catch (e) {
+      console.error(e);
+    }
+    onSelect(area);
+  };
+
+  const recentlyAccessedArea = useMemo(() => {
+    if (!recentId) return null;
+    return ROADMAP_AREAS.find(a => a.id === recentId) || null;
+  }, [recentId]);
+
   // Map our Tailwind colors to dark glass themed shades
   const getColorClasses = (color: string) => {
     const map: Record<string, { bg: string; text: string; border: string; glow: string; bar: string }> = {
@@ -88,6 +111,30 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
     return list;
   }, []);
 
+  // Pre-calculate statistics for each course group/category
+  const categoryProgresses = useMemo(() => {
+    const list = [...ROADMAP_AREAS];
+    const groups = ['mathematics', 'computer_science', 'physics', 'cyber_security', 'hacking', 'full_stack', 'data_engineering', 'robotics', 'tech_business'];
+    const results: Record<string, number> = {};
+    
+    groups.forEach(g => {
+      let groupAreas = list.filter(area => {
+        if (g === 'cyber_security') {
+          return !area.courseGroup || area.courseGroup === 'cyber_security';
+        }
+        return area.courseGroup === g;
+      });
+      const allLessons = groupAreas.flatMap(area => {
+        const relatedModules = MODULES.filter(m => m.areaId === area.id);
+        return relatedModules.flatMap(m => m.lessons);
+      });
+      const lessonIds = allLessons.map(l => l.id);
+      results[g] = lessonIds.length > 0 ? progressService.getOverallCompletionPercentage(lessonIds) : 0;
+    });
+    
+    return results;
+  }, []);
+
   // Split filteredAreas into Mathematics, Cyber Security, Ethical Hacking, Full Stack Developer, Data Engineering, Robotics, Physics, and Tech Business sections
   const { mathematicsAreas, computerScienceAreas, physicsAreas, cyberSecurityAreas, hackingAreas, fullStackAreas, dataEngineeringAreas, roboticsAreas, techBusinessAreas } = useMemo(() => {
     const list = [...ROADMAP_AREAS];
@@ -119,7 +166,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
       <div
         key={area.id}
         className="group relative flex items-center justify-between p-4 sm:p-5 hover:bg-[#232326]/60 transition-all duration-300 border-b border-zinc-800/50 last:border-0 cursor-pointer"
-        onClick={() => onSelect(area)}
+        onClick={() => handleSelectArea(area)}
         id={`area-${area.id}`}
       >
         {/* Outer Left Side: Titles */}
@@ -135,8 +182,8 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         {/* Action Buttons & Right Side Elements */}
         <div className="flex items-center gap-4 shrink-0 ml-3">
           {/* Optional Mini-Progress circle or pill */}
-          {stats.pct > 0 && (
-            <div className="hidden sm:flex flex-col items-end gap-1 font-mono text-[10px]">
+          {stats.lessonsCount > 0 && (
+            <div className="flex flex-col items-end gap-1 font-mono text-[10px]">
               <span className={cn("font-bold text-xs", theme.text)}>{Math.round(stats.pct)}%</span>
               <div className="w-12 h-1 bg-[#2C2C2E] rounded-full overflow-hidden">
                 <div className={cn("h-full rounded-full", theme.bar)} style={{ width: `${stats.pct}%` }} />
@@ -165,12 +212,28 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
 
   return (
     <div className="relative space-y-10">
-      {/* Mathematics for Programmers Section */}
+      {/* Recently Accessed Course Section */}
+      {!searchQuery && recentlyAccessedArea && (
+        <div className="space-y-3" id="recently-accessed-section">
+          <div className="pl-1 flex items-center gap-2">
+            <Icons.Clock className="w-4 h-4 text-[#0A84FF]" />
+            <h2 className="text-sm font-bold tracking-wider uppercase text-[#0A84FF]">
+              Recently Accessed
+            </h2>
+          </div>
+          <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl relative">
+            <div className="absolute inset-0 bg-[#0A84FF]/2 pointer-events-none" />
+            {renderAreaRow(recentlyAccessedArea)}
+          </div>
+        </div>
+      )}
+
+      {/* Mathematics Section */}
       {mathematicsAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Mathematics Course Track
+              Mathematics
             </h2>
           </div>
           
@@ -185,7 +248,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Computer Science Basics Course Track
+              Computer Science Basics
             </h2>
           </div>
           
@@ -195,12 +258,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Advanced Level Physics Section */}
+      {/* Physics Section */}
       {physicsAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Advanced Level Physics Course Track
+              Physics
             </h2>
           </div>
           
@@ -210,12 +273,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Cyber Security Group Section */}
+      {/* Cyber Security Section */}
       {cyberSecurityAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Cyber Security Path
+              Cyber Security
             </h2>
           </div>
           
@@ -225,12 +288,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Ethical Hacking Group Section */}
+      {/* Ethical Hacking Section */}
       {hackingAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Ethical Hacking Path
+              Ethical Hacking
             </h2>
           </div>
           
@@ -240,12 +303,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Full Stack Developer Group Section */}
+      {/* Full Stack Developer Section */}
       {fullStackAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Full Stack Developer Path
+              Full Stack Developer
             </h2>
           </div>
           
@@ -255,12 +318,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Data Science & Engineering Group Section */}
+      {/* Data Science & Engineering Section */}
       {dataEngineeringAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Data Science & Engineering Path
+              Data Science & Engineering
             </h2>
           </div>
           
@@ -270,12 +333,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Robotics & Electronics Group Section */}
+      {/* Robotics & Electronics Section */}
       {roboticsAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Robotics & Electronics Path
+              Robotics & Electronics
             </h2>
           </div>
           
@@ -285,12 +348,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
-      {/* Tech-Driven Business & Marketing Group Section */}
+      {/* Tech-Driven Business & Marketing Section */}
       {techBusinessAreas.length > 0 && (
         <div className="space-y-3">
           <div className="pl-1">
             <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
-              Tech-Driven Business & Marketing Path
+              Tech-Driven Business & Marketing
             </h2>
           </div>
           

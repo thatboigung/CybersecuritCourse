@@ -1,6 +1,6 @@
 {
   "name": "DevSec Academy",
-  "description": "An interactive concurrent-pacing learning suite for Cyber Security, Ethical Hacking, Pure Mathematics (ZIMSEC A-Level Forms 5-6), and Full-Stack development. Features custom multi-track timetables, lecture outlines, practice quizzes, and interactive credential tracking.",
+  "description": "An interactive concurrent-pacing learning suite for Cyber Security, Ethical Hacking, Pure Mathematics, and Full-Stack development. Features custom multi-track timetables, lecture outlines, practice quizzes, and interactive credential tracking.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

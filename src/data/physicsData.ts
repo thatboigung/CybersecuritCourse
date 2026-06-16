@@ -2,10 +2,74 @@ import { RoadmapArea, Module } from '../types';
 
 export const PHYSICS_ROADMAP_AREAS: RoadmapArea[] = [
   {
-    id: 'phys-1',
-    name: 'Advanced Level Physics (ZIMSEC)',
-    description: 'Master rigorous mathematical measurement, Newtonian mechanics, simple harmonic motion, CAP/DC networks, electromagnetism, op-amps, thermodynamics, and quantum radioactive decay structures.',
-    icon: 'Orbit',
+    id: 'phys-u1',
+    name: 'General Physics, Error Analysis, and Vectors',
+    description: 'Foundational frameworks for mathematical measurements, dimensional checks, and graphical error calculations.',
+    icon: 'Compass',
+    color: 'blue',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u2',
+    name: 'Newtonian Mechanics & Robotics',
+    description: 'Analyzing structural forces in static equilibrium, linear motion paths, orbital field equations, and automation.',
+    icon: 'Activity',
+    color: 'indigo',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u3',
+    name: 'Oscillations, Waves, and Superposition',
+    description: 'The mathematical and graphical representation of simple harmonic systems and waveform optics.',
+    icon: 'Shuffle',
+    color: 'rose',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u4',
+    name: 'Electricity, DC Circuits, and Capacitance',
+    description: 'The management, routing, and accumulation properties of electrical networks.',
+    icon: 'Zap',
+    color: 'amber',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u5',
+    name: 'Electromagnetism, Induction, and AC Networks',
+    description: 'Dynamic interactions inside magnetic fields, transformation ratios, and rectification mechanisms.',
+    icon: 'Cpu',
+    color: 'violet',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u6',
+    name: 'Analogue & Digital Electronics',
+    description: 'Operational amplifiers, feedback loops, logic structures, and digital applications.',
+    icon: 'Sliders',
+    color: 'emerald',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u7',
+    name: 'Phases of Matter & Thermal Dynamics',
+    description: 'Microscopic models of states, deformation limits, tracking scale conversions, and gas equations.',
+    icon: 'Thermometer',
+    color: 'rose',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-u8',
+    name: 'Modern & Quantum Physics',
+    description: 'Wave-particle duality, atomic fields, mass excess, ionizing radiation, and communication links.',
+    icon: 'Sparkles',
+    color: 'cyan',
+    courseGroup: 'physics'
+  },
+  {
+    id: 'phys-exam',
+    name: 'Physics Examination Model',
+    description: 'The structure of examination papers and strategic past paper reviews.',
+    icon: 'GraduationCap',
     color: 'indigo',
     courseGroup: 'physics'
   }
@@ -14,7 +78,7 @@ export const PHYSICS_ROADMAP_AREAS: RoadmapArea[] = [
 export const PHYSICS_MODULES: Module[] = [
   {
     id: 'mod-physics-u1',
-    areaId: 'phys-1',
+    areaId: 'phys-u1',
     title: 'Unit 1: General Physics, Error Analysis, and Vectors',
     description: 'Foundational frameworks for mathematical measurements, dimensional checks, and graphical error calculations.',
     lessons: [
@@ -160,7 +224,7 @@ Learn how to resolve vectors in mechanics:
   },
   {
     id: 'mod-physics-u2',
-    areaId: 'phys-1',
+    areaId: 'phys-u2',
     title: 'Unit 2: Newtonian Mechanics & Robotics',
     description: 'Analyzing structural forces in static equilibrium, linear motion paths, orbital field equations, and automation.',
     lessons: [
@@ -441,7 +505,7 @@ This module examines modern microcontroller nodes (ESP32, Arduino, Raspberry Pi)
   },
   {
     id: 'mod-physics-u3',
-    areaId: 'phys-1',
+    areaId: 'phys-u3',
     title: 'Unit 3: Oscillations, Waves, and Superposition',
     description: 'The mathematical and graphical representation of simple harmonic systems and waveform optics.',
     lessons: [
@@ -554,7 +618,7 @@ $$v = \\pm \\omega \\sqrt{x_0^2 - x^2}$$
   },
   {
     id: 'mod-physics-u4',
-    areaId: 'phys-1',
+    areaId: 'phys-u4',
     title: 'Unit 4: Electricity, DC Circuits, and Capacitance',
     description: 'The management, routing, and accumulation properties of electrical networks.',
     lessons: [
@@ -705,7 +769,7 @@ Excellent for designing light or temperature sensors using light-dependent resis
   },
   {
     id: 'mod-physics-u5',
-    areaId: 'phys-1',
+    areaId: 'phys-u5',
     title: 'Unit 5: Electromagnetism, Induction, and AC Networks',
     description: 'Dynamic interactions inside magnetic fields, transformation ratios, and rectification mechanisms.',
     lessons: [
@@ -824,7 +888,7 @@ $$V_H = \\frac{B I}{n t e}$$
   },
   {
     id: 'mod-physics-u6',
-    areaId: 'phys-1',
+    areaId: 'phys-u6',
     title: 'Unit 6: Analogue & Digital Electronics',
     description: 'Operational amplifiers, feedback loops, logic structures, and digital applications.',
     lessons: [
@@ -900,7 +964,7 @@ $$V_H = \\frac{B I}{n t e}$$
   },
   {
     id: 'mod-physics-u7',
-    areaId: 'phys-1',
+    areaId: 'phys-u7',
     title: 'Unit 7: Phases of Matter & Thermal Dynamics',
     description: 'Microscopic models of states, deformation limits, tracking scale conversions, and gas equations.',
     lessons: [
@@ -1048,7 +1112,7 @@ $$V_H = \\frac{B I}{n t e}$$
   },
   {
     id: 'mod-physics-u8',
-    areaId: 'phys-1',
+    areaId: 'phys-u8',
     title: 'Unit 8: Modern & Quantum Physics',
     description: 'Wave-particle duality, atomic fields, mass excess, ionizing radiation, and communication links.',
     lessons: [
@@ -1222,8 +1286,8 @@ $$V_H = \\frac{B I}{n t e}$$
   },
   {
     id: 'mod-physics-exam',
-    areaId: 'phys-1',
-    title: 'Unit 9: ZIMSEC A-Level Physics Examination Model',
+    areaId: 'phys-exam',
+    title: 'Unit 9: Physics Examination Model',
     description: 'The structure of examination papers and strategic past paper reviews.',
     lessons: [
       {
@@ -1234,7 +1298,7 @@ $$V_H = \\frac{B I}{n t e}$$
         youtubeVideoId: 'SFA8SIsG_qY',
         content: `### 9.1 Structure & Strategies for Papers 1, 2, 3, & 4
 
-#### ZIMSEC Model Overview
+#### Advanced Level Model Overview
 * **Paper 1 (Multiple Choice):** 1 Hour | 40 Marks | 13% Weighting. 40 mandatory conceptual problems covering all core learning matrices.
 * **Paper 2 (Structured Questions):** 1 Hour 30 Minutes | 60 Marks | 19% Weighting. Systemic formulas, algebraic proofs, and mathematical derivation challenges.
 * **Paper 3 (Free Response Questions):** 2 Hours 30 Minutes | 100 Marks | 32% Weighting. Consists of 5 large-scale topical problems carrying 25 marks each. Question 1 (General Physics & Newtonian Mechanics) is completely mandatory. Select exactly three out of the remaining four topical partitions.
@@ -1246,7 +1310,7 @@ $$V_H = \\frac{B I}{n t e}$$
 
 Solve actual practical and theory questions with the following resource:
 
-* **YouTube Search:** [ZIMSEC A level physics past papers](https://www.youtube.com/results?search_query=ZIMSEC+A+level+physics+past+papers)
+* **YouTube Search:** [Advanced A level physics past papers](https://www.youtube.com/results?search_query=Advanced+A+level+physics+past+papers)
 `,
         quiz: {
           id: 'q-phys-exam-all',
@@ -1254,7 +1318,7 @@ Solve actual practical and theory questions with the following resource:
           questions: [
             {
               id: 'q-phys-exam-1-1',
-              text: 'In ZIMSEC Paper 3, which physics topic section is completely mandatory for all students?',
+              text: 'In Advanced Level Paper 3, which physics topic section is completely mandatory for all students?',
               options: ['Modern Quantum Physics', 'General Physics & Newtonian Mechanics', 'Operational Amplifiers', 'Thermal Dynamics'],
               correctAnswerIndex: 1,
               explanation: 'Question 1 covering General Physics & Newtonian Mechanics is a completely mandatory composite in Paper 3.'

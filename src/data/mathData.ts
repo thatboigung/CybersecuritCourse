@@ -66,7 +66,7 @@ export const MATH_MODULES: Module[] = [
     title: 'Unit 1: Advanced Algebra & Proof Matrix',
     description: 'Decompose rational functions into partial fractions, sketch modulus paths, invert singular matrices, apply mathematical induction, and verify group binary operations.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Induction Proof Mechanics Instruction", url: "https://www.youtube.com/results?search_query=Proof+by+mathematical+induction+A+level+pure+math" }
     ],
     lessons: [
@@ -478,7 +478,7 @@ A set $\\mathbb{G}$ associated with binary operation $*$ is a mathematical **Gro
     title: 'Unit 2: Geometry and Vectors (2D & 3D)',
     description: 'Solve parametric coordinate geometries, analyze orthogonal dot/cross lines, formulate coordinate planes, and evaluate points-to-plane distance metrics.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Line and Plane Vectors 3D Guide", url: "https://www.youtube.com/results?search_query=Vector+equation+of+a+line+and+plane+3D+pure+math" }
     ],
     lessons: [
@@ -747,7 +747,7 @@ Calculating geometric relations: intersection angles and closest distances in 3D
     title: 'Unit 3: Sequences, Series, and Binomial Expansions',
     description: 'Construct progressions, evaluate infinite summation limits, perform binomial expansion for rational values, and build functions using Maclaurin/Taylor representations.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Binomial Expansions Negative Indices", url: "https://www.youtube.com/results?search_query=Binomial+expansion+rational+negative+indices+A+level" }
     ],
     lessons: [
@@ -948,7 +948,7 @@ Approximating arbitrary coordinate functions using infinite derivatives:
     title: 'Advanced Trigonometry',
     description: 'Plane trigonometry sector coordinates, small-angle approximation math, graphing inverse trigonometric coordinates, and solving compound proving identities.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Trig Proofs & Compounds Identities Tutorial", url: "https://www.youtube.com/results?search_query=Solving+trigonometric+equations+and+proving+identities+A+level" }
     ],
     lessons: [
@@ -1101,7 +1101,7 @@ $$R = \\sqrt{a^2 + b^2} \\quad \\text{and} \\quad \\alpha = \\arctan\\left(\\fra
     title: 'Unit 5: Differential and Integral Calculus',
     description: 'Master first-principle limits, chain/product/quotient rules, implicit parametric paths, stationary trajectories, parts/substitution integration, and separation of variables solvers.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Separation of Variables Differential Equations", url: "https://www.youtube.com/results?search_query=Separation+of+variables+differential+equations+A+level+pure+math" }
     ],
     lessons: [
@@ -1356,7 +1356,7 @@ Evaluate both sides to establish the general solution equation (remembering cons
     title: 'Numerical Methods',
     description: 'Solve real root boundaries with sign change evaluations, formulate converging iterative schemas, calculate Newton-Raphson approximations, and estimate definite areas via the Trapezium Rule.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "Newton Raphson Approximations & failures", url: "https://www.youtube.com/results?search_query=Newton+Raphson+method+convergence+and+failure+pure+math" }
     ],
     lessons: [
@@ -1575,7 +1575,7 @@ The nature of the trapezium estimation boundary matches the local concavity of t
     title: 'Unit 7: Complex Numbers',
     description: 'Deconstruct complex conjugates, graph geometric locus paths on Argand diagrams, represent equations in polar Euler coordinates, and calculate root matrices via de Moivre\'s theorem.',
     libraryLinks: [
-      { title: "ZIMSEC Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=ZIMSEC+A+level+pure+mathematics+past+papers" },
+      { title: "Advanced Pure Mathematics Past Papers Search", url: "https://www.youtube.com/results?search_query=Advanced+A+level+pure+mathematics+past+papers" },
       { title: "De Moivre Theorem roots of unity", url: "https://www.youtube.com/results?search_query=De+Moivre+theorem+roots+of+unity+polar+form+complex+numbers" }
     ],
     lessons: [

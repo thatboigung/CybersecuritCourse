@@ -217,15 +217,42 @@ export default function App() {
 
       {/* Main Core shell sidebar menu */}
       {isAuthenticated && (
-        <MemoizedSidebar 
-          selectedArea={selectedArea} 
-          onHomeClick={handleHomeClick}
-          onSettingsClick={handleSettingsClick}
-          onAchievementsClick={handleAchievementsClick}
-          onCalendarClick={handleCalendarClick}
-          activeView={view}
-          className="hidden md:block"
-        />
+        <>
+          {/* Mobile Sticky Topbar */}
+          <header className="md:hidden sticky top-0 z-[110] w-full bg-black/90 backdrop-blur-md border-b border-[#2C2C2E] h-14 flex items-center justify-between px-4 shrink-0" id="mobile-sticky-topbar">
+            <div 
+              onClick={handleHomeClick} 
+              className="flex items-center gap-2 cursor-pointer select-none active:opacity-90"
+              id="mobile-topbar-brand"
+            >
+              <div className="w-8 h-8 bg-[#1C1C1E] border border-[#2C2C2E]/80 rounded-xl flex items-center justify-center text-[#0A84FF]">
+                <Cpu className="w-4 h-4" />
+              </div>
+              <span className="text-[11px] font-bold text-white tracking-widest uppercase font-sans">
+                DevSec Academy
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2" id="mobile-topbar-right">
+              <div className="bg-[#1C1C1E] border border-[#2C2C2E]/60 px-3 py-1.5 rounded-full flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#30D158] animate-pulse" />
+                <span className="text-[9px] font-mono font-bold text-slate-300 uppercase tracking-wider leading-none">
+                  {localStorage.getItem('cyber_candidate_name') || 'Cadet'}
+                </span>
+              </div>
+            </div>
+          </header>
+
+          <MemoizedSidebar 
+            selectedArea={selectedArea} 
+            onHomeClick={handleHomeClick}
+            onSettingsClick={handleSettingsClick}
+            onAchievementsClick={handleAchievementsClick}
+            onCalendarClick={handleCalendarClick}
+            activeView={view}
+            className="hidden md:block"
+          />
+        </>
       )}
 
       {/* Mobile iOS-style Floating Tab Dock */}

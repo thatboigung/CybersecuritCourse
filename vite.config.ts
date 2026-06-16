@@ -47,9 +47,9 @@ export default defineConfig(({mode}) => {
           ]
         },
         manifest: {
-          name: 'ZimsecPass Portal',
-          short_name: 'ZimsecPass',
-          description: 'The ultimate O-Level companion for Zimbabwean excellence.',
+          name: 'DevSec Academy Portal',
+          short_name: 'DevSec Academy',
+          description: 'The ultimate training suite for multi-disciplinary tech and science skills.',
           theme_color: '#1a1a1a',
           background_color: '#fbfbfb',
           display: 'standalone',
