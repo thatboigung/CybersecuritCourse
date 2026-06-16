@@ -3,6 +3,8 @@ import { COMP_SCI_ROADMAP_AREAS, COMP_SCI_MODULES } from './data/compSciData';
 import { HACKING_ROADMAP_AREAS, HACKING_MODULES } from './data/hackingData';
 import { FULL_STACK_ROADMAP_AREAS, FULL_STACK_MODULES } from './data/fullStackData';
 import { DATA_ENGINEERING_ROADMAP_AREAS, DATA_ENGINEERING_MODULES } from './data/dataEngineeringData';
+import { ROBOTICS_ROADMAP_AREAS, ROBOTICS_MODULES } from './data/roboticsData';
+import { PHYSICS_ROADMAP_AREAS, PHYSICS_MODULES } from './data/physicsData';
 import { TECH_BUSINESS_ROADMAP_AREAS, TECH_BUSINESS_MODULES } from './data/techBusinessData';
 import { RoadmapArea, Module, Lesson, Quiz, Exam, QuizQuestion } from './types';
 import {
@@ -138,10 +140,12 @@ const BASE_ROADMAP_AREAS: RoadmapArea[] = [
 export const ROADMAP_AREAS: RoadmapArea[] = [
   ...MATH_ROADMAP_AREAS,
   ...COMP_SCI_ROADMAP_AREAS,
+  ...PHYSICS_ROADMAP_AREAS,
   ...BASE_ROADMAP_AREAS,
   ...HACKING_ROADMAP_AREAS,
   ...FULL_STACK_ROADMAP_AREAS,
   ...DATA_ENGINEERING_ROADMAP_AREAS,
+  ...ROBOTICS_ROADMAP_AREAS,
   ...TECH_BUSINESS_ROADMAP_AREAS
 ];
 
@@ -3313,9 +3317,11 @@ To recognize your dedication to complex security integration and practical defen
 export const MODULES: Module[] = [
   ...MATH_MODULES,
   ...COMP_SCI_MODULES,
+  ...PHYSICS_MODULES,
   ...BASE_MODULES,
   ...HACKING_MODULES,
   ...FULL_STACK_MODULES,
   ...DATA_ENGINEERING_MODULES,
+  ...ROBOTICS_MODULES,
   ...TECH_BUSINESS_MODULES
 ];

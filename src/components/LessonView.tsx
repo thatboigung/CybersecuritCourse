@@ -49,6 +49,132 @@ function extractYouTubeId(input: string): string {
   return trimmed;
 }
 
+const KEYWORD_VIDEO_MAP: Record<string, string> = {
+  'homogeneity': 'f0epc9wN_q8',
+  'dimensional': 'f0epc9wN_q8',
+  'uncertainty': 'h8Sby_Z7H2A',
+  'uncertainties': 'h8Sby_Z7H2A',
+  'errors': 'h8Sby_Z7H2A',
+  'vector': 'SFA8SIsG_qY',
+  'vectors': 'SFA8SIsG_qY',
+  'projectile': 'mNAsE6T0Gf0',
+  'momentum': 'mNAsE6T0Gf0',
+  'collision': 'mNAsE6T0Gf0',
+  'fluid': 'mNAsE6T0Gf0',
+  'stokes': 'mNAsE6T0Gf0',
+  'terminal velocity': 'mNAsE6T0Gf0',
+  'work': 'mNAsE6T0Gf0',
+  'power': 'mNAsE6T0Gf0',
+  'thermodynamics': 'mNAsE6T0Gf0',
+  'circular motion': 'mNAsE6T0Gf0',
+  'centripetal': 'mNAsE6T0Gf0',
+  'gravitational': 'mNAsE6T0Gf0',
+  'satellite': 'mNAsE6T0Gf0',
+  'shm': 'f0epc9wN_q8',
+  'simple harmonic': 'f0epc9wN_q8',
+  'stationary waves': 'f0epc9wN_q8',
+  'double slit': 'f0epc9wN_q8',
+  'young': 'f0epc9wN_q8',
+  'diffraction': 'f0epc9wN_q8',
+  'internal resistance': 'SFA8SIsG_qY',
+  'emf': 'SFA8SIsG_qY',
+  'kirchhoff': 'SFA8SIsG_qY',
+  'coulomb': 'SFA8SIsG_qY',
+  'electric field': 'SFA8SIsG_qY',
+  'capacitor': 'SFA8SIsG_qY',
+  'magnetic': 'SFA8SIsG_qY',
+  'induction': 'SFA8SIsG_qY',
+  'op-amp': 'SFA8SIsG_qY',
+  'operational amplifier': 'SFA8SIsG_qY',
+  'logic gate': 'SFA8SIsG_qY',
+  'stress': 'SFA8SIsG_qY',
+  'strain': 'SFA8SIsG_qY',
+  'heat capacity': 'SFA8SIsG_qY',
+  'kinetic theory': 'SFA8SIsG_qY',
+  'bernoulli': 'SFA8SIsG_qY',
+  'photoelectric': 'SFA8SIsG_qY',
+  'binding energy': 'SFA8SIsG_qY',
+  'fission': 'SFA8SIsG_qY',
+  'fusion': 'SFA8SIsG_qY',
+  'radioactive': 'SFA8SIsG_qY',
+  'decay': 'SFA8SIsG_qY',
+  'attenuation': 'SFA8SIsG_qY',
+
+  // Math
+  'trigonometric': 'ZK3O402wf1c',
+  'identities': 'ZK3O402wf1c',
+  'differentiation': 'U_Y3F8xQdOk',
+  'implicit': 'U_Y3F8xQdOk',
+  'parametric': 'U_Y3F8xQdOk',
+  'stationary points': 'U_Y3F8xQdOk',
+  'integration': 'f07fX_6uP7o',
+  'by parts': 'f07fX_6uP7o',
+  'substitution': 'f07fX_6uP7o',
+  'complex number': 'S_-qZ6bM0qE',
+  'argand': 'S_-qZ6bM0qE',
+  'de moivre': 'S_-qZ6bM0qE',
+  'differential equation': 'inWWhr5tnEA',
+  'separation of variables': 'inWWhr5tnEA',
+  'numerical methods': 'inWWhr5tnEA',
+  'newton raphson': 'inWWhr5tnEA',
+  'trapezium': 'inWWhr5tnEA',
+
+  // Computer Science / Tech
+  'network': 'P_3H4pY29l0',
+  'routing': 'P_3H4pY29l0',
+  'protocols': 'P_3H4pY29l0',
+  'packet': 'P_3H4pY29l0',
+  'database': 'U_A_58UvEVM',
+  'sql': 'U_A_58UvEVM',
+  'normalization': 'U_A_58UvEVM',
+  'relational': 'U_A_58UvEVM',
+  'encryption': 'rL8XmGq9pL8',
+  'cryptography': 'rL8XmGq9pL8',
+  'asymmetric': 'rL8XmGq9pL8',
+  'symmetric': 'rL8XmGq9pL8',
+  'hash': 'rL8XmGq9pL8',
+  'recursion': 'wgQ3rHh3Xk8',
+  'recursive': 'wgQ3rHh3Xk8',
+  'oop': 'wgQ3rHh3Xk8',
+  'polymorphism': 'wgQ3rHh3Xk8',
+  'assembly': 'mNAsE6T0Gf0',
+  'processor': 'mNAsE6T0Gf0',
+  'registers': 'mNAsE6T0Gf0',
+  'assembler': 'mNAsE6T0Gf0',
+  'compiler': 'mNAsE6T0Gf0'
+};
+
+function resolveVideoId(href: string, lessonVideoId: string): string {
+  if (!href) return lessonVideoId;
+
+  // 1. Direct YouTube watch ID extraction
+  const directId = extractYouTubeId(href);
+  if (directId && directId !== href && directId.length === 11) {
+    return directId;
+  }
+
+  // 2. Extract and resolve from search_query
+  try {
+    const urlObj = new URL(href);
+    const query = urlObj.searchParams.get('search_query');
+    if (query) {
+      const decodedQuery = decodeURIComponent(query.replace(/\+/g, ' ')).toLowerCase();
+      
+      // Match key phrases / words
+      for (const [key, val] of Object.entries(KEYWORD_VIDEO_MAP)) {
+        if (decodedQuery.includes(key)) {
+          return val;
+        }
+      }
+    }
+  } catch (e) {
+    // Ignore error
+  }
+
+  // Fallback to primary video
+  return lessonVideoId || 'mNAsE6T0Gf0';
+}
+
 interface LessonViewProps {
   lesson: Lesson;
   module: Module;
@@ -251,6 +377,67 @@ export default function LessonView({
       localStorage.removeItem(`cyber_lecture_checkpoints_${lesson.id}`);
     }
   };
+  
+  const cleanMarkdown = useMemo(() => {
+    if (!lesson.content) return '';
+    // Fix spacing: [Some Title] (https://...) -> [Some Title](https://...)
+    // This supports arbitrary whitespace between the closing bracket and opening parenthesis.
+    return lesson.content.replace(/\[([^\]]+)\]\s+\((https?:\/\/[^\s)]+)\)/g, '[$1]($2)');
+  }, [lesson.content]);
+
+  // Extract all video links from the lesson markdown content dynamically
+  const lessonVideos = useMemo(() => {
+    const list: { title: string; videoId: string; originalUrl: string }[] = [];
+    
+    // 1. Core lesson video
+    if (lesson.youtubeVideoId) {
+      list.push({
+        title: "Main Video Lesson Guide",
+        videoId: lesson.youtubeVideoId,
+        originalUrl: `https://youtube.com/watch?v=${lesson.youtubeVideoId}`
+      });
+    }
+
+    // 2. Extracted links
+    if (cleanMarkdown) {
+      const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+      let match;
+      while ((match = linkRegex.exec(cleanMarkdown)) !== null) {
+        let textTitle = match[1].trim();
+        const href = match[2].trim();
+        
+        // Match YouTube or standard URLs
+        if (href.includes('youtube.com') || href.includes('youtu.be') || href.includes('https://')) {
+          const vidId = resolveVideoId(href, lesson.youtubeVideoId || '');
+          const isRawUrl = /^(https?:\/\/|www\.)/i.test(textTitle);
+          
+          if (isRawUrl || !textTitle) {
+            try {
+              const urlObj = new URL(href);
+              const query = urlObj.searchParams.get('search_query');
+              if (query) {
+                textTitle = decodeURIComponent(query.replace(/\+/g, ' '));
+              } else {
+                textTitle = "Supplementary Reference Video";
+              }
+            } catch (e) {
+              textTitle = "Supplementary Reference Video";
+            }
+          }
+          
+          if (!list.some(item => item.videoId === vidId || item.title.toLowerCase() === textTitle.toLowerCase())) {
+            list.push({
+              title: textTitle,
+              videoId: vidId,
+              originalUrl: href
+            });
+          }
+        }
+      }
+    }
+    
+    return list;
+  }, [lesson, cleanMarkdown]);
 
   // Render Quiz inside the classroom if loaded
   if (activeQuiz) {
@@ -385,45 +572,49 @@ export default function LessonView({
                   a: ({ href, children, ...props }: any) => {
                     if (!href) return <span {...props}>{children}</span>;
 
-                    const isYouTube = href.includes('youtube.com') || href.includes('youtu.be');
-                    if (isYouTube) {
-                      const vidId = extractYouTubeId(href);
-                      if (vidId) {
-                        return (
-                          <button
-                            onClick={() => {
-                              setActiveVideoId(vidId);
-                              setTimeout(() => {
-                                if (videoSectionRef.current) {
-                                  videoSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                }
-                              }, 100);
-                            }}
-                            className="text-[#0A84FF] hover:text-[#0A84FF]/80 font-bold underline inline-flex items-center gap-1 bg-[#1C1C1E] border border-[#2C2C2E] hover:bg-black px-2 py-0.5 rounded transition-all cursor-pointer align-baseline focus:outline-none focus:ring-0 focus-visible:outline-none border-none text-[13px] sm:text-[14px]"
-                            title="Play Video inside App Player"
-                          >
-                            <Play className="w-3 h-3 fill-current shrink-0 inline" />
-                            {children || "Play Video"}
-                          </button>
-                        );
+                    // Support in-app video playback of ALL links
+                    const targetVideoId = resolveVideoId(href, lesson.youtubeVideoId || '');
+
+                    // Extract safe display text of children
+                    const childrenString = React.Children.toArray(children).join('').trim();
+                    const isRawUrl = /^(https?:\/\/|www\.)/i.test(childrenString);
+
+                    let displayTitle = childrenString;
+                    if (!displayTitle || isRawUrl) {
+                      try {
+                        const urlObj = new URL(href);
+                        const query = urlObj.searchParams.get('search_query');
+                        if (query) {
+                          displayTitle = decodeURIComponent(query.replace(/\+/g, ' '));
+                        } else {
+                          displayTitle = `Interactive Video Tutorial`;
+                        }
+                      } catch (e) {
+                        displayTitle = `Interactive Video Tutorial`;
                       }
                     }
 
                     return (
-                      <a 
-                        href={href} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-[#0A84FF] hover:text-[#0A84FF]/85 transition-colors underline font-medium focus:outline-none"
-                        {...props}
+                      <button
+                        onClick={() => {
+                          setActiveVideoId(targetVideoId);
+                          setTimeout(() => {
+                            if (videoSectionRef.current) {
+                              videoSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                          }, 100);
+                        }}
+                        className="text-[#0A84FF] hover:text-sky-300 font-bold underline inline-flex items-center gap-1.5 bg-[#1C1C1E] border border-[#2C2C2E]/60 hover:bg-black hover:border-sky-500/30 px-3 py-1.5 rounded-xl transition-all cursor-pointer align-baseline focus:outline-none focus:ring-0 focus-visible:outline-none text-[13px] sm:text-[14px] shadow-sm my-1 decoration-dotted"
+                        title="Load & play this video inside the class player"
                       >
-                        {children}
-                      </a>
+                        <Play className="w-3.5 h-3.5 fill-current text-sky-400 shrink-0 inline animate-pulse" />
+                        <span>{displayTitle}</span>
+                      </button>
                     );
                   }
                 }}
               >
-                {lesson.content}
+                {cleanMarkdown}
               </ReactMarkdown>
             </div>
 
@@ -512,6 +703,62 @@ export default function LessonView({
                     >
                       Back to Main Video
                     </button>
+                  </div>
+                )}
+
+                {/* Playlist & Additional Video Resources Checklist */}
+                {lessonVideos.length > 1 && (
+                  <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4.5 space-y-3 mt-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-[#0A84FF]">
+                        <BookOpen className="w-4 h-4" />
+                        <span className="text-[10px] font-mono uppercase tracking-[0.15em] font-black">Lecture Video Playlist ({lessonVideos.length})</span>
+                      </div>
+                      <span className="text-[9px] font-mono text-slate-500">SELECT IN-APP PLAYBACK</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {lessonVideos.map((video, idx) => {
+                        const isCurrentActive = activeVideoId === video.videoId;
+                        return (
+                          <button
+                            key={`${video.videoId}-${idx}`}
+                            onClick={() => {
+                              setActiveVideoId(video.videoId);
+                              setTimeout(() => {
+                                if (videoSectionRef.current) {
+                                  videoSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                              }, 100);
+                            }}
+                            className={cn(
+                              "p-3 rounded-xl transition-all duration-200 cursor-pointer flex items-center gap-3 text-left border focus:outline-none active:scale-[0.98] select-none",
+                              isCurrentActive
+                                ? "bg-sky-950/30 border-[#0A84FF]/40 text-[#0A84FF]"
+                                : "bg-black/45 border-[#2C2C2E] text-slate-450 text-slate-400 hover:text-white hover:border-[#444]"
+                            )}
+                          >
+                            <div className={cn(
+                              "w-6 h-6 rounded-lg flex items-center justify-center shrink-0 font-mono text-[10px] font-black",
+                              isCurrentActive ? "bg-[#0A84FF] text-white animate-pulse" : "bg-[#1C1C1E] text-slate-505 text-slate-500"
+                            )}>
+                              {isCurrentActive ? <Play className="w-3 h-3 fill-current" /> : (idx + 1)}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className={cn(
+                                "block text-xs font-bold leading-tight truncate",
+                                isCurrentActive ? "text-white" : "text-slate-300"
+                              )}>
+                                {video.title}
+                              </span>
+                              <span className="block text-[8px] font-mono text-slate-500 uppercase mt-0.5 truncate tracking-wider">
+                                {video.videoId === lesson.youtubeVideoId ? "Core Lecture" : "Supplementary Resource"}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>

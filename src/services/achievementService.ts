@@ -236,6 +236,128 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     icon: 'Award',
     earned: false,
     rarity: 'Legendary'
+  },
+  // New Math Certification Exams Achievements
+  {
+    id: 'cert-math-301',
+    title: 'Pure Algebraist Certification',
+    description: 'Earned by passing the Unit 1 Advanced Algebra and Proofs Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-302',
+    title: 'Geometric Vectorist Certification',
+    description: 'Earned by passing the Unit 2 Geometry & 3D Vectors Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-303',
+    title: 'Infinite Series Strategist Certification',
+    description: 'Earned by passing the Unit 3 Infinite Series & Binomial Expansions Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-304',
+    title: 'Trigonometric Analyst Certification',
+    description: 'Earned by passing the Unit 4 Advanced Trigonometry Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-305',
+    title: 'Pure Calculus Engineer Certification',
+    description: 'Earned by passing the Unit 5 Differentiation & Integration Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-306',
+    title: 'Numerical Methods Analyst Certification',
+    description: 'Earned by passing the Unit 6 Numerical Approximations Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-math-307',
+    title: 'Complex Domain Specialist Certification',
+    description: 'Earned by passing the Unit 7 Complex Numbers Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  // New CS Certification Exams Achievements
+  {
+    id: 'cert-cs-101',
+    title: 'Certified Data Representation Associate',
+    description: 'Earned by passing the Unit 1 Data Representation & Arithmetic Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-102',
+    title: 'Certified Computer & Cloud Architect',
+    description: 'Earned by passing the Unit 2 CPU Architecture & Cloud Services Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-103',
+    title: 'Certified Network Systems Architect',
+    description: 'Earned by passing the Unit 3 Networking Protocols Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-104',
+    title: 'Certified Algorithms Specialist',
+    description: 'Earned by passing the Unit 4 Algorithms & Data Structures Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-105',
+    title: 'Certified Software Design Engineer',
+    description: 'Earned by passing the Unit 5 OOP Software Methodologies Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-106',
+    title: 'Certified Database Systems Manager',
+    description: 'Earned by passing the Unit 6 Relational Databases Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-107',
+    title: 'Certified IT Security & Ethics Professional',
+    description: 'Earned by passing the Unit 7 Security, Governance & Unhu Ethics Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
+  },
+  {
+    id: 'cert-cs-108',
+    title: 'Certified Tech Entrepreneurship Strategist',
+    description: 'Earned by passing the Unit 8 Technology Enterprising MVP Final Examination with 70% or higher.',
+    icon: 'GraduationCap',
+    earned: false,
+    rarity: 'Common'
   }
 ];
 
@@ -269,6 +391,25 @@ export const achievementService = {
     awardIfPassed('cert-group6', 'ex-group6');
     awardIfPassed('cert-group7', 'ex-group7');
     awardIfPassed('cert-group8', 'ex-group8');
+
+    // Math Certifications
+    awardIfPassed('cert-math-301', 'ex-math-301');
+    awardIfPassed('cert-math-302', 'ex-math-302');
+    awardIfPassed('cert-math-303', 'ex-math-303');
+    awardIfPassed('cert-math-304', 'ex-math-304');
+    awardIfPassed('cert-math-305', 'ex-math-305');
+    awardIfPassed('cert-math-306', 'ex-math-306');
+    awardIfPassed('cert-math-307', 'ex-math-307');
+
+    // CS Certifications
+    awardIfPassed('cert-cs-101', 'ex-cs-101');
+    awardIfPassed('cert-cs-102', 'ex-cs-102');
+    awardIfPassed('cert-cs-103', 'ex-cs-103');
+    awardIfPassed('cert-cs-104', 'ex-cs-104');
+    awardIfPassed('cert-cs-105', 'ex-cs-105');
+    awardIfPassed('cert-cs-106', 'ex-cs-106');
+    awardIfPassed('cert-cs-107', 'ex-cs-107');
+    awardIfPassed('cert-cs-108', 'ex-cs-108');
 
     // Also other achievements
     if (!earnedIds['first-lesson'] && progress.completedLessons.length >= 1) {
@@ -415,6 +556,36 @@ export const achievementService = {
         saveAchievement('cert-group7');
       } else if (latestExamId === 'ex-group8') {
         saveAchievement('cert-group8');
+      } else if (latestExamId === 'ex-math-301') {
+        saveAchievement('cert-math-301');
+      } else if (latestExamId === 'ex-math-302') {
+        saveAchievement('cert-math-302');
+      } else if (latestExamId === 'ex-math-303') {
+        saveAchievement('cert-math-303');
+      } else if (latestExamId === 'ex-math-304') {
+        saveAchievement('cert-math-304');
+      } else if (latestExamId === 'ex-math-305') {
+        saveAchievement('cert-math-305');
+      } else if (latestExamId === 'ex-math-306') {
+        saveAchievement('cert-math-306');
+      } else if (latestExamId === 'ex-math-307') {
+        saveAchievement('cert-math-307');
+      } else if (latestExamId === 'ex-cs-101') {
+        saveAchievement('cert-cs-101');
+      } else if (latestExamId === 'ex-cs-102') {
+        saveAchievement('cert-cs-102');
+      } else if (latestExamId === 'ex-cs-103') {
+        saveAchievement('cert-cs-103');
+      } else if (latestExamId === 'ex-cs-104') {
+        saveAchievement('cert-cs-104');
+      } else if (latestExamId === 'ex-cs-105') {
+        saveAchievement('cert-cs-105');
+      } else if (latestExamId === 'ex-cs-106') {
+        saveAchievement('cert-cs-106');
+      } else if (latestExamId === 'ex-cs-107') {
+        saveAchievement('cert-cs-107');
+      } else if (latestExamId === 'ex-cs-108') {
+        saveAchievement('cert-cs-108');
       }
     }
 

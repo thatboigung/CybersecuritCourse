@@ -436,7 +436,41 @@ A set $\\mathbb{G}$ associated with binary operation $*$ is a mathematical **Gro
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-301',
+      title: 'Advanced Algebra, Matrices, & Proofs Sovereign Exam',
+      moduleId: 'mod-math-301',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m301-q1',
+          text: 'Using Proof by Mathematical Induction, if we assume the statement P(k) is true for some positive integer k, what must we show to prove the inductive step?',
+          options: [
+            'P(k) is true for all integers.',
+            'P(k+1) is true based on the assumption that P(k) is true.',
+            'P(1) is true for the base case.',
+            'P(k-1) is true.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'The inductive step requires showing that if the statement holds for k, it must hold for k+1: P(k) ⟹ P(k+1).'
+        },
+        {
+          id: 'ex-m301-q2',
+          text: 'What is the sum of the roots of the cubic polynomial equation x³ - 6x² + 11x - 6 = 0?',
+          options: ['-6', '11', '6', '1'],
+          correctAnswerIndex: 2,
+          explanation: 'By Vieta\'s formulas, for a polynomial a_n x^n + a_{n-1} x^{n-1} + ... + a_0 = 0, the sum of roots is -a_{n-1}/a_n. Here, -(-6)/1 = 6.'
+        },
+        {
+          id: 'ex-m301-q3',
+          text: 'The set {1, -1} is a Group under which standard binary operation?',
+          options: ['Addition', 'Multiplication', 'Subtraction', 'Division'],
+          correctAnswerIndex: 1,
+          explanation: 'Under multiplication, {1, -1} is closed, associative, has identity 1, and inverses 1⁻¹=1 and (-1)⁻¹=-1. It satisfies all group axioms.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-302',
@@ -671,7 +705,41 @@ Calculating geometric relations: intersection angles and closest distances in 3D
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-302',
+      title: 'Geometry and 3D Vectors Sovereign Exam',
+      moduleId: 'mod-math-302',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m302-q1',
+          text: 'What is the dot product of two mutually orthogonal 3D vectors u and v?',
+          options: ['1', '0', '-1', '|u||v|'],
+          correctAnswerIndex: 1,
+          explanation: 'The dot product u · v = |u||v| cos(θ). Since orthogonal vectors have θ = 90° and cos(90°) = 0, their dot product is always 0.'
+        },
+        {
+          id: 'ex-m302-q2',
+          text: 'What geometry does the equation r · n = d represent in 3D vector space, where n is a constant vector and d is a scalar?',
+          options: ['A line parallel to n', 'A sphere centered at n', 'A plane perpendicular to n', 'A cylinder along n'],
+          correctAnswerIndex: 2,
+          explanation: 'r · n = d is the standard vector equation of a plane, where n is the normal vector perpendicular to the plane surface.'
+        },
+        {
+          id: 'ex-m302-q3',
+          text: 'If vectors a = [2, 1, -1] and b = [1, 3, 5] are given, what does their cross product a × b represent physically?',
+          options: [
+            'A scalar representing their area projection.',
+            'A vector perpendicular to both a and b.',
+            'The projection length of a onto b.',
+            'A parallel vector in the same plane.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'The cross product of two non-parallel 3D vectors results in a new vector that is perpendicular (orthogonal) to the plane containing both input vectors.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-303',
@@ -843,7 +911,36 @@ Approximating arbitrary coordinate functions using infinite derivatives:
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-303',
+      title: 'Sequences, Infinite Series & Binomial Sovereign Exam',
+      moduleId: 'mod-math-303',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m303-q1',
+          text: 'For what range of x is the binomial expansion of (1 - 2x)⁻¹/² valid and convergent?',
+          options: ['|x| < 1', '|x| < 1/2', '|x| < 2', 'All real numbers x'],
+          correctAnswerIndex: 1,
+          explanation: 'For (1 + u)^n, convergence requires |u| < 1. Here, u = -2x, so |-2x| < 1 ⟹ |x| < 1/2.'
+        },
+        {
+          id: 'ex-m303-q2',
+          text: 'Given an infinite geometric series with first term a = 3 and common ratio r = 1/3, what is the exact sum to infinity? ',
+          options: ['9/2', '9', '4', '3'],
+          correctAnswerIndex: 0,
+          explanation: 'The sum to infinity S_∞ is given by a / (1 - r) = 3 / (1 - 1/3) = 3 / (2/3) = 9/2.'
+        },
+        {
+          id: 'ex-m303-q3',
+          text: 'Which series convergence test is most suitable for evaluating the limit or convergence of infinite series with factorial terms, such as ∑ (3ⁿ / n!)?',
+          options: ['Integral Test', 'Ratio Test', 'Leibniz Alternating Test', 'Geometric Series Convergence Test'],
+          correctAnswerIndex: 1,
+          explanation: 'The Ratio Test (D\'Alembert) is highly optimal for series with factorials because consecutive terms simplify cleanly: (a_{n+1}/a_n) = 3 / (n+1) ⟹ limit as n→∞ is 0 < 1.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-304',
@@ -962,7 +1059,41 @@ $$R = \\sqrt{a^2 + b^2} \\quad \\text{and} \\quad \\alpha = \\arctan\\left(\\fra
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-304',
+      title: 'Advanced Trigonometry & Functions Sovereign Exam',
+      moduleId: 'mod-math-304',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m304-q1',
+          text: 'Using the trigonometric identity for cos(A + B), express cos(θ + π/2) in its simplest form.',
+          options: ['sin(θ)', '-sin(θ)', 'cos(θ)', '-cos(θ)'],
+          correctAnswerIndex: 1,
+          explanation: 'cos(θ + π/2) = cos(θ)cos(π/2) - sin(θ)sin(π/2). Since cos(π/2) = 0 and sin(π/2) = 1, this simplifies to -sin(θ).'
+        },
+        {
+          id: 'ex-m304-q2',
+          text: 'According to small angle approximations, when θ is very small and measured in radians, what is the approximated value of (1 - cos(θ)) / θ²?',
+          options: ['1', '0', '1/2', 'Infinity'],
+          correctAnswerIndex: 2,
+          explanation: 'The small-angle approximation for cos(θ) is 1 - θ²/2. Substituting this yields (1 - (1 - θ²/2)) / θ² = (θ²/2) / θ² = 1/2.'
+        },
+        {
+          id: 'ex-m304-q3',
+          text: 'What are the coordinates of the turning points of the reciprocal function f(x) = sec(x) within the domain 0 ≤ x < π?',
+          options: [
+            '(0, 1) only, which is a local minimum',
+            '(0, 1) as a local minimum, and (π, -1) as a local maximum',
+            '(π/2, 0) as a point of inflection',
+            'Sec(x) has no turning points in this domain'
+          ],
+          correctAnswerIndex: 0,
+          explanation: 'The derivative of sec(x) is sec(x)tan(x). Within 0 ≤ x < π, this derivative is 0 only at x = 0. f(0) = 1, which acts as a turning point (local minimum).'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-305',
@@ -1188,7 +1319,36 @@ Evaluate both sides to establish the general solution equation (remembering cons
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-305',
+      title: 'Calculus, Integrations & Systems Sovereign Exam',
+      moduleId: 'mod-math-305',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m305-q1',
+          text: 'What integration technique is required to evaluate ∫ x e^x dx?',
+          options: ['Integration by Parts', 'Integration by Substitution', 'Partial Fractions Expansion', 'Numerical Trapezoidal expansion'],
+          correctAnswerIndex: 0,
+          explanation: '∫ u dv = u v - ∫ v du. Setting u = x (du = dx) and dv = e^x dx (v = e^x) gives x e^x - ∫ e^x dx = x e^x - e^x + C.'
+        },
+        {
+          id: 'ex-m305-q2',
+          text: 'If a curve is defined parametrically by x = t² and y = t³, find the gradient of the curve dy/dx in terms of t.',
+          options: ['2/3 t', '3/2 t', '3/2 t²', '2/3 t²'],
+          correctAnswerIndex: 1,
+          explanation: 'dy/dx = (dy/dt) / (dx/dt). For x = t², dx/dt = 2t. For y = t³, dy/dt = 3t². Therefore, dy/dx = (3t²) / (2t) = 3/2 t.'
+        },
+        {
+          id: 'ex-m305-q3',
+          text: 'A solid of revolution is generated by rotating the region under the curve y = √x from x = 0 to x = 4 through 360° about the x-axis. What is the volume of this solid?',
+          options: ['8π', '16π', '4π', '12π'],
+          correctAnswerIndex: 0,
+          explanation: 'Volume V = π ∫ y² dx from a to b. Here, ∫ (√x)² dx = ∫ x dx = [x²/2] from 0 to 4 = 16/2 = 8. Thus, Volume is 8π.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-306',
@@ -1363,7 +1523,51 @@ The nature of the trapezium estimation boundary matches the local concavity of t
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-306',
+      title: 'Numerical Methods & Approximations Exam',
+      moduleId: 'mod-math-306',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m306-q1',
+          text: 'What is the iterative formula of the Newton-Raphson method used to approximate roots of f(x) = 0?',
+          options: [
+            'x_{n+1} = x_n - f\'(x_n) / f(x_n)',
+            'x_{n+1} = x_n - f(x_n) / f\'(x_n)',
+            'x_{n+1} = x_n + f(x_n) f\'(x_n)',
+            'x_{n+1} = (x_n + f(x_n)) / 2'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'The Newton-Raphson formula is x_{n+1} = x_n - f(x_n) / f\'(x_n), which projects the tangent line from x_n onto the x-axis.'
+        },
+        {
+          id: 'ex-m306-q2',
+          text: 'When using the Interval Bisection method on f(x) = 0 in range [a, b], where f(a) < 0 and f(b) > 0, what condition must f(x) satisfy to guarantee a root exists?',
+          options: [
+            'f(x) must be strictly linear',
+            'f(x) must be continuous across the interval [a, b]',
+            'f(x) must have a positive second derivative',
+            'The interval length must be exactly 1 unit'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'By the Intermediate Value Theorem, f(x) must be continuous on [a, b] for a change of sign to guarantee at least one crossing (root).'
+        },
+        {
+          id: 'ex-m306-q3',
+          text: 'How does increasing the number of intervals (n) affect the error margin of a Trapezium Rule approximation?',
+          options: [
+            'It increases the error quadratically.',
+            'It reduces the error margin because the trapezoid segments fit closer to the actual curve.',
+            'It has no impact whatsoever on error margins.',
+            'It changes an overestimation into an underestimation.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'As the width h of each trapezoid decreases (by increasing n), the linear chords approximate the curve more precisely, reducing error.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-math-307',
@@ -1487,6 +1691,45 @@ This produces exactly $n$ distinct roots symmetrically distributed on a circle o
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-math-307',
+      title: 'Complex Numbers & de Moivre Sovereign Exam',
+      moduleId: 'mod-math-307',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-m307-q1',
+          text: 'Convert the complex expression z = 1 + i√3 into exponential polar coordinates (r e^(iθ)).',
+          options: ['2 e^(iπ/6)', '2 e^(iπ/3)', '√2 e^(iπ/4)', '4 e^(iπ/3)'],
+          correctAnswerIndex: 1,
+          explanation: 'r = √(1² + (√3)²) = √4 = 2. θ = arctan(√3 / 1) = π/3. Thus, z = 2 e^(iπ/3).'
+        },
+        {
+          id: 'ex-m307-q2',
+          text: 'What locus is described in the Argand diagram by the algebraic equation |z - 3 - 4i| = 5?',
+          options: [
+            'A perpendicular bisector of the line joining (0,0) and (3,4)',
+            'A circle of radius 5 centered at the point (3, 4)',
+            'A straight line passing through (3,4) with gradient 5',
+            'A circle of radius 25 centered at the point (-3, -4)'
+          ],
+          correctAnswerIndex: 1,
+          explanation: '|z - z_0| = r describes a circle centered at complex coordinate z_0 with radius r. Here, z_0 = 3 + 4i and r = 5.'
+        },
+        {
+          id: 'ex-m307-q3',
+          text: 'Using de Moivre\'s Theorem, express cos(3θ) in terms of powers of cos(θ).',
+          options: [
+            '3cos(θ) - 4cos³(θ)',
+            '4cos³(θ) - 3cos(θ)',
+            'cos³(θ) - 3cos(θ)sin²(θ)',
+            '2cos³(θ) - 3cos(θ)'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Using (cos(θ) + i sin(θ))³ = cos(3θ) + i sin(3θ) and expanding yields the identity cos(3θ) = 4cos³(θ) - 3cos(θ).'
+        }
+      ]
+    }
   }
 ];

@@ -88,8 +88,8 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
     return list;
   }, []);
 
-  // Split filteredAreas into Mathematics, Cyber Security, Ethical Hacking, Full Stack Developer, Data Engineering, and Tech Business sections
-  const { mathematicsAreas, computerScienceAreas, cyberSecurityAreas, hackingAreas, fullStackAreas, dataEngineeringAreas, techBusinessAreas } = useMemo(() => {
+  // Split filteredAreas into Mathematics, Cyber Security, Ethical Hacking, Full Stack Developer, Data Engineering, Robotics, Physics, and Tech Business sections
+  const { mathematicsAreas, computerScienceAreas, physicsAreas, cyberSecurityAreas, hackingAreas, fullStackAreas, dataEngineeringAreas, roboticsAreas, techBusinessAreas } = useMemo(() => {
     const list = [...ROADMAP_AREAS];
     const filtered = searchQuery
       ? list.filter(area => 
@@ -101,10 +101,12 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
     return {
       mathematicsAreas: filtered.filter(area => area.courseGroup === 'mathematics'),
       computerScienceAreas: filtered.filter(area => area.courseGroup === 'computer_science'),
+      physicsAreas: filtered.filter(area => area.courseGroup === 'physics'),
       cyberSecurityAreas: filtered.filter(area => !area.courseGroup || area.courseGroup === 'cyber_security'),
       hackingAreas: filtered.filter(area => area.courseGroup === 'hacking'),
       fullStackAreas: filtered.filter(area => area.courseGroup === 'full_stack'),
       dataEngineeringAreas: filtered.filter(area => area.courseGroup === 'data_engineering'),
+      roboticsAreas: filtered.filter(area => area.courseGroup === 'robotics'),
       techBusinessAreas: filtered.filter(area => area.courseGroup === 'tech_business'),
     };
   }, [searchQuery]);
@@ -193,6 +195,21 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
+      {/* Advanced Level Physics Section */}
+      {physicsAreas.length > 0 && (
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Advanced Level Physics Course Track
+            </h2>
+          </div>
+          
+          <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
+            {physicsAreas.map(renderAreaRow)}
+          </div>
+        </div>
+      )}
+
       {/* Cyber Security Group Section */}
       {cyberSecurityAreas.length > 0 && (
         <div className="space-y-3">
@@ -253,6 +270,21 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
 
+      {/* Robotics & Electronics Group Section */}
+      {roboticsAreas.length > 0 && (
+        <div className="space-y-3">
+          <div className="pl-1">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-slate-300">
+              Robotics & Electronics Path
+            </h2>
+          </div>
+          
+          <div className="flex flex-col bg-[#161618] border border-zinc-800/70 rounded-2xl overflow-hidden shadow-2xl">
+            {roboticsAreas.map(renderAreaRow)}
+          </div>
+        </div>
+      )}
+
       {/* Tech-Driven Business & Marketing Group Section */}
       {techBusinessAreas.length > 0 && (
         <div className="space-y-3">
@@ -268,7 +300,7 @@ const SubjectGrid = React.memo(function SubjectGrid({ onSelect, searchQuery = ''
         </div>
       )}
       
-      {mathematicsAreas.length === 0 && computerScienceAreas.length === 0 && cyberSecurityAreas.length === 0 && hackingAreas.length === 0 && fullStackAreas.length === 0 && dataEngineeringAreas.length === 0 && techBusinessAreas.length === 0 && (
+      {mathematicsAreas.length === 0 && computerScienceAreas.length === 0 && physicsAreas.length === 0 && cyberSecurityAreas.length === 0 && hackingAreas.length === 0 && fullStackAreas.length === 0 && dataEngineeringAreas.length === 0 && roboticsAreas.length === 0 && techBusinessAreas.length === 0 && (
         <div className="text-center py-12 text-slate-500 border border-zinc-800/50 rounded-2xl bg-[#161618]/30">
           No courses found matching "{searchQuery}"
         </div>

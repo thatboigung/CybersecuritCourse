@@ -209,7 +209,46 @@ To maximize precision and eliminate redundant representations, floating-point nu
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-101',
+      title: 'CS-101 Data Representation Certificate Exam',
+      moduleId: 'mod-cs-101',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs101-q1',
+          text: 'An 8-bit sign-and-magnitude register has value 10101100. Write down the decimal value represented.',
+          options: ['-44', '-76', '44', '-30'],
+          correctAnswerIndex: 0,
+          explanation: 'The MSB is 1 (negative), and the remaining bits 0101100 represent 32 + 8 + 4 = 44. Thus, it represents -44.'
+        },
+        {
+          id: 'ex-cs101-q2',
+          text: 'What happens when a positive integer is added to another positive integer in a fixed-size two\'s complement register, resulting in a sign bit of 1?',
+          options: [
+            'Normal algebraic closure is preserved.',
+            'Arithmetic overflow, prompting incorrect sign interpretation.',
+            'Underflow, resulting in absolute zero.',
+            'No change occurs; the register ignores the high bit.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'When adding two positive numbers yields a negative sign bit (1) in two\'s complement, arithmetic overflow has occurred.'
+        },
+        {
+          id: 'ex-cs101-q3',
+          text: 'In floating-point normalization, why must a positive mantissa begin with the digits "0.1"?',
+          options: [
+            'To indicate that the sign is negative and exponent is fractional.',
+            'To ensure the highest possible precision by forcing the most significant fractional bit to be non-zero and removing redundant representations.',
+            'To align the mantissa dynamically with the hexadecimal alignment block.',
+            'To force the exponent to remain strictly positive.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'A normalized positive mantissa under two\'s complement must show the sign bit (0) followed by a different bit (1), so it starts with 0.1 to maximize precision.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-102',
@@ -346,7 +385,36 @@ The cloud service models define how responsibility is partitioned between the ve
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-102',
+      title: 'CS-102 Computer Architecture & Cloud Services Cert Exam',
+      moduleId: 'mod-cs-102',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs102-q1',
+          text: 'During which phase of the Fetch-Execute cycle is the Program Counter (PC) incremented?',
+          options: ['Decode', 'Fetch', 'Execute', 'Interrupt Check'],
+          correctAnswerIndex: 1,
+          explanation: 'The PC is incremented immediately after the instruction is copied from memory to the Memory Data Register (MDR), which is part of the Fetch phase.'
+        },
+        {
+          id: 'ex-cs102-q2',
+          text: 'Which Cloud architecture model offers the client control over the underlying operating system and virtualized networks?',
+          options: ['SaaS (Software as a Service)', 'PaaS (Platform as a Service)', 'IaaS (Infrastructure as a Service)', 'BaaS (Backend as a Service)'],
+          correctAnswerIndex: 2,
+          explanation: 'With IaaS, users are provided with bare infrastructure (virtual servers, hypervisors, storage), on which they must install and manage and configure the OS and software stack.'
+        },
+        {
+          id: 'ex-cs102-q3',
+          text: 'What specialized CPU registers hold the address of the memory location currently being read from or written to?',
+          options: ['Program Counter (PC)', 'Accumulator (ACC)', 'Memory Address Register (MAR)', 'Current Instruction Register (CIR)'],
+          correctAnswerIndex: 2,
+          explanation: 'The Memory Address Register (MAR) stores the primary coordinates of memory addresses being requested by the CPU.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-103',
@@ -476,7 +544,36 @@ DNS maps human-readable domain names (e.g., \`google.com\`) to machine-readable 
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-103',
+      title: 'CS-103 Networking & Protocols Certificate Exam',
+      moduleId: 'mod-cs-103',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs103-q1',
+          text: 'Which Layer of the OSI Model oversees packet routing, path determination, logical IP addressing, and IP lookup setups?',
+          options: ['Data Link Layer (Layer 2)', 'Network Layer (Layer 3)', 'Transport Layer (Layer 4)', 'Session Layer (Layer 5)'],
+          correctAnswerIndex: 1,
+          explanation: 'Layer 3 (Network Layer) is responsible for routing packets across the network, processing logical coordinates (IP addresses), and routing tables.'
+        },
+        {
+          id: 'ex-cs103-q2',
+          text: 'What is the network address of the subnet for an IP address 192.168.1.50 with a subnet mask of /26?',
+          options: ['192.168.1.0', '192.168.1.32', '192.168.1.48', '192.168.1.64'],
+          correctAnswerIndex: 0,
+          explanation: 'A /26 subnet splits the octet into segments of 64. The range for the first subnet is 0-63, so 192.168.1.50 falls in the range 0 to 63, making the network address 192.168.1.0.'
+        },
+        {
+          id: 'ex-cs103-q3',
+          text: 'Which protocol is responsible for auto-rotating or matching dynamic IP allocations to systems on a local network?',
+          options: ['DNS', 'DHCP', 'ARP', 'NTP'],
+          correctAnswerIndex: 1,
+          explanation: 'DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses, subnet masks, and default gateways to devices on a network.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-104',
@@ -687,7 +784,41 @@ How do we sort arrays efficiently in memory?
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-104',
+      title: 'CS-104 Algorithms & Advanced Data Structures Exam',
+      moduleId: 'mod-cs-104',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs104-q1',
+          text: 'Which sorting algorithm uses a divide-and-conquer strategy, selecting a "pivot" element to split the array into halves?',
+          options: ['Insertion Sort', 'Selection Sort', 'Quick Sort', 'Bubble Sort'],
+          correctAnswerIndex: 2,
+          explanation: 'Quick Sort is a divide-and-conquer algorithm that selects a pivot, partitions the array around it, and recursively sorts the sub-arrays.'
+        },
+        {
+          id: 'ex-cs104-q2',
+          text: 'In a standard Binary Search Tree (BST), what traversal sequence produces the keys in strictly values-sorted ascending order?',
+          options: ['Pre-order', 'In-order', 'Post-order', 'Breadth-first'],
+          correctAnswerIndex: 1,
+          explanation: 'An In-order traversal of a BST visits the left subtree, the node itself, then the right subtree, which retrieves keys in ascending order.'
+        },
+        {
+          id: 'ex-cs104-q3',
+          text: 'What major limitation defines static arrays compared to dynamic linked lists?',
+          options: [
+            'Fixed configuration size defined at execution, requiring continuous memory blocks',
+            'Slower random access time speeds',
+            'Inability to hold integer variables',
+            'Complex recursive execution loops'
+          ],
+          correctAnswerIndex: 0,
+          explanation: 'Static arrays are allocated as a single, contiguous block of memory with a fixed size; expanding them requires re-allocation and copying, unlike linked lists.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-105',
@@ -895,7 +1026,41 @@ Uses OOAD (Object-Oriented Analysis and Design) to model software as a collectio
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-105',
+      title: 'CS-105 Software Design & OOP Certification Exam',
+      moduleId: 'mod-cs-105',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs105-q1',
+          text: 'Which Object-Oriented Programming (OOP) concept hides an object\'s internal fields and mandates interaction only via public methods?',
+          options: ['Polymorphism', 'Inheritance', 'Encapsulation', 'Abstraction'],
+          correctAnswerIndex: 2,
+          explanation: 'Encapsulation restricts direct access to object attributes and binds variables and methods together in a class with private access scopes.'
+        },
+        {
+          id: 'ex-cs105-q2',
+          text: 'What characterizes the core operational difference between the traditional Waterfall life cycle model and Agile Prototyping?',
+          options: [
+            'Waterfall requires no documentation whatsoever.',
+            'Agile uses an iterative cycle returning feedback loops, whereas Waterfall is structured and strictly linear sequential.',
+            'Waterfall is highly optimal for dynamic, fast-changing requirements.',
+            'Agile completely bypasses the coding phase.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Waterfall is a rigid, step-by-step linear methodology with sequential phases, whereas Agile thrives on iterative development, rapid feedback, and continuous optimization.'
+        },
+        {
+          id: 'ex-cs105-q3',
+          text: 'What occurs when a subclass provides a specific implementation for a method that is already defined in its parent class?',
+          options: ['Method Overloading', 'Method Overriding', 'Dynamic Instantiation', 'System Compiling'],
+          correctAnswerIndex: 1,
+          explanation: 'Method overriding allows a subclass to provide a specific implementation for a method defined in its superclass, resolved at runtime.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-106',
@@ -1032,7 +1197,36 @@ Normalization systematically organizes tables to eliminate redundancy and update
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-106',
+      title: 'CS-106 Relational Databases & DBMS Certificate Exam',
+      moduleId: 'mod-cs-106',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs106-q1',
+          text: 'To satisfy Third Normal Form (3NF) requirements, what type of dependency must be completely eliminated from our database schema?',
+          options: ['Partial Dependency', 'Transitive Dependency', 'Multi-valued Dependency', 'Functional Dependency'],
+          correctAnswerIndex: 1,
+          explanation: '3NF mandates that the relation is in 2NF and that no non-prime attribute is transitively dependent on the primary key (no non-key attribute depends on another non-key attribute).'
+        },
+        {
+          id: 'ex-cs106-q2',
+          text: 'What kind of database key uniquely identifies rows in another table to establish logical structural cross-references?',
+          options: ['Primary Key', 'Candidate Key', 'Foreign Key', 'Alternate Key'],
+          correctAnswerIndex: 2,
+          explanation: 'A Foreign Key is a field in a relational table that matches the primary key of another table, creating links and enforcing referential integrity.'
+        },
+        {
+          id: 'ex-cs106-q3',
+          text: 'What major database anomaly occurs when deleting a row inadvertently deletes secondary critical information about another entity?',
+          options: ['Insertion Anomaly', 'Update Anomaly', 'Deletion Anomaly', 'Cascading Index Anomaly'],
+          correctAnswerIndex: 2,
+          explanation: 'A Deletion Anomaly is a relational hazard where removing key records forces the unintentional deletion of unrelated valuable data.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-107',
@@ -1179,7 +1373,46 @@ Disasters happen; we must build resilient architectures:
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-107',
+      title: 'CS-107 Security, Ethics & Governance Certificate Exam',
+      moduleId: 'mod-cs-107',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs107-q1',
+          text: 'Under the Unhu/Ubuntu ethics philosophy applied in computational workspaces, what represents the primary duty of an engineer?',
+          options: [
+            'Minimizing corporate software backup budgets at all costs',
+            'Prioritizing community-centered development, data privacy, respect for human relationships, and ethical professional conduct',
+            'Acquiring absolute monopoly patents over open-source platforms',
+            'Bypassing national privacy regulations to double database throughput'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Ubuntu or Unhu ethics translates to "I am because we are," focusing heavily on collaborative impact, human dignity, respect for customers, and open ethical systems.'
+        },
+        {
+          id: 'ex-cs107-q2',
+          text: 'An engineering team establishes a disaster recovery target stating that the service must be restored within 2 hours of an outage. What metric is being defined?',
+          options: ['Recovery Point Objective (RPO)', 'Recovery Time Objective (RTO)', 'Mean Time Between Failures (MTBF)', 'Disaster Response Protocol (DRP)'],
+          correctAnswerIndex: 1,
+          explanation: 'RTO (Recovery Time Objective) represents the maximum acceptable duration of time within which a systems architecture must be fully restored after an outage.'
+        },
+        {
+          id: 'ex-cs107-q3',
+          text: 'How does an engineer prevent catastrophic SQL injection (SQLi) attacks on input-enabled relational database interfaces?',
+          options: [
+            'Removing the backend firewall rules completely',
+            'Employing parameterized queries and prepared statements to separate SQL commands from user input variables',
+            'Applying binary sign-and-magnitude conversions to the frontend UI',
+            'Compressing all input forms via zip standards'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Parameterized queries compile the SQL statement before inserting input parameters, treating active user input strictly as a safe literal rather than executable database commands.'
+        }
+      ]
+    }
   },
   {
     id: 'mod-cs-108',
@@ -1317,6 +1550,45 @@ An SRS is the official manual that guides development:
           ]
         }
       }
-    ]
+    ],
+    exam: {
+      id: 'ex-cs-108',
+      title: 'CS-108 Technology Enterprising & E-Commerce Exam',
+      moduleId: 'mod-cs-108',
+      timeLimit: 30,
+      questions: [
+        {
+          id: 'ex-cs108-q1',
+          text: 'Which document specifies the comprehensive technical and operational parameters of a proposed system, acting as a binding contract between developers and clients?',
+          options: ['User Manual', 'Software Requirements Specification (SRS)', 'Product Backlog', 'System Architecture Design (SAD)'],
+          correctAnswerIndex: 1,
+          explanation: 'The SRS defines all functional and non-functional requirements of the software system, acting as the ultimate source of truth.'
+        },
+        {
+          id: 'ex-cs108-q2',
+          text: 'What represents a transaction-based monetization model within dynamic e-commerce pipelines?',
+          options: [
+            'Charging users a static monthly recurring subscription cost irrespective of system use',
+            'Earning commissions or fees directly proportional to the value of processed network sales transactions',
+            'Releasing software entirely free of charge with zero secondary services',
+            'Selling the physical server hardware itself'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Transaction pricing charges a client per-action or takes a predefined percentage cut out of every transaction processed through the platform.'
+        },
+        {
+          id: 'ex-cs108-q3',
+          text: 'In commercial software proposals, why is a Service Level Agreement (SLA) included?',
+          options: [
+            'To bypass local cyber laws',
+            'To guarantee system performance standards (e.g., 99.9% uptime) and detail legal recourse if thresholds are not met',
+            'To override existing code files',
+            'To estimate the overall budget of writing code'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'An SLA is a formal business agreement detailing system reliability expectations, uptime stats, response times, and financial credits if targets are missed.'
+        }
+      ]
+    }
   }
 ];

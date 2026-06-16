@@ -27,7 +27,7 @@ export default function CalendarView() {
   });
 
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
-  const [activeSegment, setActiveSegment] = useState<'all' | 'mathematics' | 'computer_science' | 'cyber_security' | 'hacking' | 'full_stack' | 'data_engineering' | 'tech_business'>('all');
+  const [activeSegment, setActiveSegment] = useState<'all' | 'mathematics' | 'computer_science' | 'physics' | 'cyber_security' | 'hacking' | 'full_stack' | 'data_engineering' | 'robotics' | 'tech_business'>('all');
   const [detailLesson, setDetailLesson] = useState<any | null>(null);
   const [sessionNonce, setSessionNonce] = useState(0);
 
@@ -45,22 +45,26 @@ export default function CalendarView() {
   }, [numWeeks]);
 
   // Read all lessons and link back to their modules and category groups
-  const { mathLessons, compSciLessons, csLessons, hackingLessons, fsLessons, deLessons, tbLessons } = useMemo(() => {
+  const { mathLessons, compSciLessons, physicsLessons, csLessons, hackingLessons, fsLessons, deLessons, roboticsLessons, tbLessons } = useMemo(() => {
     const math: any[] = [];
     const compSci: any[] = [];
+    const phys: any[] = [];
     const cs: any[] = [];
     const hack: any[] = [];
     const fs: any[] = [];
     const de: any[] = [];
+    const rob: any[] = [];
     const tb: any[] = [];
 
     MODULES.forEach(mod => {
       const area = ROADMAP_AREAS.find(a => a.id === mod.areaId);
       const isMath = area?.courseGroup === 'mathematics';
       const isCompSci = area?.courseGroup === 'computer_science';
+      const isPhysics = area?.courseGroup === 'physics';
       const isHacking = area?.courseGroup === 'hacking';
       const isFS = area?.courseGroup === 'full_stack';
       const isDE = area?.courseGroup === 'data_engineering';
+      const isRobotics = area?.courseGroup === 'robotics';
       const isTB = area?.courseGroup === 'tech_business';
 
       mod.lessons.forEach(lesson => {
@@ -75,12 +79,16 @@ export default function CalendarView() {
           math.push(payload);
         } else if (isCompSci) {
           compSci.push(payload);
+        } else if (isPhysics) {
+          phys.push(payload);
         } else if (isHacking) {
           hack.push(payload);
         } else if (isFS) {
           fs.push(payload);
         } else if (isDE) {
           de.push(payload);
+        } else if (isRobotics) {
+          rob.push(payload);
         } else if (isTB) {
           tb.push(payload);
         } else {
@@ -89,7 +97,7 @@ export default function CalendarView() {
       });
     });
 
-    return { mathLessons: math, compSciLessons: compSci, csLessons: cs, hackingLessons: hack, fsLessons: fs, deLessons: de, tbLessons: tb };
+    return { mathLessons: math, compSciLessons: compSci, physicsLessons: phys, csLessons: cs, hackingLessons: hack, fsLessons: fs, deLessons: de, roboticsLessons: rob, tbLessons: tb };
   }, []);
 
   // Chunks compiler
@@ -106,10 +114,12 @@ export default function CalendarView() {
   const schedule = useMemo(() => {
     const mathChunks = chunkLessons(mathLessons, numWeeks);
     const compSciChunks = chunkLessons(compSciLessons, numWeeks);
+    const physicsChunks = chunkLessons(physicsLessons, numWeeks);
     const csChunks = chunkLessons(csLessons, numWeeks);
     const hackChunks = chunkLessons(hackingLessons, numWeeks);
     const fsChunks = chunkLessons(fsLessons, numWeeks);
     const deChunks = chunkLessons(deLessons, numWeeks);
+    const robChunks = chunkLessons(roboticsLessons, numWeeks);
     const tbChunks = chunkLessons(tbLessons, numWeeks);
 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -117,10 +127,12 @@ export default function CalendarView() {
     return Array.from({ length: numWeeks }, (_, weekIdx) => {
       const mathWeek = mathChunks[weekIdx] || [];
       const compSciWeek = compSciChunks[weekIdx] || [];
+      const physicsWeek = physicsChunks[weekIdx] || [];
       const csWeek = csChunks[weekIdx] || [];
       const hackWeek = hackChunks[weekIdx] || [];
       const fsWeek = fsChunks[weekIdx] || [];
       const deWeek = deChunks[weekIdx] || [];
+      const robWeek = robChunks[weekIdx] || [];
       const tbWeek = tbChunks[weekIdx] || [];
 
       const days = daysOfWeek.map(name => ({ name, tasks: [] as any[] }));
@@ -216,8 +228,34 @@ export default function CalendarView() {
         });
       });
 
+      // Distribute Robotics
+      robWeek.forEach((lesson, index) => {
+        const weekdaysIndices = [2, 4, 5]; // Wed, Fri, Sat
+        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
+        days[dayIdx].tasks.push({
+          ...lesson,
+          type: 'robotics',
+          label: 'Robotics & Elec.',
+          themeColor: '#FF2D55',
+          badgeStyle: 'bg-rose-500/10 text-rose-450 border-rose-500/20'
+        });
+      });
+
+      // Distribute Physics
+      physicsWeek.forEach((lesson, index) => {
+        const weekdaysIndices = [1, 3, 5]; // Tue, Thu, Sat
+        const dayIdx = weekdaysIndices[index % weekdaysIndices.length];
+        days[dayIdx].tasks.push({
+          ...lesson,
+          type: 'physics',
+          label: 'A-Level Physics',
+          themeColor: '#6366F1',
+          badgeStyle: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+        });
+      });
+
       // Sunday is Weekly Review + Capstone Check
-      if (mathWeek.length > 0 || compSciWeek.length > 0 || csWeek.length > 0 || hackWeek.length > 0 || fsWeek.length > 0 || deWeek.length > 0 || tbWeek.length > 0) {
+      if (mathWeek.length > 0 || compSciWeek.length > 0 || physicsWeek.length > 0 || csWeek.length > 0 || hackWeek.length > 0 || fsWeek.length > 0 || deWeek.length > 0 || robWeek.length > 0 || tbWeek.length > 0) {
         days[6].tasks.push({
           id: `review-wk-${weekIdx}`,
           title: "Weekly Multi-Disciplinary Synthesis Check",
@@ -396,10 +434,12 @@ export default function CalendarView() {
                 { id: 'all', label: 'All Tracks', style: 'bg-slate-550/10 text-slate-300 border-slate-500/20' },
                 { id: 'mathematics', label: 'Mathematics', style: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
                 { id: 'computer_science', label: 'Computer Science', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
+                { id: 'physics', label: 'A-Level Physics', style: 'bg-indigo-500/10 text-indigo-450 border-indigo-500/20' },
                 { id: 'cyber_security', label: 'Cyber Security', style: 'bg-[#0A84FF]/10 text-[#0A84FF] border-[#0A84FF]/20' },
                 { id: 'hacking', label: 'Ethical Hacking', style: 'bg-rose-500/10 text-rose-450 border-rose-500/20' },
                 { id: 'full_stack', label: 'Full Stack', style: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
                 { id: 'data_engineering', label: 'Data Engineering', style: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
+                { id: 'robotics', label: 'Robotics & Elec.', style: 'bg-rose-500/10 text-rose-450 border-rose-500/20' },
                 { id: 'tech_business', label: 'Tech Business', style: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
               ].map((btn) => (
                 <button
